@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { theme } from '../theme';
+import { LoginProvider } from 'src/utils/auth';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -18,7 +19,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Material Kit Pro
+          CTIPM
         </title>
         <meta
           name="viewport"
@@ -28,7 +29,7 @@ const App = (props) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
+          {getLayout(<LoginProvider><Component {...pageProps} /></LoginProvider>)}
         </ThemeProvider>
       </LocalizationProvider>
     </CacheProvider>

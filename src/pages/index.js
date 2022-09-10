@@ -1,17 +1,26 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import * as Yup from 'yup';
-import { Box, Button, Container,  TextField, Typography } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useData } from "../../src/utils/hooks";
+import { useLoginContext } from '../../src/utils/auth'
+import { createToken } from '../../src/utils/requests'
+import axios from '../../src/utils/axios';
 
 const Login = () => {
+  const [state, setState] = useData({ username: "", password: "" });
+  const [loggedIn, setLoggedIn] = useState(false);
+  const { setLoginState } = useLoginContext();
   const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
-      username: 'CTI',
-      password: 'ctipj2022'
+      username: '',
+      password: ''
     },
     validationSchema: Yup.object({
       username: Yup
@@ -21,12 +30,29 @@ const Login = () => {
           'Este campo es requerido'),
       password: Yup
         .string()
-        .min(8,'La contraseña debe tener al menos 8 caracteres')
+        .min(8, 'La contraseña debe tener al menos 8 caracteres')
         .required(
           'Este campo es requerido')
     }),
-    onSubmit: () => {
-      router.push('/dashboard');
+    onSubmit: async (event) => {
+      event.preventDefault;
+      setState({ username: formik.values.username, password: formik.values.password })
+      console.log(state)
+      const responseToken = await createToken(state);
+      if (responseToken.status == 200) {
+        router.push('/dashboard');
+        setLoggedIn(true);
+        setLoginState({ status: 200 });
+        localStorage.setItem("access_token", responseToken.data.access);
+        localStorage.setItem("refresh_token", responseToken.data.refresh);
+        localStorage.setItem("user", JSON.stringify(responseToken.data.user));
+        axios.defaults.headers[
+          "Authorization"
+        ] = `Bearer ${responseToken.data.access}`;
+
+      } else if (responseToken.status == 401) {
+      }
+
     }
   });
 
@@ -44,14 +70,14 @@ const Login = () => {
           minHeight: '100%'
         }}
       >
-        <Container 
-        maxWidth="sm"
-        align="center">
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main'}}>
+        <Container
+          maxWidth="sm"
+          align="center">
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
-        </Avatar>
+          </Avatar>
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3, alignItems:"center"}}>
+            <Box sx={{ my: 3, alignItems: "center" }}>
               <Typography
                 color="textPrimary"
                 variant="h4"
