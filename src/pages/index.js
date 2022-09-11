@@ -17,6 +17,12 @@ const Login = () => {
   const { setLoginState } = useLoginContext();
   const router = useRouter();
 
+  const handleChange = (field, value) => {
+    setState({ [field]: value });
+    formik.setFieldValue(field, value)
+
+  }
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -37,7 +43,6 @@ const Login = () => {
     onSubmit: async (event) => {
       event.preventDefault;
       setState({ username: formik.values.username, password: formik.values.password })
-      console.log(state)
       const responseToken = await createToken(state);
       if (responseToken.status == 200) {
         router.push('/dashboard');
@@ -51,6 +56,8 @@ const Login = () => {
         ] = `Bearer ${responseToken.data.access}`;
 
       } else if (responseToken.status == 401) {
+        formik.setFieldError('username', 'No hay ninguna cuenta asociada con estos credenciales');
+        formik.setFieldError('password', 'No hay ninguna cuenta asociada con estos credenciales')
       }
 
     }
@@ -102,7 +109,7 @@ const Login = () => {
               margin="normal"
               name="username"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => handleChange("username", e.target.value)}
               type="text"
               value={formik.values.username}
               variant="outlined"
@@ -115,7 +122,7 @@ const Login = () => {
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => handleChange("password", e.target.value)}
               type="password"
               value={formik.values.password}
               variant="outlined"
