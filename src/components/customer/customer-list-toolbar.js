@@ -1,15 +1,13 @@
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   TextField,
+  Tab,
+  Tabs,
   InputAdornment,
   SvgIcon, Typography
 } from '@mui/material';
 import { Search as SearchIcon } from '../../icons/search';
-import { Upload as UploadIcon } from '../../icons/upload';
-import { Download as DownloadIcon } from '../../icons/download';
 import { AddIcon } from '../../icons/add';
 
 export const CustomerListToolbar = (props) => (
@@ -20,16 +18,19 @@ export const CustomerListToolbar = (props) => (
         display: 'flex',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        m: -1
+        mt: 1
       }}
     >
-      <Typography
-        sx={{ m: 1 }}
-        variant="h4"
-      >
-        Projects
-      </Typography>
-      <Box sx={{ maxWidth: 500 }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', flexGrow: 1 }}>
+        <Tabs value={0} centered>
+          <Tab label="Sectoriales" />
+          <Tab label="Territoriales" />
+          <Tab label="Nacionales" />
+          <Tab label="No asociados" />
+        </Tabs>
+      </Box>
+      
+      <Box sx={{ maxWidth: 500, m: 1 }}>
         <TextField
           fullWidth
           InputProps={{
@@ -44,7 +45,7 @@ export const CustomerListToolbar = (props) => (
               </InputAdornment>
             )
           }}
-          placeholder="Search projects"
+          placeholder="Buscar proyectos"
           variant="outlined"
         />
       </Box>
@@ -54,7 +55,7 @@ export const CustomerListToolbar = (props) => (
           color="primary"
           variant="contained"
         >
-          New
+          Nuevo
         </Button>
       </Box>
     </Box>
