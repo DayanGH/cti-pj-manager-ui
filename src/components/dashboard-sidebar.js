@@ -79,11 +79,20 @@ export const DashboardSidebar = (props) => {
         <Box sx={{
           p: 2,
           display: 'flex',
+          alignItems: 'center',
         }}>
-          <img/>
-          <AddIcon/>
+          <img
+            alt="UHO logo"
+            src="/static/images/uho_logo.webp"
+            style={{
+              display: 'inline-block',
+              maxWidth: '100%',
+              width: 32,
+              height: 32
+            }}
+          />
           <Typography
-            sx={{ m: 1 }}
+            sx={{ ml: 2 }}
             variant="h5"
           >
             CTIPM
