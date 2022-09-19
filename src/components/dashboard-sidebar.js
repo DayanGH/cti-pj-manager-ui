@@ -25,7 +25,7 @@ const items = [
   {
     href: '/products',
     icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'products'
+    title: 'Programas'
   },
   {
     href: '/account',
@@ -35,12 +35,12 @@ const items = [
   {
     href: '/settings',
     icon: (<CogIcon fontSize="small" />),
-    title: 'Settings'
+    title: 'Ajustes'
   },
   {
     href: '/register',
     icon: (<UserAddIcon fontSize="small" />),
-    title: 'Register'
+    title: 'Acerca de'
   },
 ];
 
@@ -91,17 +91,19 @@ export const DashboardSidebar = (props) => {
               height: 32
             }}
           />
+          <Box sx={{ml: 2}}>
           <Typography
-            sx={{ ml: 2 }}
+            sx={{color: 'secondary.main', mb: -1}}
             variant="h5"
           >
             CTIPM
           </Typography>
+          <small>Gestion de projectos de CTI</small>
+          </Box>
         </Box>
         <Divider
           sx={{
-            borderColor: '#2D3748',
-            my: 0
+            borderColor: '#b8b8b8',
           }}
         />
         <Box sx={{
@@ -130,8 +132,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: 'neutral.900',
-            color: '#FFFFFF',
+            backgroundColor: '#C0C8B8',
             width: 280
           }
         }}
@@ -149,8 +150,7 @@ export const DashboardSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: 'neutral.900',
-          color: '#FFFFFF',
+          backgroundColor: '#C0C8B8',
           width: 280
         }
       }}
