@@ -13,12 +13,12 @@ import { AddIcon } from 'src/icons/add';
 
 const items = [
   {
-    href: '/dashboard',
+    href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
     title: 'Inicio'
   },
   {
-    href: '/customers',
+    href: '/projects',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Proyectos'
   },
@@ -91,14 +91,14 @@ export const DashboardSidebar = (props) => {
               height: 32
             }}
           />
-          <Box sx={{ml: 2}}>
-          <Typography
-            sx={{color: 'secondary.main', mb: -1}}
-            variant="h5"
-          >
-            CTIPM
-          </Typography>
-          <small>Gestion de projectos de CTI</small>
+          <Box sx={{ ml: 2 }}>
+            <Typography
+              sx={{ color: 'secondary.main', mb: -1 }}
+              variant="h5"
+            >
+              CTIPM
+            </Typography>
+            <small>Gestion de projectos de CTI</small>
           </Box>
         </Box>
         <Divider

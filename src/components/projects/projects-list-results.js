@@ -16,9 +16,10 @@ import {
   Typography
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
+import router from 'next/router';
 
-export const CustomerListResults = ({ projects, ...rest }) => {
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+export const ProjectsListResults = ({ projects, ...rest }) => {
+  const [selectedProjectsIds, setSelectedProjectsIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -59,7 +60,8 @@ export const CustomerListResults = ({ projects, ...rest }) => {
                 <TableRow
                   hover
                   key={project.id}
-                  selected={selectedCustomerIds.indexOf(project.id) !== -1}
+                  selected={selectedProjectsIds.indexOf(project.id) !== -1}
+                  onClick={() => router.push('/settings')}
                 >
 
                   <TableCell>
@@ -114,6 +116,6 @@ export const CustomerListResults = ({ projects, ...rest }) => {
   );
 };
 
-CustomerListResults.propTypes = {
-  customers: PropTypes.array.isRequired
+ProjectsListResults.propTypes = {
+  projects: PropTypes.array.isRequired
 };

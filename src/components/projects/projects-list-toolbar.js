@@ -10,7 +10,7 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';
 
-export const CustomerListToolbar = (props) => (
+export const ProjectsListToolbar = (props) => (
   <Box {...props}>
     <Box
       sx={{
@@ -22,14 +22,15 @@ export const CustomerListToolbar = (props) => (
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider', flexGrow: 1 }}>
-        <Tabs value={0} centered>
+        <Tabs value={0}
+          centered>
           <Tab label="Sectoriales" />
           <Tab label="Territoriales" />
           <Tab label="Nacionales" />
           <Tab label="No asociados" />
         </Tabs>
       </Box>
-      
+
       <Box sx={{ maxWidth: 500, m: 1 }}>
         <TextField
           fullWidth
