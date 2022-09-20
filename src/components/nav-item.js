@@ -41,7 +41,7 @@ export const NavItem = (props) => {
               color: active ? 'primary.main' : '#2d2d2d'
             },
             '&:hover': {
-              backgroundColor: 'rgba(255,255,255, 0.08)'
+              backgroundColor: active ? '#E8F0C8' : 'rgba(255,255,255, 0.25)'
             }
           }}
         >

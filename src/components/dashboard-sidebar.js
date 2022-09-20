@@ -77,7 +77,8 @@ export const DashboardSidebar = (props) => {
       >
 
         <Box sx={{
-          p: 2,
+          px: 2,
+          py: 1,
           display: 'flex',
           alignItems: 'center',
         }}>
@@ -93,7 +94,7 @@ export const DashboardSidebar = (props) => {
           />
           <Box sx={{ml: 2}}>
           <Typography
-            sx={{color: 'secondary.main', mb: -1}}
+            sx={{color: 'secondary.main', mb: -0.5}}
             variant="h5"
           >
             CTIPM
