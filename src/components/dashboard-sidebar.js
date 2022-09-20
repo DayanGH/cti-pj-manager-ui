@@ -13,12 +13,12 @@ import { AddIcon } from 'src/icons/add';
 
 const items = [
   {
-    href: '/dashboard',
+    href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
     title: 'Inicio'
   },
   {
-    href: '/customers',
+    href: '/projects',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Proyectos'
   },
