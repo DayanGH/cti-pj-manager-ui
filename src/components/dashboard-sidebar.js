@@ -9,7 +9,6 @@ import { User as UserIcon } from '../icons/user';
 import { UserAdd as UserAddIcon } from '../icons/user-add';
 import { Users as UsersIcon } from '../icons/users';
 import { NavItem } from './nav-item';
-import { AddIcon } from 'src/icons/add';
 
 const items = [
   {
@@ -35,7 +34,7 @@ const items = [
   {
     href: '/settings',
     icon: (<CogIcon fontSize="small" />),
-    title: 'Ajustes'
+    title: 'Ajustes de perfil'
   },
   {
     href: '/register',
@@ -77,8 +76,7 @@ export const DashboardSidebar = (props) => {
       >
 
         <Box sx={{
-          px: 2,
-          py: 1,
+          p: 2,
           display: 'flex',
           alignItems: 'center',
         }}>
@@ -92,14 +90,14 @@ export const DashboardSidebar = (props) => {
               height: 32
             }}
           />
-          <Box sx={{ml: 2}}>
-          <Typography
-            sx={{color: 'secondary.main', mb: -0.5}}
-            variant="h5"
-          >
-            CTIPM
-          </Typography>
-          <small>Gestion de projectos de CTI</small>
+          <Box sx={{ ml: 2 }}>
+            <Typography
+              sx={{ color: 'secondary.main', mb: -1 }}
+              variant="h5"
+            >
+              CTIPM
+            </Typography>
+            <small>Gestion de projectos de CTI</small>
           </Box>
         </Box>
         <Divider

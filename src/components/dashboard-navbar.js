@@ -52,7 +52,6 @@ export const DashboardNavbar = (props) => {
             color="textPrimary"
             variant="h6"
           >
-            Proyecto: Derechos humanos en Tailandia
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Tooltip title="Notifications">
@@ -72,7 +71,7 @@ export const DashboardNavbar = (props) => {
               width: 40,
               ml: 1
             }}
-            
+
           >
             {getInitials("Axel")}
           </Avatar>

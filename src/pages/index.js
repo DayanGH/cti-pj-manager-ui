@@ -23,7 +23,6 @@ const Dashboard = () => {
       }, []);
     }
     useAuthentication(); */
-  console.log(data)
   return (
     <>
       <Head>

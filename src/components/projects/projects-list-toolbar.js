@@ -5,7 +5,7 @@ import {
   Tab,
   Tabs,
   InputAdornment,
-  SvgIcon, Typography
+  SvgIcon
 } from '@mui/material';
 import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';

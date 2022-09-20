@@ -1,23 +1,25 @@
 import Head from 'next/head';
 import { Box, Container, Tab, Tabs, TabPanel } from '@mui/material';
-import { ProjectsListResults } from '../components/projects/projects-list-results';
-import { ProjectsListToolbar } from '../components/projects/projects-list-toolbar';
-import { DashboardLayout } from '../components/dashboard-layout';
-import { projects } from '../__mocks__/projects';
+import { ProjectsListResults } from '../../components/projects/projects-list-results';
+import { ProjectsListToolbar } from '../../components/projects/projects-list-toolbar';
+import { DashboardLayout } from '../../components/dashboard-layout';
 import { useEffect, useState } from 'react';
-import { fetchProjects } from '../utils/requests';
-import { useAsync } from "react-async";
+import { fetchProjects } from '../../utils/requests'
 
 function Projects() {
-  //here
-  const [projects, setProjects] = useState(null);
+  const [projects, setProjects] = useState();
+  const [isloading, setloading] = useState(true);
 
   useEffect(() => {
-    fetchProjects().then((data) => {
-      console.log(data)
-      setProjects(data);
-    });
+    setloading(true);
+    fetchProjects()
+      .then((data) => {
+        setProjects(data);
+        setloading(false)
+      });
   }, []);
+
+  if (isloading) return <p>loading....</p>
 
   return (
     <>
@@ -36,14 +38,16 @@ function Projects() {
         <Container maxWidth={false}>
           <ProjectsListToolbar />
           <Box sx={{ mt: 3 }}>
-            <ProjectsListResults projects={projects?.results || []} />
+            <ProjectsListResults projects={projects || []} />
           </Box>
         </Container>
       </Box>
     </>
+
   );
 
 };
+
 Projects.getLayout = (page) => (
   <DashboardLayout>
     {page}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+
 import {
   Avatar,
   Box,
@@ -30,7 +30,6 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -39,19 +38,19 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Name
+                  Nombre
                 </TableCell>
                 <TableCell>
-                  Chief
+                  Jefe
                 </TableCell>
                 <TableCell>
-                  Type
+                  Clasificación
                 </TableCell>
                 <TableCell>
-                  Revision
+                  Revisión
                 </TableCell>
                 <TableCell>
-                  End date
+                  Finalización
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -61,10 +60,10 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                   hover
                   key={project.id}
                   selected={selectedProjectsIds.indexOf(project.id) !== -1}
-                  onClick={() => router.push('/settings')}
                 >
 
-                  <TableCell>
+                  <TableCell onClick={() => router.push(`/projects/${project.id}`)}
+                  >
                     {project.name}
                   </TableCell>
                   <TableCell>
@@ -89,13 +88,13 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {project.type}
+                    {project.project_classification}
                   </TableCell>
                   <TableCell>
                     <Checkbox />
                   </TableCell>
                   <TableCell>
-                    {format(project.createdAt, 'dd/MM/yyyy')}
+                    {project.end_date}
                   </TableCell>
                 </TableRow>
               ))}
