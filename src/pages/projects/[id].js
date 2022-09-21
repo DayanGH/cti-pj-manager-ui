@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, Icon } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableRow, TableCell } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { AddIcon } from '../../icons/add';
@@ -15,7 +15,8 @@ const ProjectDetails = () => {
     const [pdetails, setPdetails] = useState();
     const [open, setOpen] = useState(false);
     const [isloading, setloading] = useState(true);
-    const handleOpen = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         if (typeof id !== "undefined") {
@@ -43,7 +44,8 @@ const ProjectDetails = () => {
                     display: 'flex'
                 }}
             >
-                <NewDocumentDialog/>
+                <NewDocumentDialog open={open}
+                    handleClose={handleClose} />
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >

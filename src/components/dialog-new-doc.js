@@ -1,32 +1,34 @@
 import { Dialog, Button, TextField, Box } from '@mui/material';
 
-export const NewDocumentDialog = (props) => {
+export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
   return (
     <Dialog
-      open="false"
+      open={open}
+      onClose={handleClose}
     >
       <Box
-        sx={{px:2, pt:2, display: "flex", flexDirection: "column"}}
+        sx={{ px: 2, pt: 2, display: "flex", flexDirection: "column" }}
       >
         <TextField
-          placeholder="Project name"
+          label="Document name"
           variant="standard"
-          text={open}
+          margin='1'
         >
         </TextField>
         <TextField
-          helperText="Project chief"
+          label="Project chief"
           variant="standard"
+          margin='1'
         >
         </TextField>
         <Box
-          sx={{display: "flex", justifyContent: "right"}}
+          sx={{ pt: 2, display: "flex", justifyContent: "right" }}
         >
-          <Button>
-            Cancel
+          <Button onClick={handleClose}>
+            Cancelar
           </Button>
           <Button>
-            Save
+            Guardar
           </Button>
         </Box>
       </Box>
@@ -34,3 +36,4 @@ export const NewDocumentDialog = (props) => {
   );
 
 };
+
