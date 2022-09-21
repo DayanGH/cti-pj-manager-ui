@@ -76,7 +76,8 @@ export const DashboardSidebar = (props) => {
       >
 
         <Box sx={{
-          p: 2,
+          py: 1,
+          px: 2,
           display: 'flex',
           alignItems: 'center',
         }}>

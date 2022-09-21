@@ -47,7 +47,7 @@ export const ProjectsListToolbar = (props) => (
             )
           }}
           placeholder="Buscar proyectos"
-          variant="outlined"
+          variant="standard"
         />
       </Box>
       <Box sx={{ m: 1 }}>

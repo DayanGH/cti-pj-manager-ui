@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, Icon } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
+import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { AddIcon } from '../../icons/add';
 import { ContextMenuIcon } from '../../icons/context-menu';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -8,54 +9,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests'
 
-const documents = [
-    {
-        id: '1',
-        name: 'Perfil'
-    },
-    {
-        id: '2',
-        name: 'Resolución de nombramiento del jefe de proyecto'
-    },
-    {
-        id: '3',
-        name: 'Compatibilización con los intereses de la Defensa'
-    },
-    {
-        id: '4',
-        name: 'Resolución oficial de aprobación del proyecto'
-    },
-    {
-        id: '5',
-        name: 'Dictamen de aprobación del proyecto por el CCA'
-    },
-    {
-        id: '6',
-        name: 'Fotos escaneadas del carné de identidad de los investigadores'
-    },
-    {
-        id: '7',
-        name: 'Desglose del presupuesto del año en curso'
-    },
-    {
-        id: '8',
-        name: 'Informe científico técnico'
-    },
-    {
-        id: '9',
-        name: 'Anexo 8. Certifico para el pago de los investigadores externos'
-    },
-    {
-        id: '10',
-        name: 'Resolución de nombramiento del jefe de proyecto'
-    }
-]
-
 const ProjectDetails = () => {
     const router = useRouter();
     const { id } = router.query;
     const [pdetails, setPdetails] = useState();
+    const [open, setOpen] = useState(false);
     const [isloading, setloading] = useState(true);
+    const handleOpen = () => setOpen(false);
 
     useEffect(() => {
         if (typeof id !== "undefined") {
@@ -75,6 +35,7 @@ const ProjectDetails = () => {
                     Proyecto|{pdetails.name}
                 </title>
             </Head>
+
             <Box
                 component="main"
                 sx={{
@@ -82,6 +43,7 @@ const ProjectDetails = () => {
                     display: 'flex'
                 }}
             >
+                <NewDocumentDialog/>
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
@@ -106,6 +68,7 @@ const ProjectDetails = () => {
                             startIcon={(<AddIcon fontSize="small" />)}
                             color="primary"
                             variant="contained"
+                            onClick={handleOpen}
                         >
                             Nuevo
                         </Button>
@@ -114,7 +77,7 @@ const ProjectDetails = () => {
                         <PerfectScrollbar>
                             <Table>
                                 <TableBody>
-                                    {documents.slice(0, 10).map((document) => (
+                                    {pdetails.documents.slice(0, 10).map((document) => (
                                         <TableRow
                                             hover
                                             key={document.id}
