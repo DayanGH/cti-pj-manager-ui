@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
   const [type, setType] = useState('')
+  const [showCustomName, setShowCustomName] = useState('none')
   const [doc_name, setDoc_name] = useState('')
 
   const d = 'document'
@@ -37,26 +38,7 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
     setType(event.target.value);
     setNames(event.target.value == 'document' ? documentNames : groupNames)
   };
-  const handleDocName = (event) => {
-    setDoc_name(event.target.value);
-  };
-  if (true) {
-    form = <FormControl variant="standard">
-      <InputLabel id="demo-simple-select-filled-label">Nombre</InputLabel>
-      <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
-        value={doc_name}
-        onChange={handleDocName}
-      >
-        {names.map((name) => (
-          <MenuItem value={name.key}
-            key={name.key}>{name.value}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
 
-  }
   return (
     <Dialog
       open={open}
@@ -81,8 +63,33 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
             <MenuItem value={'document'}>Documento</MenuItem>
           </Select>
         </FormControl>
-
-        {form}
+        <FormControl variant="standard" sx={{mt: 1}}>
+          <InputLabel id="demo-simple-select-filled-label">Nombre</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={doc_name}
+            onChange={(event) => {
+              setDoc_name(event.target.value);
+              setShowCustomName(event.target.value == "other" ? "flex" : "none")
+            }}
+          >
+          {names.map((name) => (
+            <MenuItem value={name.key}
+              key={name.key}>{name.value}</MenuItem>
+          ))}
+          </Select>
+        </FormControl>
+        <TextField
+          sx={{mt: 1, display: showCustomName}}
+          label="Nombre"
+          variant="standard"/>
+        <Button
+          sx={{mt: 1}}
+          variant="contained"
+        >
+          Seleccionar archivo
+        </Button>
         <Box
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}
         >
@@ -98,4 +105,3 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
   );
 
 };
-
