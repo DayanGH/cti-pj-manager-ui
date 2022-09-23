@@ -77,11 +77,11 @@ export const DashboardSidebar = (props) => {
 
         <Box sx={{
           py: 1,
-          px: 2,
+          px: 1,
           display: 'flex',
           alignItems: 'center',
         }}>
-          <img
+          {/* <img
             alt="UHO logo"
             src="/static/images/uho_logo.webp"
             style={{
@@ -90,15 +90,15 @@ export const DashboardSidebar = (props) => {
               width: 32,
               height: 32
             }}
-          />
-          <Box sx={{ ml: 2 }}>
+          /> */}
+          <Box sx={{ ml: 1 }}>
             <Typography
               sx={{ color: 'secondary.main', mb: -1 }}
               variant="h5"
             >
-              CTIPM
+              GePCTI
             </Typography>
-            <small>Gestion de projectos de CTI</small>
+            <small>Gestion de programas y proyectos CTI</small>
           </Box>
         </Box>
         <Divider
