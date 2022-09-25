@@ -34,6 +34,10 @@ export const fetchProjects = async () => {
   const response = await axiosInstance.get("/projects/");
   return response.data;
 };
+export const fetchPrograms = async () => {
+  const response = await axiosInstance.get("/programs/");
+  return response.data;
+};
 export const fetchProjectsDetails = async (p_id) => {
   const response = await axiosInstance.get(`/projects/${p_id}`);
   return response.data;

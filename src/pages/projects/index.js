@@ -11,14 +11,18 @@ function Projects() {
   const [isloading, setloading] = useState(true);
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  function loadData() {
     setloading(true);
     fetchProjects()
       .then((data) => {
         setProjects(data);
         setloading(false)
+        console.log(data)
       });
-  }, []);
-
+  }
   if (isloading) return <p>loading....</p>
 
   return (
@@ -36,7 +40,7 @@ function Projects() {
         }}
       >
         <Container maxWidth={false}>
-          <ProjectsListToolbar />
+          <ProjectsListToolbar loadData={() => loadData()} />
           <Box sx={{ mt: 3 }}>
             <ProjectsListResults projects={projects || []} />
           </Box>

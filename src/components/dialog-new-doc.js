@@ -1,4 +1,5 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { min } from 'date-fns';
 import { useState } from 'react';
 
 export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
@@ -44,7 +45,7 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
       open={open}
       onClose={handleClose}
       maxWidth='xs'
-      fullWidth='true'
+      fullWidth={true}
 
     >
       <DialogTitle>Nuevo documento</DialogTitle>
@@ -63,7 +64,8 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
             <MenuItem value={'document'}>Documento</MenuItem>
           </Select>
         </FormControl>
-        <FormControl variant="standard" sx={{mt: 1}}>
+        <FormControl variant="standard"
+          sx={{ mt: 1 }}>
           <InputLabel id="demo-simple-select-filled-label">Nombre</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
@@ -74,18 +76,18 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
               setShowCustomName(event.target.value == "other" ? "flex" : "none")
             }}
           >
-          {names.map((name) => (
-            <MenuItem value={name.key}
-              key={name.key}>{name.value}</MenuItem>
-          ))}
+            {names.map((name) => (
+              <MenuItem value={name.key}
+                key={name.key}>{name.value}</MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
-          sx={{mt: 1, display: showCustomName}}
+          sx={{ mt: 1, display: showCustomName }}
           label="Nombre"
-          variant="standard"/>
+          variant="standard" />
         <Button
-          sx={{mt: 1}}
+          sx={{ mt: 1 }}
           variant="contained"
         >
           Seleccionar archivo

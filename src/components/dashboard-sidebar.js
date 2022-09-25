@@ -98,7 +98,7 @@ export const DashboardSidebar = (props) => {
             >
               GePCTI
             </Typography>
-            <small>Gestion de programas y proyectos CTI</small>
+            <small>Gestión de programas y proyectos CTI</small>
           </Box>
         </Box>
         <Divider
