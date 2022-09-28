@@ -1,10 +1,11 @@
-import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, InputAdornment } from '@mui/material';
 import { useState } from 'react';
 import { useToggleState, useData } from 'src/utils/hooks';
-import { fetchProgramDetails, fetchPrograms, fetchChiefs, fetchChiefDetails, addProject, editProject } from 'src/utils/requests';
+import { fetchPrograms, fetchChiefs, addProject, editProject } from 'src/utils/requests';
 import Autocomplete from '@mui/material/Autocomplete'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
+import { object } from 'prop-types';
 
 
 export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => {
@@ -28,11 +29,17 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
   const projectTypesNAP = [
     { key: 'pnap_di', value: 'Proyectos No Asociados a Programas Demanda Interna' },
     { key: 'pnap_de', value: 'Proyectos No Asociados a Programas Demanda Externa' }]
+  const projectsClass = [
+    { key: 'i_bas', value: 'De Investigación Básica' },
+    { key: 'i_d', value: 'Aplicada y de Desarrollo' },
+    { key: 'inn', value: 'Innovación' }]
 
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
+  const [errors, setErrors] = useData({});
   const [ptype, setPtype] = useState("none")
   const [pnapType, setPnapType] = useState("")
+  const [pClass, setpClass] = useState("")
   let component;
 
 
@@ -71,7 +78,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
         loadData();
       })
       .catch((error) => {
-        console.log(error)
+        setErrors(error.response.data)
+        console.log(error.response.data)
       });
   }
 
@@ -131,7 +139,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
     >
       <DialogTitle>{neww ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
       <Box
-        sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
+        sx={{ px: 1, mx: 2, display: "flex", flexDirection: "column" }}
       >
         <TextField
           sx={{ mt: 1 }}
@@ -149,6 +157,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
 
           }} />
         <Autocomplete
+          sx={{ mt: 1 }}
           id="select-program"
           open={togglePrograms}
           onOpen={handleOpenPrograms}
@@ -177,6 +186,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           renderInput={(params) => (
             <TextField
               {...params}
+
               label="Programa"
               variant="standard"
               InputProps={{
@@ -197,6 +207,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
         />
         {component}
         <Autocomplete
+          sx={{ mt: 1 }}
           id="select-chief"
           open={toggleChief}
           onOpen={handleOpenChiefs}
@@ -232,19 +243,93 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
             />
           )}
         />
-
+        <TextField
+          sx={{ mt: 1 }}
+          label="Financiamiento"
+          type="number"
+          inputProps={{ min: 0 }}
+          onChange={(evt) =>
+            handleChangeField(evt.target.value, "financing")
+          }
+          variant="standard"
+          fullWidth
+          value={data.financing}
+          InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
+        />
+        <FormControl variant="standard">
+          <InputLabel id="p_clasification">Clasificación</InputLabel>
+          <Select
+            labelId="p_clasification"
+            id="demo-simple-select-filled"
+            value={pClass}
+            onChange={(event) => {
+              handleChangeField(event.target.value, 'project_classification')
+              setpClass(event.target.value)
+              console.log(event.target.value)
+            }}
+          >
+            {projectsClass.map((classif) => (
+              <MenuItem value={classif.key}
+                key={classif.key}>{classif.value}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Box sx={{ display: "flex", flexDirection: 'row' }} >
+          <TextField
+            sx={{ mr: 1, mt: 1 }}
+            label="Fecha de inicio"
+            type="date"
+            error={'start_date' in errors}
+            helperText={errors.start_date}
+            onChange={(evt) => handleChangeField(evt.target.value, 'start_date')}
+            variant="standard"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            sx={{ mr: 1, mt: 1 }}
+            label="Fecha de culminación"
+            type="date"
+            error={'end_date' in errors}
+            helperText={errors.end_date}
+            onChange={(evt) => handleChangeField(evt.target.value, 'end_date')}
+            variant="standard"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+          />
+        </Box>
+        <TextField
+          sx={{ mr: 1, mt: 1 }}
+          label="Entidad principal"
+          type='text'
+          onChange={(evt) => handleChangeField(evt.target.value, 'main_entity')}
+          variant="standard"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          sx={{ mr: 1, mt: 1 }}
+          label="Entidades participantes"
+          multiline
+          maxRows={4}
+          type='text'
+          onChange={(evt) => handleChangeField(evt.target.value, 'entities')}
+          variant="standard"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
         <Box
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}
         >
           <Button onClick={() => onClose()}>
             Cancelar
           </Button>
-          <Button onClick={() => { console.log(data) }}>
+          <Button onClick={() => { console.log(data), handleAddProject(data) }}>
             Guardar
           </Button>
         </Box>
       </Box>
-    </Dialog>
+    </Dialog >
   );
 
 };
