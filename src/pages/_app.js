@@ -19,7 +19,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          CTIPM
+          GePCTI
         </title>
         <meta
           name="viewport"

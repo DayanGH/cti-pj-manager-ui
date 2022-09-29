@@ -5,7 +5,6 @@ import { fetchPrograms, fetchChiefs, addProject, editProject } from 'src/utils/r
 import Autocomplete from '@mui/material/Autocomplete'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
-import { object } from 'prop-types';
 
 
 export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => {
@@ -71,7 +70,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
   }
   function handleAddProject(data) {
     const func = neww ? addProject : editProject;
-    console.log(data)
     func(data)
       .then((data) => {
         onClose();
@@ -109,8 +107,11 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
     />
   }
   else if (ptype === 'none') {
-    component = <FormControl variant="standard"
-      sx={{ mt: 1 }}>
+    component = <FormControl
+      variant="standard"
+      sx={{ mt: 1 }}
+      error={'pj_type' in errors}
+      helpertext={errors.pj_typen}>
       <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
       <Select
         labelId="demo-simple-select-filled-label"
@@ -145,6 +146,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           sx={{ mt: 1 }}
           label="Nombre"
           variant="standard"
+          error={'name' in errors}
+          helperText={errors.name}
           onChange={(event) => {
             handleChangeField(event.target.value, 'name')
           }} />
@@ -152,6 +155,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           sx={{ mt: 1 }}
           label="Código"
           variant="standard"
+          error={'project_code' in errors}
+          helperText={errors.project_code}
           onChange={(event) => {
             handleChangeField(event.target.value, 'project_code')
 
@@ -186,9 +191,10 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           renderInput={(params) => (
             <TextField
               {...params}
-
               label="Programa"
               variant="standard"
+              error={'program' in errors}
+              helperText={errors.program}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -227,6 +233,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
               {...params}
               label="Jefe"
               variant="standard"
+              error={'chief' in errors}
+              helperText={errors.chief}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -248,6 +256,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           label="Financiamiento"
           type="number"
           inputProps={{ min: 0 }}
+          error={'financing' in errors}
+          helperText={errors.financing}
           onChange={(evt) =>
             handleChangeField(evt.target.value, "financing")
           }
@@ -256,7 +266,10 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           value={data.financing}
           InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
         />
-        <FormControl variant="standard">
+        <FormControl
+          variant="standard"
+          error={'project_classification' in errors}
+          helpertext={errors.project_classification}>
           <InputLabel id="p_clasification">Clasificación</InputLabel>
           <Select
             labelId="p_clasification"
@@ -265,7 +278,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
             onChange={(event) => {
               handleChangeField(event.target.value, 'project_classification')
               setpClass(event.target.value)
-              console.log(event.target.value)
             }}
           >
             {projectsClass.map((classif) => (
@@ -302,6 +314,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           sx={{ mr: 1, mt: 1 }}
           label="Entidad principal"
           type='text'
+          error={'main_entity' in errors}
+          helperText={errors.main_entity}
           onChange={(evt) => handleChangeField(evt.target.value, 'main_entity')}
           variant="standard"
           fullWidth
@@ -313,6 +327,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           multiline
           maxRows={4}
           type='text'
+          error={'entities' in errors}
+          helperText={errors.entities}
           onChange={(evt) => handleChangeField(evt.target.value, 'entities')}
           variant="standard"
           fullWidth
@@ -324,7 +340,10 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           <Button onClick={() => onClose()}>
             Cancelar
           </Button>
-          <Button onClick={() => { console.log(data), handleAddProject(data) }}>
+          <Button onClick={() => {
+            console.log(data)
+            handleAddProject(data)
+          }}>
             Guardar
           </Button>
         </Box>

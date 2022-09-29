@@ -27,7 +27,7 @@ const Dashboard = () => {
     <>
       <Head>
         <title>
-          Inicio | CTIPM
+          Inicio | GePCTI
         </title>
       </Head>
       <Box

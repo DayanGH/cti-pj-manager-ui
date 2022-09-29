@@ -33,7 +33,7 @@ const ProjectDetails = () => {
         <>
             <Head>
                 <title>
-                    Proyecto|{pdetails.name}
+                    Proyecto |{" " + pdetails.name}
                 </title>
             </Head>
 
