@@ -2,33 +2,33 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Box, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
-import { ChartBar as ChartBarIcon } from '../icons/chart-bar';
+import { PieChartIcon } from '../icons/pie-chart';
 import { Cog as CogIcon } from '../icons/cog';
-import { ShoppingBag as ShoppingBagIcon } from '../icons/shopping-bag';
-import { User as UserIcon } from '../icons/user';
-import { UserAdd as UserAddIcon } from '../icons/user-add';
+import { ProjectsIcon } from '../icons/projects';
+import { ProgramsIcon } from '../icons/programs';
+import { InfoIcon } from '../icons/info';
 import { Users as UsersIcon } from '../icons/users';
 import { NavItem } from './nav-item';
 
 const items = [
   {
     href: '/',
-    icon: (<ChartBarIcon fontSize="small" />),
+    icon: (<PieChartIcon fontSize="small" />),
     title: 'Inicio'
   },
   {
     href: '/projects',
-    icon: (<UsersIcon fontSize="small" />),
+    icon: (<ProjectsIcon fontSize="small" />),
     title: 'Proyectos'
   },
   {
     href: '/programs',
-    icon: (<ShoppingBagIcon fontSize="small" />),
+    icon: (<ProgramsIcon fontSize="small" />),
     title: 'Programas'
   },
   {
     href: '/account',
-    icon: (<UserIcon fontSize="small" />),
+    icon: (<UsersIcon fontSize="small" />),
     title: 'Usuarios'
   },
   {
@@ -38,7 +38,7 @@ const items = [
   },
   {
     href: '/register',
-    icon: (<UserAddIcon fontSize="small" />),
+    icon: (<InfoIcon fontSize="small" />),
     title: 'Acerca de'
   },
 ];
