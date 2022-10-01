@@ -7,6 +7,7 @@ import { Bell as BellIcon } from '../icons/bell';
 import { UserCircle as UserCircleIcon } from '../icons/user-circle';
 import { Users as UsersIcon } from '../icons/users';
 import { getInitials } from '../utils/get-initials';
+import { useState } from 'react';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -15,6 +16,7 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
+  const [title, setTitle] = useState("Inicio")
 
   return (
     <>
@@ -52,6 +54,7 @@ export const DashboardNavbar = (props) => {
             color="textPrimary"
             variant="h6"
           >
+           {title}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Tooltip title="Notifications">

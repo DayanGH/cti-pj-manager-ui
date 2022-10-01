@@ -22,7 +22,7 @@ const items = [
     title: 'Proyectos'
   },
   {
-    href: '/products',
+    href: '/programs',
     icon: (<ShoppingBagIcon fontSize="small" />),
     title: 'Programas'
   },
