@@ -47,7 +47,7 @@ export const DashboardNavbar = (props) => {
           >
             <MenuIcon fontSize="small" />
           </IconButton>
-          <Box sx={{ ml: 1 }}>
+          <Box sx={{ ml: 0.5 }}>
             <Typography
               sx={{ color: 'secondary.main', mb: -0.2 }}
               variant="h5"

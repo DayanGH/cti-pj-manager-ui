@@ -86,7 +86,8 @@ export const DashboardSidebar = (props) => {
             sx={{
               height: 40,
               width: 40,
-              ml: 1
+              ml: 1,
+              bgcolor: '#9F9E9E'
             }}
 
           >
