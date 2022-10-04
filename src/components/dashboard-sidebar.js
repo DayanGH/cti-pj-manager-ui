@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { Box, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
+import { Box, Avatar, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { PieChartIcon } from '../icons/pie-chart';
 import { Cog as CogIcon } from '../icons/cog';
 import { ProjectsIcon } from '../icons/projects';
@@ -9,6 +9,7 @@ import { ProgramsIcon } from '../icons/programs';
 import { InfoIcon } from '../icons/info';
 import { Users as UsersIcon } from '../icons/users';
 import { NavItem } from './nav-item';
+import { getInitials } from '../utils/get-initials';
 
 const items = [
   {
@@ -76,29 +77,34 @@ export const DashboardSidebar = (props) => {
       >
 
         <Box sx={{
-          py: 1,
+          py: 1.3,
           px: 1,
           display: 'flex',
           alignItems: 'center',
         }}>
-          {/* <img
-            alt="UHO logo"
-            src="/static/images/uho_logo.webp"
-            style={{
-              display: 'inline-block',
-              maxWidth: '100%',
-              width: 32,
-              height: 32
+          <Avatar
+            sx={{
+              height: 40,
+              width: 40,
+              ml: 1
             }}
-          /> */}
+
+          >
+            {getInitials("Axel")}
+          </Avatar>
           <Box sx={{ ml: 1 }}>
             <Typography
-              sx={{ color: 'secondary.main', mb: -1 }}
-              variant="h5"
+              sx={{  mb: -0.2 }}
+              variant="body1"
+              fontWeight="bold"
             >
-              GePCTI
+              Axel358
             </Typography>
-            <small>Gestión de programas y proyectos CTI</small>
+            <Typography
+              variant="subtitle2"
+            >
+            axel358@gmail.com
+          </Typography>
           </Box>
         </Box>
         <Divider

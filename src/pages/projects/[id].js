@@ -106,7 +106,7 @@ const ProjectDetails = () => {
                                                         color="textPrimary"
                                                         variant="body1"
                                                     >
-                                                        {document.name}
+                                                        {document.d_name}
                                                     </Typography>
                                                 </Box>
                                             </TableCell>
@@ -147,7 +147,7 @@ const ProjectDetails = () => {
                                     <b>Tipo: </b>
                                 </TableCell>
                                 <TableCell>
-                                    {pdetails.pj_type}
+                                    {pdetails.type}
                                 </TableCell>
                             </TableRow>
                             <TableRow
@@ -156,7 +156,7 @@ const ProjectDetails = () => {
                                     <b>Clasificación: </b>
                                 </TableCell>
                                 <TableCell>
-                                    {pdetails.project_classification}
+                                    {pdetails.classification}
                                 </TableCell>
                             </TableRow>
                             <TableRow
