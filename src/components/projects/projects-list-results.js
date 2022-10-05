@@ -25,6 +25,7 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
+    setPage(0);
   };
 
   const handlePageChange = (event, newPage) => {
@@ -55,7 +56,7 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {projects.slice(0, limit).map((project) => (
+              {projects.slice(page * limit, page * limit + limit).map((project) => (
                 <TableRow
                   hover
                   key={project.id}
