@@ -24,6 +24,7 @@ export const ProgramList = ({ programs, ...rest }) => {
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
+    setPage(0);
   };
 
   const handlePageChange = (event, newPage) => {
@@ -54,7 +55,7 @@ export const ProgramList = ({ programs, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {programs.slice(0, limit).map((program) => (
+              {programs.slice(page * limit, page * limit + limit).map((program) => (
                 <TableRow
                   hover
                   key={program.id}
