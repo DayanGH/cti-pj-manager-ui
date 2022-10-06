@@ -85,7 +85,7 @@ export const ProgramList = ({ programs, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {program.program_classification}
+                    {program.classification}
                   </TableCell>
                   <TableCell>
                     <Checkbox />

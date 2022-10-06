@@ -147,7 +147,7 @@ const ProgramDetails = () => {
                                     <b>Tipo: </b>
                                 </TableCell>
                                 <TableCell>
-                                    {pdetails.pj_type}
+                                    {pdetails.type}
                                 </TableCell>
                             </TableRow>
                             <TableRow
@@ -189,7 +189,7 @@ const ProgramDetails = () => {
                                     <b>Finaciamiento: </b>
                                 </TableCell>
                                 <TableCell>
-                                    ${pdetails.financing}
+                                    ${pdetails.money}
                                 </TableCell>
                             </TableRow>
                             <TableRow>

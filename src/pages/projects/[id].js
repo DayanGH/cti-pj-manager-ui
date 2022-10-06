@@ -122,7 +122,6 @@ const ProjectDetails = () => {
                 </Box>
                 <Box
                     sx={{
-                        my: 1,
                         p: 1,
                         minWidth: "30%",
                         maxWidth: "35%",
@@ -130,6 +129,31 @@ const ProjectDetails = () => {
                         borderColor: 'divider'
                     }}
                 >
+                <Box
+                        sx={{
+                            p: 1,
+                            display: 'flex',
+                            flexGrow: 1,
+                            borderBottom: 1,
+                            borderColor: 'divider',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <Typography
+                            color="textPrimary"
+                            variant="h6"
+                        >
+                            {pdetails.name}
+                        </Typography>
+                        <Button
+                            startIcon={(<AddIcon fontSize="small" />)}
+                            color="primary"
+                            onClick={handleOpen}
+                        >
+                            Nuevo
+                        </Button>
+                    </Box>
                     <Table>
                         <TableBody>
                             <TableRow
