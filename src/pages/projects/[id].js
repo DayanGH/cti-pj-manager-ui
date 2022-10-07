@@ -1,12 +1,13 @@
 import Head from 'next/head';
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, Menu, MenuItem } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { AddIcon } from '../../icons/add';
+import { Menu as MenuIcon } from '../../icons/menu';
 import { ContextMenuIcon } from '../../icons/context-menu';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests'
 
 const ProjectDetails = () => {
@@ -14,9 +15,11 @@ const ProjectDetails = () => {
     const { id } = router.query;
     const [pdetails, setPdetails] = useState();
     const [open, setOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const [isloading, setloading] = useState(true);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const menuButton = useRef();
 
     useEffect(() => {
         if (typeof id !== "undefined") {
@@ -147,11 +150,18 @@ const ProjectDetails = () => {
                             {pdetails.name}
                         </Typography>
                         <Button
-                            startIcon={(<AddIcon fontSize="small" />)}
-                            color="primary"
-                            onClick={handleOpen}
+                            sx={{color: "text.primary"}}
+                            ref={menuButton}
+                            startIcon={(<ContextMenuIcon fontSize="small" />)}
+                            onClick={() => setMenuOpen(!menuOpen)}
                         >
-                            Nuevo
+                            <Menu
+                              anchorEl={menuButton}
+                              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                              open={menuOpen}>
+                              <MenuItem>Editar</MenuItem>
+                              <MenuItem>Eliminar</MenuItem>
+                            </Menu>
                         </Button>
                     </Box>
                     <Table>
@@ -240,3 +250,5 @@ ProjectDetails.getLayout = (page) => (
 );
 
 export default ProjectDetails;
+
+
