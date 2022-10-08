@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
 
 
-export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => {
+export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, ...rest }) => {
   const [data, setData] = useData({
     documents: [],
     document_groups: [],
@@ -23,7 +23,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
     start_date: "",
     end_date: "",
     financing: 0,
-    program: null
+    program: null,
+    ...instance,
   });
   const projectTypesNAP = [
     { key: 'pnap_di', value: 'Proyectos No Asociados a Programas Demanda Interna' },
@@ -69,7 +70,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
     setData({ [field]: value });
   }
   function handleAddProject(data) {
-    const func = neww ? addProject : editProject;
+    const func = onAction ? addProject : editProject;
     func(data)
       .then((data) => {
         onClose();
@@ -136,15 +137,15 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
       maxWidth='xs'
       fullWidth={true}
 
-
     >
-      <DialogTitle>{neww ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
+      <DialogTitle>{onAction ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
       <Box
         sx={{ px: 1, mx: 2, display: "flex", flexDirection: "column" }}
       >
         <TextField
           sx={{ mt: 1 }}
           label="Nombre"
+          value={data.name}
           variant="standard"
           error={'name' in errors}
           helperText={errors.name}
@@ -154,6 +155,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
         <TextField
           sx={{ mt: 1 }}
           label="Código"
+          value={data.project_code}
           variant="standard"
           error={'project_code' in errors}
           helperText={errors.project_code}
@@ -291,6 +293,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
             sx={{ mr: 1, mt: 1 }}
             label="Fecha de inicio"
             type="date"
+            value={data.start_date}
             error={'start_date' in errors}
             helperText={errors.start_date}
             onChange={(evt) => handleChangeField(evt.target.value, 'start_date')}
@@ -302,6 +305,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
             sx={{ mr: 1, mt: 1 }}
             label="Fecha de culminación"
             type="date"
+            value={data.end_date}
             error={'end_date' in errors}
             helperText={errors.end_date}
             onChange={(evt) => handleChangeField(evt.target.value, 'end_date')}
@@ -314,6 +318,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           sx={{ mr: 1, mt: 1 }}
           label="Entidad principal"
           type='text'
+          value={data.main_entity}
           error={'main_entity' in errors}
           helperText={errors.main_entity}
           onChange={(evt) => handleChangeField(evt.target.value, 'main_entity')}
@@ -325,6 +330,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, neww, ...rest }) => 
           sx={{ mr: 1, mt: 1 }}
           label="Entidades participantes"
           multiline
+          value={data.entities}
           maxRows={4}
           type='text'
           error={'entities' in errors}

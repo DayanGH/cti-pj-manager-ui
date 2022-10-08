@@ -3,25 +3,42 @@ import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, Menu, M
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { AddIcon } from '../../icons/add';
-import { Menu as MenuIcon } from '../../icons/menu';
+import { Delete, Edit } from '@mui/icons-material';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon'
 import { ContextMenuIcon } from '../../icons/context-menu';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { useRouter } from 'next/router';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests'
+import { DeleteProject } from '../../components/dialog-delete-project';
+import { useTargetAction } from "../../utils/hooks";
+import { NewProjectDialog } from 'src/components/dialog-new-project';
 
 const ProjectDetails = () => {
     const router = useRouter();
     const { id } = router.query;
     const [pdetails, setPdetails] = useState();
     const [open, setOpen] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
     const [isloading, setloading] = useState(true);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const menuButton = useRef();
+    const [action, target, handleAction] = useTargetAction();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openMenu = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
 
     useEffect(() => {
+        loadData(id);
+    }, [id]);
+
+    function loadData(id) {
         if (typeof id !== "undefined") {
             setloading(true);
             fetchProjectsDetails(id)
@@ -30,7 +47,7 @@ const ProjectDetails = () => {
                     setloading(false)
                 });
         }
-    }, [id]);
+    }
     if (isloading) return <p>loading....</p>
     return (
         <>
@@ -47,6 +64,22 @@ const ProjectDetails = () => {
                     display: 'flex'
                 }}
             >
+                {action == "delete" && (
+                    <DeleteProject
+                        open
+                        instance={pdetails}
+                        project_id={id}
+                        onClose={handleAction}
+                    />
+                )}
+                {["new", "edit"].includes(action) && (
+                    <NewProjectDialog
+                        open
+                        new={action === "new"}
+                        instance={pdetails}
+                        onClose={handleAction}
+                        loadData={() => loadData(id)} />
+                )}
                 <NewDocumentDialog open={open}
                     handleClose={handleClose} />
                 <Box
@@ -132,7 +165,7 @@ const ProjectDetails = () => {
                         borderColor: 'divider'
                     }}
                 >
-                <Box
+                    <Box
                         sx={{
                             p: 1,
                             display: 'flex',
@@ -150,19 +183,40 @@ const ProjectDetails = () => {
                             {pdetails.name}
                         </Typography>
                         <Button
-                            sx={{color: "text.primary"}}
-                            ref={menuButton}
+                            id="long-button"
+                            aria-label="more"
+                            sx={{ color: "text.primary" }}
                             startIcon={(<ContextMenuIcon fontSize="small" />)}
-                            onClick={() => setMenuOpen(!menuOpen)}
+                            aria-controls={openMenu ? 'menu' : undefined}
+                            aria-expanded={openMenu ? 'true' : undefined}
+                            aria-haspopup="true"
+                            onClick={handleClick}
+
                         >
-                            <Menu
-                              anchorEl={menuButton}
-                              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                              open={menuOpen}>
-                              <MenuItem>Editar</MenuItem>
-                              <MenuItem>Eliminar</MenuItem>
-                            </Menu>
                         </Button>
+                        <Menu
+                            id="menu"
+                            anchorEl={anchorEl}
+                            MenuListProps={{
+                                'aria-labelledby': 'long-button',
+                            }}
+                            open={openMenu}
+                            onClose={handleCloseMenu}>
+
+                            <MenuItem onClick={() => { handleAction("edit"); handleCloseMenu() }}>
+                                <ListItemIcon>
+                                    <Edit />
+                                </ListItemIcon>
+                                <ListItemText>Editar</ListItemText>
+                            </MenuItem>
+                            <MenuItem onClick={() => { handleAction("delete", id); handleCloseMenu() }}>
+                                <ListItemIcon>
+                                    <Delete />
+                                </ListItemIcon>
+                                <ListItemText>Eliminar</ListItemText>
+
+                            </MenuItem>
+                        </Menu>
                     </Box>
                     <Table>
                         <TableBody>

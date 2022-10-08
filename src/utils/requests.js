@@ -34,8 +34,8 @@ export const addProject = async (data) => {
   const response = await axiosInstance.post("projects/", data);
   return response.data;
 };
-export const editProject = async (data) => {              //TODO
-  const response = await axiosInstance.post("/projects/", data);
+export const editProject = async (data) => {
+  const response = await axiosInstance.patch(`projects/${data.id}/`, data);
   return response.data;
 };
 
@@ -43,6 +43,12 @@ export const fetchProjects = async () => {
   const response = await axiosInstance.get("/projects/");
   return response.data;
 };
+
+export const deleteProject = async (id) => {
+  const response = await axiosInstance.delete(`projects/${id}/`);
+  return response.data;
+};
+
 export const fetchPrograms = async () => {
   const response = await axiosInstance.get("/programs/");
   return response.data;
