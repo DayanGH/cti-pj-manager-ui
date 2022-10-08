@@ -276,7 +276,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           <Select
             labelId="p_clasification"
             id="demo-simple-select-filled"
-            value={pClass}
+            value={data.project_classification}
             onChange={(event) => {
               handleChangeField(event.target.value, 'project_classification')
               setpClass(event.target.value)
