@@ -1,11 +1,13 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { min } from 'date-fns';
 import { useState } from 'react';
+import { addDocument } from 'src/utils/requests';
 
-export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
+export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, ...rest }) => {
   const [type, setType] = useState('')
   const [showCustomName, setShowCustomName] = useState('none')
-  const [doc_name, setDoc_name] = useState('')
+  const [docName, setDocName] = useState('')
+  const [file, setFile] = useState()
 
   const d = 'document'
   let form;
@@ -35,10 +37,19 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
     { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
     { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos' }]
 
-  const handleType = (event) => {
-    setType(event.target.value);
-    setNames(event.target.value == 'document' ? documentNames : groupNames)
+  const saveDocument = () => {
+        let data = new FormData();
+        let saveName = documentNames.find(item => item.key == docName).value;
+        data.append("file", file, saveName);
+        data.append("project", pj_id);
+        data.append("name", saveName);
+        data.append("dtype", docName);
+        //TODO: Verify response and validate data before closing
+        addDocument(data);
+        loadData(pj_id);
+        handleClose();
   };
+
 
   return (
     <Dialog
@@ -58,7 +69,10 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             value={type}
-            onChange={handleType}
+            onChange={(event) => {
+              setType(event.target.value);
+              setNames(event.target.value == 'document' ? documentNames : groupNames);
+            }}
           >
             <MenuItem value={'group'}>Grupo</MenuItem>
             <MenuItem value={'document'}>Documento</MenuItem>
@@ -70,10 +84,10 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            value={doc_name}
+            value={docName}
             onChange={(event) => {
-              setDoc_name(event.target.value);
-              setShowCustomName(event.target.value == "other" ? "flex" : "none")
+              setDocName(event.target.value);
+              setShowCustomName(event.target.value == "other" ? "flex" : "none");
             }}
           >
             {names.map((name) => (
@@ -90,15 +104,24 @@ export const NewDocumentDialog = ({ open, handleClose, ...rest }) => {
           sx={{ mt: 1 }}
           variant="contained"
         >
-          Seleccionar archivo
+
+          <input
+            type="file"
+            name="file_url"
+            onChange={() => setFile(event.target.files[0])}
+            />
         </Button>
         <Box
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}
         >
-          <Button onClick={handleClose}>
+          <Button
+            onClick={handleClose}
+          >
             Cancelar
           </Button>
-          <Button>
+          <Button
+            onClick={saveDocument}
+          >
             Guardar
           </Button>
         </Box>

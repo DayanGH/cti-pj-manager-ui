@@ -80,8 +80,12 @@ const ProjectDetails = () => {
                         onClose={handleAction}
                         loadData={() => loadData(id)} />
                 )}
-                <NewDocumentDialog open={open}
-                    handleClose={handleClose} />
+                <NewDocumentDialog
+                    open={open}
+                    handleClose={handleClose}
+                    pj_id={pdetails.id}
+                    loadData={loadData}
+                />
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
@@ -304,5 +308,3 @@ ProjectDetails.getLayout = (page) => (
 );
 
 export default ProjectDetails;
-
-
