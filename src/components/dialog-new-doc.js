@@ -1,13 +1,14 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { min } from 'date-fns';
 import { useState } from 'react';
 import { addDocument } from 'src/utils/requests';
+import { useData } from '../../src/utils/hooks';
 
-export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, ...rest }) => {
+export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
   const [type, setType] = useState('')
   const [showCustomName, setShowCustomName] = useState('none')
   const [docName, setDocName] = useState('')
   const [file, setFile] = useState()
+  const [errors, setErrors] = useData({});
 
   const d = 'document'
   let form;
@@ -38,16 +39,21 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, ...rest 
     { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos' }]
 
   const saveDocument = () => {
-        let data = new FormData();
-        let saveName = documentNames.find(item => item.key == docName).value;
-        data.append("file", file, saveName);
-        data.append("project", pj_id);
-        data.append("name", saveName);
-        data.append("dtype", docName);
-        //TODO: Verify response and validate data before closing
-        addDocument(data);
-        loadData(pj_id);
-        handleClose();
+    let data = new FormData();
+    let saveName = documentNames.find(item => item.key == docName).value;
+    data.append("file", file, saveName);
+    data.append("project", pj_id);
+    data.append("name", saveName);
+    data.append("dtype", docName);
+    //TODO: Verify response and validate data before closing
+    addDocument(data).then((data) => {
+      handleClose();
+      loadData();
+    })
+      .catch((error) => {
+        setErrors(error.response.data)
+        console.log(error.response.data)
+      });
   };
 
 
@@ -59,7 +65,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, ...rest 
       fullWidth={true}
 
     >
-      <DialogTitle>Nuevo documento</DialogTitle>
+      <DialogTitle>{onAction === 'new_document' ? "Nuevo documento" : "Editar documento"}</DialogTitle>
       <Box
         sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
       >
@@ -106,10 +112,11 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, ...rest 
         >
 
           <input
+
             type="file"
             name="file_url"
-            onChange={() => setFile(event.target.files[0])}
-            />
+            onChange={(event) => setFile(event.target.files[0])}
+          />
         </Button>
         <Box
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}

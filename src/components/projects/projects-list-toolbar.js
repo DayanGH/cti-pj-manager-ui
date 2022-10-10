@@ -27,7 +27,7 @@ export const ProjectsListToolbar = (props) => {
         {["new", "edit"].includes(action) && (
           <NewProjectDialog
             open
-            onAction={action === "new"}
+            onAction={action}
             instance={target}
             onClose={handleAction}
             loadData={() => loaddata()} />

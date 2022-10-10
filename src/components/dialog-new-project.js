@@ -138,7 +138,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       fullWidth={true}
 
     >
-      <DialogTitle>{onAction ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
+       <DialogTitle>{onAction === 'new' ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
       <Box
         sx={{ px: 1, mx: 2, display: "flex", flexDirection: "column" }}
       >
