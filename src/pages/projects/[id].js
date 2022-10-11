@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, Collapse, TableContainer } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { AddIcon } from '../../icons/add';
@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests'
 import { DeleteDialog } from '../../components/dialog-delete';
+import { DocumentList } from '../../components/documents/document-list';
 import { useTargetAction } from "../../utils/hooks";
 import { NewProjectDialog } from 'src/components/dialog-new-project';
 import { PopupMenu } from 'src/components/popup-menu';
@@ -105,52 +106,11 @@ const ProjectDetails = () => {
                         </Button>
                     </Box>
                     <Box sx={{ p: 1 }}>
-                        <PerfectScrollbar>
-                            <Table>
-                                <TableBody>
-                                    {pdetails.documents.slice(0, pdetails.documents.length).map((document) => (
-                                        <TableRow
-                                            hover
-                                            key={document.id}
-                                        >
-                                            <TableCell>
-                                                <Box
-                                                    sx={{
-                                                        alignItems: 'center',
-                                                        display: 'flex',
-                                                    }}
-                                                >
-                                                    <img
-                                                        alt="Icon of a document"
-                                                        src="/static/images/document.svg"
-                                                        style={{
-                                                            display: 'inline-block',
-                                                            maxWidth: '100%',
-                                                            width: 40,
-                                                            height: 40
-                                                        }}
-                                                    />
-                                                    <Typography
-                                                        sx={{ mx: 1 }}
-                                                        color="textPrimary"
-                                                        variant="body1"
-                                                    >
-                                                        {document.d_name}
-                                                    </Typography>
-                                                </Box>
-                                            </TableCell>
-                                            <TableCell>
-                                                <PopupMenu
-                                                    onAction={'project_document'}
-                                                    handleAction={handleAction}
-                                                    instance={document.id}
-                                                ></PopupMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </PerfectScrollbar>
+                        <DocumentList
+                            handleAction={handleAction}
+                            documents={pdetails.documents}
+                            groups={pdetails.document_groups}
+                        />
                     </Box>
                 </Box>
                 <Box
