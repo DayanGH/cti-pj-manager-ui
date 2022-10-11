@@ -105,7 +105,7 @@ const ProjectDetails = () => {
                             Nuevo
                         </Button>
                     </Box>
-                    <Box sx={{ p: 1 }}>
+                    <Box sx={{ p: 1}}>
                         <DocumentList
                             handleAction={handleAction}
                             documents={pdetails.documents}

@@ -1,5 +1,5 @@
 import { useState, Fragment } from 'react';
-import { Box, Typography, Table, TableBody, TableRow, TableCell, Collapse, TableContainer, IconButton } from '@mui/material';
+import { Box, Paper, Typography, Table, TableBody, TableRow, TableCell, TableHead, Collapse, TableContainer, IconButton } from '@mui/material';
 import { PopupMenu } from '../popup-menu';
 import { ExpandIcon } from 'src/icons/expand';
 import { CollapseIcon } from 'src/icons/collapse';
@@ -8,17 +8,16 @@ import { DocumentGroupIcon } from 'src/icons/document-group';
 
 export const DocumentList = ({ documents, groups, handleAction }) => {
 
-    const [grupOpen, setGroupOpen] = useState(false);
+
 
     const DocumentRow = ({ document }) => {
-
         return (
             <TableRow
                 hover
-                sx={{display: 'flex'}}
+                sx={{ display: 'flex' }}
                 key={document.id}
             >
-                <TableCell sx={{flexGrow: 1}}>
+                <TableCell sx={{ flexGrow: 1 }}>
                     <Box
                         sx={{
                             alignItems: 'center',
@@ -39,7 +38,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                         </Typography>
                     </Box>
                 </TableCell>
-                <TableCell sx={{px: 0}}>
+                <TableCell sx={{ px: 0 }}>
                     <PopupMenu
                         onAction={'project_document'}
                         handleAction={handleAction}
@@ -51,12 +50,13 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
     };
 
     const GroupRow = ({ group }) => {
+        const [groupOpen, setGroupOpen] = useState(false);
         return (
             <Fragment>
                 <TableRow
                     hover
                     key={group.id}
-                    onClick={() => setGroupOpen(!grupOpen)}
+                    onClick={() => setGroupOpen(!groupOpen)}
                 >
                     <TableCell>
                         <Box
@@ -79,21 +79,21 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                     </TableCell>
                     <TableCell>
                         <IconButton aria-label="expand row" size="small">
-                            {grupOpen ? <CollapseIcon /> : <ExpandIcon />}
+                            {groupOpen ? <CollapseIcon /> : <ExpandIcon />}
                         </IconButton>
                     </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell sx={{py: 0}}>
-                    <Collapse in={grupOpen} timeout="auto" unmountOnExit>
-                        <Table>
-                            <TableBody >
-                                {group.documents.slice(0, documents.length).map((document) => (
-                                    <DocumentRow  document={document} />
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </Collapse>
+                    <TableCell sx={{ py: 0 }}>
+                        <Collapse in={groupOpen} timeout="auto" unmountOnExit>
+                            <Table>
+                                <TableBody >
+                                    {group.documents.slice(0, documents.length).map((document) => (
+                                        <DocumentRow document={document} />
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Collapse>
                     </TableCell>
                 </TableRow>
             </Fragment>
@@ -101,21 +101,24 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
     };
 
     return (
-        <TableContainer>
-            <Table>
-                <TableBody>
-                    {documents.slice(0, documents.length).map((document) => (
-                        <DocumentRow document={document} />
-                    ))}
-                </TableBody>
-            </Table>
-            <Table>
-                <TableBody>
-                    {groups.slice(0, groups.length).map((group) => (
-                        <GroupRow group={group} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+                <Table>
+                    <TableHead></TableHead>
+                    <TableBody>
+                        {documents.slice(0, documents.length).map((document) => (
+                            <DocumentRow document={document} />
+                        ))}
+                    </TableBody>
+                </Table>
+                <Table>
+                    <TableBody>
+                        {groups.slice(0, groups.length).map((group) => (
+                            <GroupRow group={group} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            </Paper>
+            );
 };
