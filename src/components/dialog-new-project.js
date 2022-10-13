@@ -83,7 +83,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       })
       .catch((error) => {
         setErrors(error.response.data)
-        console.log(error.response.data)
       });
   }
 
@@ -364,7 +363,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             Cancelar
           </Button>
           <Button onClick={() => {
-            console.log(data)
             handleAddProject(data)
           }}>
             Guardar
