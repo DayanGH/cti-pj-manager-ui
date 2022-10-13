@@ -49,15 +49,15 @@ export const deleteProject = async (id) => {
   return response.data;
 };
 
-export const addDocument = async (data) => {
-  const response = await axiosInstance.post("/projectdocuments/", data, { headers: { "Content-Type": "multipart/form-data", }, });
+export const addDocument = async (data, route) => {
+  const response = await axiosInstance.post(route, data, { headers: { "Content-Type": "multipart/form-data", }, });
   return response.data;
 };
+
 export const deleteDocument = async (id) => {
   const response = await axiosInstance.delete(`projectdocuments/${id}/`);
   return response.data;
 };
-
 
 export const fetchPrograms = async () => {
   const response = await axiosInstance.get("/programs/");

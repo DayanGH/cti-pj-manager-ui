@@ -4,11 +4,12 @@ import { addDocument } from 'src/utils/requests';
 import { useData } from '../../src/utils/hooks';
 
 export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
-  const [type, setType] = useState('')
+  const [type, setType] = useState("document")
   const [showCustomName, setShowCustomName] = useState('none')
   const [docName, setDocName] = useState('')
   const [file, setFile] = useState()
   const [errors, setErrors] = useData({});
+  const [customName, setCustomName] = useState("")
 
   const d = 'document'
   let form;
@@ -40,13 +41,13 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
 
   const saveDocument = () => {
     let data = new FormData();
-    let saveName = documentNames.find(item => item.key == docName).value;
+    let saveName = showCustomName == "flex" ? customName : documentNames.find(item => item.key == docName).value;
     data.append("file", file, saveName);
     data.append("project", pj_id);
     data.append("name", saveName);
     data.append("dtype", docName);
     //TODO: Verify response and validate data before closing
-    addDocument(data).then((data) => {
+    addDocument(data, type == "document" ? "/projectdocuments/" : "/groupdocuments/").then((data) => {
       handleClose();
       loadData();
     })
@@ -104,15 +105,14 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
         </FormControl>
         <TextField
           sx={{ mt: 1, display: showCustomName }}
+          onChange={() => setCustomName(event.target.value)}
           label="Nombre"
           variant="standard" />
         <Button
           sx={{ mt: 1 }}
           variant="contained"
         >
-
           <input
-
             type="file"
             name="file_url"
             onChange={(event) => setFile(event.target.files[0])}
