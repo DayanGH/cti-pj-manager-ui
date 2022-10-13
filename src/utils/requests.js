@@ -49,7 +49,12 @@ export const deleteProject = async (id) => {
   return response.data;
 };
 
-export const addDocument = async (data, route) => {
+export const fetchDocuments = async () => {
+  const response = await axiosInstance.get("/documents/");
+  return response.data;
+};
+
+export const addPDocument = async (data, route) => {
   const response = await axiosInstance.post(route, data, { headers: { "Content-Type": "multipart/form-data", }, });
   return response.data;
 };

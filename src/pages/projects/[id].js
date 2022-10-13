@@ -1,16 +1,15 @@
 import Head from 'next/head';
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell} from '@mui/material';
+import { Box } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/dialog-new-doc';
-import { AddIcon } from '../../icons/add';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { fetchProjectsDetails } from '../../utils/requests'
+import { fetchProjectsDetails } from '../../utils/requests';
 import { DeleteDialog } from '../../components/dialog-delete';
 import { DocumentList } from '../../components/documents/document-list';
+import { DocumentsToolbar } from '../../components/documents/documents-toolbar';
 import { useTargetAction } from "../../utils/hooks";
 import { NewProjectDialog } from 'src/components/dialog-new-project';
-import { PopupMenu } from 'src/components/popup-menu';
 import { DetailsPanel } from 'src/components/projects/details-panel';
 
 const ProjectDetails = () => {
@@ -79,32 +78,7 @@ const ProjectDetails = () => {
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <Box
-                        sx={{
-                            p: 1,
-                            display: 'flex',
-                            flexGrow: 1,
-                            borderBottom: 1,
-                            borderColor: 'divider',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Typography
-                            color="textPrimary"
-                            variant="h6"
-                        >
-                            Documentos
-                        </Typography>
-                        <Button
-                            startIcon={(<AddIcon fontSize="small" />)}
-                            color="primary"
-                            variant="contained"
-                            onClick={() => handleAction("new_document")}
-                        >
-                            Nuevo
-                        </Button>
-                    </Box>
+                    <DocumentsToolbar handleAction={handleAction}/>
                     <Box sx={{ p: 1 }}>
                         <DocumentList
                             handleAction={handleAction}

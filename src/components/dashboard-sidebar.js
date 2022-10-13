@@ -6,6 +6,7 @@ import { PieChartIcon } from '../icons/pie-chart';
 import { Cog as CogIcon } from '../icons/cog';
 import { ProjectsIcon } from '../icons/projects';
 import { ProgramsIcon } from '../icons/programs';
+import { DocumentIcon } from '../icons/document';
 import { InfoIcon } from '../icons/info';
 import { Users as UsersIcon } from '../icons/users';
 import { NavItem } from './nav-item';
@@ -33,9 +34,9 @@ const items = [
     title: 'Usuarios'
   },
   {
-    href: '/settings',
-    icon: (<CogIcon fontSize="small" />),
-    title: 'Ajustes de perfil'
+    href: '/documentation',
+    icon: (<DocumentIcon fontSize="small" />),
+    title: 'Documentación'
   },
   {
     href: '/register',
