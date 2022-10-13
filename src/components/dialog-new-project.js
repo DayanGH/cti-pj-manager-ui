@@ -37,11 +37,15 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
   const [errors, setErrors] = useData({});
-  const [ptype, setPtype] = useState("none")
-  const [pnapType, setPnapType] = useState("")
+  const [ptype, setPtype] = useState(data.pj_type === "pnap_di" || data.pj_type === "pnap_de" || data.pj_type === "" ? 'none' : data.pj_type)
+  const [value, setValue] = useState(data.program !== null ? { id: data?.program, name: instance?.program_name } : null)
+  const [inputValue, setInputValue] = useState('')
+  const [pnapType, setPnapType] = useState(data.pj_type === "pnap_di" ? "pnap_di" : data.pj_type === "pnap_de" ? "pnap_de" : "")
   const [pClass, setpClass] = useState("")
-  let component;
 
+
+
+  let component;
 
   const programsAsyncData = useAsync({
     deferFn: fetchPrograms,
@@ -70,7 +74,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     setData({ [field]: value });
   }
   function handleAddProject(data) {
-    const func = onAction ? addProject : editProject;
+    const func = onAction === 'new' ? addProject : editProject;
     func(data)
       .then((data) => {
         onClose();
@@ -82,7 +86,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       });
   }
 
-  if (ptype === 'nac') {
+  if (ptype === 'nac' || (data.pj_type === 'papn' && ptype !== 'none')) {
     component = <TextField
       sx={{ mt: 1 }}
       label="Tipo"
@@ -90,7 +94,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       contentEditable={false}
       value='Proyectos Asociados a Programas Nacional'
     />
-  } else if (ptype === 'sec') {
+  } else if (ptype === 'sec' || (data.pj_type === 'paps' && ptype !== 'none')) {
     component = <TextField
       sx={{ mt: 1 }}
       label="Tipo"
@@ -98,7 +102,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       contentEditable={false}
       value='Proyectos Asociados a Programas Sectorial'
     />
-  } else if (ptype === 'ter') {
+  } else if (ptype === 'ter' || (data.pj_type === 'papt' && ptype !== 'none')) {
     component = <TextField
       sx={{ mt: 1 }}
       label="Tipo"
@@ -138,7 +142,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       fullWidth={true}
 
     >
-       <DialogTitle>{onAction === 'new' ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
+      <DialogTitle>{onAction === 'new' ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
       <Box
         sx={{ px: 1, mx: 2, display: "flex", flexDirection: "column" }}
       >
@@ -168,10 +172,12 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           id="select-program"
           open={togglePrograms}
           onOpen={handleOpenPrograms}
+          value={value}
           onClose={handleClosePrograms}
           onChange={(_, value) => {
             handleChangeField(value?.id, 'program')
             handleChangeField(value?.program_code, 'program_code')
+            setValue(value)
             setPtype(value?.ptype)
             if (value === null) {
               setPtype('none')
@@ -185,6 +191,10 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             } else if (value?.ptype === 'ter') {
               handleChangeField('papt', 'pj_type')
             }
+          }}
+          inputValue={inputValue}
+          onInputChange={(_, value) => {
+            setInputValue(value)
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           getOptionLabel={(option) => option.name}
@@ -220,14 +230,17 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           open={toggleChief}
           onOpen={handleOpenChiefs}
           onClose={handleClosechiefs}
+          value={valueChief}
           onChange={(_, value) => {
             if (value !== null) {
               handleChangeField(value?.id, 'chief')
+              setValueChief(value)
             }
 
           }}
+
           isOptionEqualToValue={(option, value) => option.id === value.id}
-          getOptionLabel={(option) => option.first_name + ' ' + option.last_name}
+          getOptionLabel={(option) => option.name}
           options={chiefsAsyncData.data || []}
           loading={chiefsAsyncData.isLoading}
           renderInput={(params) => (
