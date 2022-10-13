@@ -43,9 +43,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [pnapType, setPnapType] = useState(data.pj_type === "pnap_di" ? "pnap_di" : data.pj_type === "pnap_de" ? "pnap_de" : "")
   const [pClass, setpClass] = useState("")
 
-  const [valueChief, setValueChief] = useState(data.chief !== null ? { id: instance.chief_id, name: data?.chief } : null)
+  const [valueChief, setValueChief] = useState(data.chief !== null ? { id: onAction === 'new' ? data.chief : instance.chief_id, name: data?.chief } : null)
   const [inputValueChief, setInputValueChief] = useState('')
-
   let component;
 
   const programsAsyncData = useAsync({
@@ -364,6 +363,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           </Button>
           <Button onClick={() => {
             handleAddProject(data)
+            console.log(data.chief)
           }}>
             Guardar
           </Button>
