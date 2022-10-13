@@ -55,13 +55,13 @@ export const DeleteDialog = (props) => {
             }
 
             <DialogActions>
-                <Button color="primary"
-                    onClick={props.onAction === 'delete_project' ? () => handleSubmit(props.instance.id) : () => handleSubmit(props.instance)}>
-                    Eliminar
-                </Button>
-                <Button color="error"
+                <Button
                     onClick={() => props.onClose()}>
                     Cancelar
+                </Button>
+                <Button color="error"
+                    onClick={props.onAction === 'delete_project' ? () => handleSubmit(props.instance.id) : () => handleSubmit(props.instance)}>
+                    Eliminar
                 </Button>
             </DialogActions>
         </Dialog>
