@@ -29,7 +29,7 @@ const items = [
     title: 'Programas'
   },
   {
-    href: '/account',
+    href: '/users',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Usuarios'
   },
