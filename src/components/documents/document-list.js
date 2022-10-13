@@ -89,7 +89,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             <Table>
                                 <TableBody >
                                     {group.documents.slice(0, documents.length).map((document) => (
-                                        <DocumentRow document={document} />
+                                        <DocumentRow key={document.id} document={document} />
                                     ))}
                                 </TableBody>
                             </Table>
@@ -107,14 +107,14 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                     <TableHead></TableHead>
                     <TableBody>
                         {documents.slice(0, documents.length).map((document) => (
-                            <DocumentRow document={document} />
+                            <DocumentRow key={document.id} document={document} />
                         ))}
                     </TableBody>
                 </Table>
                 <Table>
                     <TableBody>
                         {groups.slice(0, groups.length).map((group) => (
-                            <GroupRow group={group} />
+                            <GroupRow key={group.id} group={group} />
                         ))}
                     </TableBody>
                 </Table>
