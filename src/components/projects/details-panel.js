@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
 import { PopupMenu } from '../popup-menu';
-export const DetailsPanel = ({pdetails, handleAction}) => {
+export const DetailsPanel = ({ pdetails, handleAction }) => {
     return (
         <Box
             sx={{
@@ -42,7 +42,7 @@ export const DetailsPanel = ({pdetails, handleAction}) => {
                             <b>Jefe: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.chief}
+                            {pdetails.chief_name}
                         </TableCell>
                     </TableRow>
                     <TableRow
