@@ -64,7 +64,10 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             datatemp.append('dtype', docName)
             addGroupDocuments(datatemp)
               .then((dd) => {
-
+                data.append("group", dd.id);
+                data.append("file", file, saveName);
+                data.append("date", getDate());
+                add(data);
               });
           }
         });
@@ -87,7 +90,6 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
 
       return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
     }
-
   };
 
 

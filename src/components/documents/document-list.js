@@ -9,7 +9,6 @@ import { DocumentGroupIcon } from 'src/icons/document-group';
 export const DocumentList = ({ documents, groups, handleAction }) => {
 
 
-
     const DocumentRow = ({ document }) => {
         return (
             <TableRow
@@ -78,18 +77,22 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                         </Box>
                     </TableCell>
                     <TableCell>
-                        <IconButton aria-label="expand row" size="small">
+                        <IconButton aria-label="expand row"
+                            size="small">
                             {groupOpen ? <CollapseIcon /> : <ExpandIcon />}
                         </IconButton>
                     </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell sx={{ py: 0 }}>
-                        <Collapse in={groupOpen} timeout="auto" unmountOnExit>
+                        <Collapse in={groupOpen}
+                            timeout="auto"
+                            unmountOnExit>
                             <Table>
                                 <TableBody >
-                                    {group.documents.slice(0, documents.length).map((document) => (
-                                        <DocumentRow key={document.id} document={document} />
+                                    {group.documents.slice(0, group.documents.length).map((document) => (
+                                        <DocumentRow key={document.id}
+                                            document={document} />
                                     ))}
                                 </TableBody>
                             </Table>
@@ -107,18 +110,20 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                     <TableHead></TableHead>
                     <TableBody>
                         {documents.slice(0, documents.length).map((document) => (
-                            <DocumentRow key={document.id} document={document} />
+                            <DocumentRow key={document.id}
+                                document={document} />
                         ))}
                     </TableBody>
                 </Table>
                 <Table>
                     <TableBody>
                         {groups.slice(0, groups.length).map((group) => (
-                            <GroupRow key={group.id} group={group} />
+                            <GroupRow key={group.id}
+                                group={group} />
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            </Paper>
-            );
+        </Paper>
+    );
 };
