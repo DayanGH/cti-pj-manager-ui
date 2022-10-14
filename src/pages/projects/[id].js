@@ -78,7 +78,7 @@ const ProjectDetails = () => {
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <DocumentsToolbar handleAction={handleAction}/>
+                    <DocumentsToolbar handleAction={handleAction} />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
                             handleAction={handleAction}
@@ -87,7 +87,8 @@ const ProjectDetails = () => {
                         />
                     </Box>
                 </Box>
-                <DetailsPanel pdetails={pdetails} handleAction={handleAction}/>
+                <DetailsPanel pdetails={pdetails}
+                    handleAction={handleAction} />
             </Box>
         </>)
 };

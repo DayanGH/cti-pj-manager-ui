@@ -84,3 +84,16 @@ export const fetchChiefDetails = async (p_id) => {
   const response = await axiosInstance.get(`/user/${p_id}`);
   return response.data;
 };
+export const fetchGroupDocuments = async (name, project) => {
+  const response = await axiosInstance.get('/documentgroups/', {
+    headers: {
+      "name": `${name}`,
+      "project": `${project}`
+    }
+  });
+  return response.data;
+}
+export const addGroupDocuments = async (data) => {
+  const response = await axiosInstance.post('/documentgroups/', data);
+  return response.data;
+}

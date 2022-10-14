@@ -1,6 +1,6 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useState } from 'react';
-import { addPDocument } from 'src/utils/requests';
+import { addPDocument, fetchGroupDocuments, addGroupDocuments } from 'src/utils/requests';
 import { useData } from '../../src/utils/hooks';
 
 export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
@@ -10,6 +10,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
   const [file, setFile] = useState()
   const [errors, setErrors] = useData({});
   const [customName, setCustomName] = useState("")
+  const [group, setGroup] = useState("")
 
   const d = 'document'
   let form;
@@ -26,7 +27,6 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     { key: 'fciie', value: 'Fotos escaneadas del carné de identidad de los investigadores' }]
   const [names, setNames] = useState(documentNames)
   const groupNames = [
-    { key: 'other', value: 'Otro' },
     { key: 'dpac', value: 'Desglose del presupuesto del año en curso' },
     { key: 'mca', value: 'Anexo 15 Modelo de certificación de actividades' },
     { key: 'isp', value: 'Anexo 13 Informe semestral del proyecto' },
@@ -39,22 +39,55 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
     { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos' }]
 
-  const saveDocument = () => {
+  const saveDocument = async () => {
     let data = new FormData();
-    let saveName = showCustomName == "flex" ? customName : documentNames.find(item => item.key == docName).value;
-    data.append("file", file, saveName);
-    data.append("project", pj_id);
-    data.append("name", saveName);
-    data.append("dtype", docName);
-    //TODO: Verify response and validate data before closing
-    addPDocument(data, type == "document" ? "/projectdocuments/" : "/groupdocuments/").then((data) => {
-      handleClose();
-      loadData();
-    })
-      .catch((error) => {
-        setErrors(error.response.data)
-        console.log(error.response.data)
-      });
+    let saveName = showCustomName === "flex" ? customName : (type === 'document' ? (documentNames.find(item => item.key == docName)) : (groupNames.find(item => item.key == docName))).value;
+
+    if (type === "document") {
+      data.append("file", file, saveName);
+      data.append("project", pj_id);
+      data.append("name", saveName);
+      data.append("dtype", docName);
+      add(data);
+    } else {
+      await fetchGroupDocuments(docName, pj_id)
+        .then((groupData) => {
+          if (groupData.length === 1) {
+            data.append("group", groupData[0].id);
+            data.append("file", file, saveName);
+            data.append("date", getDate());
+            add(data);
+          } else if (groupData.length === 0) {
+            let datatemp = new FormData();
+            datatemp.append('name', saveName)
+            datatemp.append('project', pj_id)
+            datatemp.append('dtype', docName)
+            addGroupDocuments(datatemp)
+              .then((dd) => {
+
+              });
+          }
+        });
+    }
+    function add(data) {
+      //TODO: Verify response and validate data before closing
+      addPDocument(data, type == "document" ? "/projectdocuments/" : "/groupdocuments/").then((data) => {
+        handleClose();
+        loadData();
+      })
+        .catch((error) => {
+          setErrors(error.response.data)
+          console.log(error.response.data)
+        });
+    }
+    function getDate() {
+      const year = new Date().getFullYear();
+      const month = new Date().getMonth() + 1;
+      const day = new Date().getDate();
+
+      return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+    }
+
   };
 
 
@@ -86,11 +119,13 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           </Select>
         </FormControl>
         <FormControl variant="standard"
-          sx={{ mt: 1 }}>
-          <InputLabel id="demo-simple-select-filled-label">Nombre</InputLabel>
+          sx={{ mt: 1 }}
+          error={'exist' in errors}
+          helpertext={errors.exist}>
+          <InputLabel id="demo-simple-select-filled-labeld">Nombre</InputLabel>
           <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
+            labelId="demo-simple-select-filled-labell"
+            id="demo-simple-select-filledd"
             value={docName}
             onChange={(event) => {
               setDocName(event.target.value);
@@ -105,7 +140,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
         </FormControl>
         <TextField
           sx={{ mt: 1, display: showCustomName }}
-          onChange={() => setCustomName(event.target.value)}
+          onChange={(event) => setCustomName(event.target.value)}
           label="Nombre"
           variant="standard" />
         <Button
