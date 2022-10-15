@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Box, Avatar, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
@@ -48,6 +48,8 @@ const items = [
 export const DashboardSidebar = (props) => {
   const { open, onClose } = props;
   const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     defaultMatches: true,
     noSsr: false
@@ -62,10 +64,17 @@ export const DashboardSidebar = (props) => {
       if (open) {
         onClose?.();
       }
+      asignValues()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.asPath]
   );
+  function asignValues() {
+    if (typeof window !== 'undefined' && localStorage.getItem("user") !== null && localStorage.getItem("email") !== null) {
+      setUsername(JSON.parse(localStorage.getItem("user")).username)
+      setEmail(JSON.parse(localStorage.getItem("email")).email)
+    }
+  }
 
   const content = (
     <>
@@ -92,21 +101,21 @@ export const DashboardSidebar = (props) => {
             }}
 
           >
-            {getInitials("Axel")}
+            {getInitials(username)}
           </Avatar>
           <Box sx={{ ml: 1 }}>
             <Typography
-              sx={{  mb: -0.2 }}
+              sx={{ mb: -0.2 }}
               variant="body1"
               fontWeight="bold"
             >
-              Axel358
+              {username}
             </Typography>
             <Typography
               variant="subtitle2"
             >
-            axel358@gmail.com
-          </Typography>
+              {email}
+            </Typography>
           </Box>
         </Box>
         <Divider

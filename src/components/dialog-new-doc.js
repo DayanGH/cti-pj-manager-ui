@@ -11,11 +11,8 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
   const [file, setFile] = useState()
   const [errors, setErrors] = useData({});
   const [customName, setCustomName] = useState("")
-  const [group, setGroup] = useState("")
   const [date, setDate] = useState();
 
-  const d = 'document'
-  let form;
   const documentNames = [
     { key: 'other', value: 'Otro' },
     { key: 'profile', value: 'Perfil' },
@@ -137,14 +134,14 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           </Select>
         </FormControl>
         <TextField
-            sx={{mt: 1, display: showDate }}
-            label="Fecha"
-            type="date"
-            onChange={() => setDate(event.target.value)}
-            variant="standard"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-          />
+          sx={{ mt: 1, display: showDate }}
+          label="Fecha"
+          type="date"
+          onChange={() => setDate(event.target.value)}
+          variant="standard"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
         <TextField
           sx={{ mt: 1, display: showCustomName }}
           onChange={(event) => setCustomName(event.target.value)}
