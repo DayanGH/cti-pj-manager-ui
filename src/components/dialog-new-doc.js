@@ -5,12 +5,14 @@ import { useData } from '../../src/utils/hooks';
 
 export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
   const [type, setType] = useState("document")
-  const [showCustomName, setShowCustomName] = useState('none')
+  const [showCustomName, setShowCustomName] = useState("none")
+  const [showDate, setShowDate] = useState("none")
   const [docName, setDocName] = useState('')
   const [file, setFile] = useState()
   const [errors, setErrors] = useData({});
   const [customName, setCustomName] = useState("")
   const [group, setGroup] = useState("")
+  const [date, setDate] = useState();
 
   const d = 'document'
   let form;
@@ -55,7 +57,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           if (groupData.length === 1) {
             data.append("group", groupData[0].id);
             data.append("file", file, saveName);
-            data.append("date", getDate());
+            data.append("date", date);
             add(data);
           } else if (groupData.length === 0) {
             let datatemp = new FormData();
@@ -66,7 +68,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
               .then((dd) => {
                 data.append("group", dd.id);
                 data.append("file", file, saveName);
-                data.append("date", getDate());
+                data.append("date", date);
                 add(data);
               });
           }
@@ -82,13 +84,6 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           setErrors(error.response.data)
           console.log(error.response.data)
         });
-    }
-    function getDate() {
-      const year = new Date().getFullYear();
-      const month = new Date().getMonth() + 1;
-      const day = new Date().getDate();
-
-      return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
     }
   };
 
@@ -114,6 +109,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             onChange={(event) => {
               setType(event.target.value);
               setNames(event.target.value == 'document' ? documentNames : groupNames);
+              setShowDate(event.target.value == "group" ? "flex" : "none");
             }}
           >
             <MenuItem value={'group'}>Grupo</MenuItem>
@@ -140,6 +136,15 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             ))}
           </Select>
         </FormControl>
+        <TextField
+            sx={{mt: 1, display: showDate }}
+            label="Fecha"
+            type="date"
+            onChange={() => setDate(event.target.value)}
+            variant="standard"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+          />
         <TextField
           sx={{ mt: 1, display: showCustomName }}
           onChange={(event) => setCustomName(event.target.value)}
