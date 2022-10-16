@@ -14,43 +14,42 @@ const Documentation = () => {
 
     useEffect(() => {
         loadData();
-    });
+    }, []);
 
     function loadData() {
-        if (typeof id !== "undefined") {
-            setloading(true);
-            fetchDocuments()
-                .then((data) => {
-                    setDocuments(data);
-                    setloading(false)
-                });
-        }
+        setloading(true);
+        fetchDocuments()
+            .then((data) => {
+                setDocuments(data);
+                setloading(false)
+            });
+
     }
     if (isloading) return <p>cargando....</p>
 
-    return(
-    <>
-        <Head>
-            <title>
-                Documentación
-            </title>
-        </Head>
-        <Box
-            component="main"
-            sx={{
-                flexGrow: 1
-            }}
-        >
-          <DocumentsToolbar handleAction={handleAction}/>
-          <Box sx={{ p: 1 }}>
-            <DocumentList
-              handleAction={handleAction}
-              documents={documents}
-              groups={''}
-            />
-          </Box>
-        </Box>
-    </>
+    return (
+        <>
+            <Head>
+                <title>
+                    Documentación
+                </title>
+            </Head>
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1
+                }}
+            >
+                <DocumentsToolbar handleAction={handleAction} />
+                <Box sx={{ p: 1 }}>
+                    <DocumentList
+                        handleAction={handleAction}
+                        documents={documents}
+                        groups={[{}]}
+                    />
+                </Box>
+            </Box>
+        </>
     );
 };
 

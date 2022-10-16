@@ -4,7 +4,6 @@ import { PopupMenu } from '../popup-menu';
 import { ExpandIcon } from 'src/icons/expand';
 import { CollapseIcon } from 'src/icons/collapse';
 import { DocumentIcon } from 'src/icons/document';
-import { DocumentGroupIcon } from 'src/icons/document-group';
 
 export const DocumentList = ({ documents, groups, handleAction }) => {
 
@@ -90,7 +89,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             unmountOnExit>
                             <Table>
                                 <TableBody >
-                                    {group.documents.slice(0, group.documents.length).map((document) => (
+                                    {group.documents?.slice(0, group.documents?.length).map((document) => (
                                         <DocumentRow key={document.id}
                                             document={document} />
                                     ))}
