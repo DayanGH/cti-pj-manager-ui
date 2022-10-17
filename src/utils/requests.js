@@ -97,3 +97,7 @@ export const addGroupDocuments = async (data) => {
   const response = await axiosInstance.post('/documentgroups/', data);
   return response.data;
 }
+export const fetchMembers = async () => {
+  const response = await axiosInstance.get("/members/");
+  return response.data;
+};

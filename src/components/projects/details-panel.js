@@ -1,6 +1,7 @@
 import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
+import { AdminMembers } from '../dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
-export const DetailsPanel = ({ pdetails, handleAction }) => {
+export const DetailsPanel = ({ pdetails, handleAction, action }) => {
     return (
         <Box
             sx={{
@@ -11,6 +12,13 @@ export const DetailsPanel = ({ pdetails, handleAction }) => {
                 borderColor: 'divider'
             }}
         >
+            {["admin_new", "admin_edit"].includes(action) && (
+                <AdminMembers
+                    open
+                    onAction={action}
+                    onClose={handleAction}
+                    project={pdetails} />
+            )}
             <Box
                 sx={{
                     p: 1,
@@ -101,7 +109,7 @@ export const DetailsPanel = ({ pdetails, handleAction }) => {
                             <b>Miembros: </b>
                         </TableCell>
                         <TableCell>
-                            <Button>
+                            <Button onClick={() => handleAction("admin_new")}>
                                 Administrar
                             </Button>
                         </TableCell>

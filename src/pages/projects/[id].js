@@ -88,7 +88,8 @@ const ProjectDetails = () => {
                     </Box>
                 </Box>
                 <DetailsPanel pdetails={pdetails}
-                    handleAction={handleAction} />
+                    handleAction={handleAction}
+                    action={action} />
             </Box>
         </>)
 };
