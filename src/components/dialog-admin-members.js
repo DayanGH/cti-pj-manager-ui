@@ -39,7 +39,7 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
 
                 <Autocomplete
                     multiple
-                    id="select-program"
+                    id="select-members"
                     open={toggleMembers}
                     value={value}
                     onOpen={handleOpenMembers}
