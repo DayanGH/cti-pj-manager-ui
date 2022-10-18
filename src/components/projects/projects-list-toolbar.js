@@ -15,8 +15,6 @@ import { useTargetAction } from "../../utils/hooks";
 
 export const ProjectsListToolbar = (props) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [action, target, handleAction] = useTargetAction();
   function loaddata() {
     return props.loadData()
