@@ -39,8 +39,12 @@ export const editProject = async (data) => {
   return response.data;
 };
 
-export const fetchProjects = async () => {
-  const response = await axiosInstance.get("/projects/");
+export const fetchProjects = async (classification) => {
+  const response = await axiosInstance.get("/projects/", {
+    headers: {
+      "classification": `${classification}`
+    }
+  });
   return response.data;
 };
 

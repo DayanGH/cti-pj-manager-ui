@@ -42,7 +42,10 @@ export const ProjectsListToolbar = (props) => {
           }}
         >
           <Box sx={{ borderBottom: 1, borderColor: 'divider', flexGrow: 1 }}>
-            <Tabs value={0}
+            <Tabs value={props.activeTab}
+              onChange={(event, newTab) => {
+                props.setActiveTab(newTab)
+              }}
               centered>
               <Tab label="Sectoriales" />
               <Tab label="Territoriales" />

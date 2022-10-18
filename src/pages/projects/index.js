@@ -9,14 +9,15 @@ import { fetchProjects } from '../../utils/requests'
 function Projects() {
   const [projects, setProjects] = useState();
   const [isloading, setloading] = useState(true);
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    loadData(activeTab);
+  }, [activeTab]);
 
-  function loadData() {
+  function loadData(type) {
     setloading(true);
-    fetchProjects()
+    fetchProjects(type === 0 ? "paps" : type === 1 ? "papt" : type === 2 ? "papn" : "pnap")
       .then((data) => {
         setProjects(data);
         setloading(false)
@@ -40,7 +41,9 @@ function Projects() {
         }}
       >
         <Container maxWidth={false}>
-          <ProjectsListToolbar loadData={() => loadData()} />
+          <ProjectsListToolbar loadData={() => loadData()}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab} />
           <Box sx={{ mt: 3 }}>
             <ProjectsListResults projects={projects || []} />
           </Box>
