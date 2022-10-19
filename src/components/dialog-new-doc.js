@@ -1,6 +1,6 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useState } from 'react';
-import { addPDocument, fetchGroupDocuments, addGroupDocuments } from 'src/utils/requests';
+import { addDocument, fetchGroupDocuments, addGroupDocuments } from 'src/utils/requests';
 import { useData } from '../../src/utils/hooks';
 
 export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
@@ -73,7 +73,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     }
     function add(data) {
       //TODO: Verify response and validate data before closing
-      addPDocument(data, type == "document" ? "/projectdocuments/" : "/groupdocuments/").then((data) => {
+      addDocument(data, type == "document" ? "/projectdocuments/" : "/groupdocuments/").then((data) => {
         handleClose();
         loadData();
       })

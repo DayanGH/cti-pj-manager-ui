@@ -58,7 +58,7 @@ export const fetchDocuments = async () => {
   return response.data;
 };
 
-export const addPDocument = async (data, route) => {
+export const addDocument = async (data, route) => {
   const response = await axiosInstance.post(route, data, { headers: { "Content-Type": "multipart/form-data", }, });
   return response.data;
 };
