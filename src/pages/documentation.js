@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Box } from '@mui/material';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { DocumentGrid } from '../components/documents/document-grid';
-import { DocumentsToolbar } from '../components/documents/documents-toolbar';
+import { Toolbar } from '../components/toolbar';
 import { NewSDocumentDialog } from '../components/documents/new-simple-doc-dialog';
 import { useTargetAction } from "../utils/hooks";
 import { useEffect, useState } from 'react';
@@ -38,10 +38,11 @@ const Documentation = () => {
             <Box
                 component="main"
                 sx={{
-                    flexGrow: 1
+                    flexGrow: 1,
+                    p:1
                 }}
             >
-                <DocumentsToolbar handleAction={handleAction} />
+                <Toolbar title="Documentos" handleAction={handleAction} />
                   {["new_document", "edit_document"].includes(action) && (
                     <NewSDocumentDialog
                         open

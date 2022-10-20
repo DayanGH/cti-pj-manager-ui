@@ -33,6 +33,11 @@ const items = [
     icon: (<UsersIcon fontSize="small" />),
     title: 'Usuarios'
   },
+    {
+    href: '/members',
+    icon: (<UsersIcon fontSize="small" />),
+    title: 'Miembros'
+  },
   {
     href: '/documentation',
     icon: (<DocumentIcon fontSize="small" />),

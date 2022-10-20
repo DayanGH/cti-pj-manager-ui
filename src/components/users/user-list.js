@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import router from 'next/router';
 
-export const ProjectsListResults = ({ projects, ...rest }) => {
+export const UserList = ({ users, ...rest }) => {
   const [selectedProjectsIds, setSelectedProjectsIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -41,42 +41,22 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                   Nombre
                 </TableCell>
                 <TableCell>
-                  Jefe
-                </TableCell>
-                <TableCell>
-                  Clasificación
-                </TableCell>
-                <TableCell>
-                  Revisión
-                </TableCell>
-                <TableCell>
-                  Finalización
+                  Tipo
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {projects.slice(page * limit, page * limit + limit).map((project) => (
+              {users.slice(page * limit, page * limit + limit).map((user) => (
                 <TableRow
                   hover
-                  key={project.id}
-                  selected={selectedProjectsIds.indexOf(project.id) !== -1}
+                  key={user.id}
+                  selected={selectedProjectsIds.indexOf(user.id) !== -1}
                 >
-
-                  <TableCell onClick={() => router.push(`/projects/${project.id}`)}
-                  >
-                    {project.name}
+                  <TableCell onClick={() => router.push(`/users/${user.id}`)}>
+                    <UserEntry name={user.name}/>
                   </TableCell>
                   <TableCell>
-                    <UserEntry name={project.chief}/>
-                  </TableCell>
-                  <TableCell>
-                    {project.project_classification}
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
-                  <TableCell>
-                    {project.end_date}
+                    {user.type}
                   </TableCell>
                 </TableRow>
               ))}
@@ -86,7 +66,7 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={projects.length}
+        count={users.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -97,6 +77,6 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
   );
 };
 
-ProjectsListResults.propTypes = {
-  projects: PropTypes.array.isRequired
+UserList.propTypes = {
+  users: PropTypes.array.isRequired
 };
