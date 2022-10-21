@@ -18,7 +18,6 @@ import {
 import router from 'next/router';
 
 export const UserList = ({ users, ...rest }) => {
-  const [selectedProjectsIds, setSelectedProjectsIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -41,6 +40,9 @@ export const UserList = ({ users, ...rest }) => {
                   Nombre
                 </TableCell>
                 <TableCell>
+                  Correo
+                </TableCell>
+                <TableCell>
                   Tipo
                 </TableCell>
               </TableRow>
@@ -50,10 +52,12 @@ export const UserList = ({ users, ...rest }) => {
                 <TableRow
                   hover
                   key={user.id}
-                  selected={selectedProjectsIds.indexOf(user.id) !== -1}
                 >
                   <TableCell onClick={() => router.push(`/users/${user.id}`)}>
                     <UserEntry name={user.name}/>
+                  </TableCell>
+                  <TableCell>
+                    {user.email}
                   </TableCell>
                   <TableCell>
                     {user.type}

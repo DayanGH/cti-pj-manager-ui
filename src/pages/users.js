@@ -4,7 +4,7 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { UserList } from '../components/users/user-list';
 import { Toolbar } from '../components/toolbar';
 import { useTargetAction } from "../utils/hooks";
-import { fetchDocuments } from '../utils/requests';
+import { fetchUsers } from '../utils/requests';
 import { useEffect, useState } from 'react';
 
 const Users = () => {
@@ -18,7 +18,7 @@ const Users = () => {
 
     function loadData() {
         setloading(true);
-        fetchDocuments()
+        fetchUsers()
             .then((data) => {
                 setUsers(data);
                 setloading(false)
