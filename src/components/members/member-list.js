@@ -53,8 +53,8 @@ export const MemberList = ({ members, ...rest }) => {
                   hover
                   key={member.id}
                 >
-                  <TableCell onClick={() => router.push(`/members/${member.id}`)}>
-                    <UserEntry name={member.name}/>
+                  <TableCell onClick={() => console.log(member.id)}>
+                    <UserEntry name={member.name} />
                   </TableCell>
                   <TableCell>
                     {member.email}

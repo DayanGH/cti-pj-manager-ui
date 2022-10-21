@@ -89,7 +89,8 @@ const ProjectDetails = () => {
                 </Box>
                 <DetailsPanel pdetails={pdetails}
                     handleAction={handleAction}
-                    action={action} />
+                    action={action}
+                    loadData={() => loadData(id)} />
             </Box>
         </>)
 };

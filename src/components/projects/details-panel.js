@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
 import { AdminMembers } from '../dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
-export const DetailsPanel = ({ pdetails, handleAction, action }) => {
+export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
     return (
         <Box
             sx={{
@@ -12,12 +12,13 @@ export const DetailsPanel = ({ pdetails, handleAction, action }) => {
                 borderColor: 'divider'
             }}
         >
-            {["admin_new", "admin_edit"].includes(action) && (
+            {["admin_new"].includes(action) && (
                 <AdminMembers
                     open
                     onAction={action}
                     onClose={handleAction}
-                    project={pdetails} />
+                    project={pdetails}
+                    loadData={() => loadData()} />
             )}
             <Box
                 sx={{

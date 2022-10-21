@@ -1,10 +1,10 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
-import { addMember} from 'src/utils/requests';
+import { addMember } from 'src/utils/requests';
 import { useData } from '../../utils/hooks';
 
 export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
-    const [data, setData] = useData({
+  const [data, setData] = useData({
     name: "",
     c_id: "",
     email: "",
@@ -17,13 +17,13 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
     console.log(data);
 
     addMember(data).then((data) => {
-        handleClose();
-        loadData();
-      })
-        .catch((error) => {
-          setErrors(error.response.data)
-          console.log(error.response.data)
-        });
+      handleClose();
+      loadData();
+    })
+      .catch((error) => {
+        setErrors(error.response.data)
+        console.log(error.response.data)
+      });
 
   };
 
@@ -44,41 +44,39 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
           label="Nombre"
           onChange={() => setData({ ["name"]: event.target.value })}
           fullWidth
-          InputLabelProps={{ shrink: true }}
         />
 
-        <FormControl sx={{ mt: 2}}>
+        <FormControl sx={{ mt: 2 }}>
           <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             value={data["type"]}
-            onChange={() => setData({ ["type"]: event.target.value })}
+            onChange={(event) => setData({ "type": event.target.value })}
           >
             <MenuItem value={"out"}>Externo</MenuItem>
             <MenuItem value={'in'}>Interno</MenuItem>
           </Select>
         </FormControl>
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           label="Correo"
-          onChange={() => setData({ ["email"]: event.target.value })}
+          onChange={(event) => setData({ "email": event.target.value })}
           fullWidth
-          InputLabelProps={{ shrink: true }}
+
         />
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           label="CID"
-          onChange={() => setData({ ["c_id"]: event.target.value })}
+          onChange={(event) => setData({ "c_id": event.target.value })}
           fullWidth
-          InputLabelProps={{ shrink: true }}
         />
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           label="Organizacion"
-          onChange={() => setData({ ["organization"]: event.target.value })}
+          onChange={(event) => setData({ "organization": event.target.value })}
           fullWidth
-          InputLabelProps={{ shrink: true }}
+
         />
         <Box
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}

@@ -1,7 +1,7 @@
 import { Dialog, Button, TextField, Box, DialogTitle, CircularProgress, Autocomplete } from '@mui/material';
 import { useState } from 'react';
 import { useAsync } from 'react-async';
-import { fetchMembers } from 'src/utils/requests';
+import { fetchMembers, editProject } from 'src/utils/requests';
 import { useData, useToggleState } from '../../src/utils/hooks';
 
 export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest }) => {
@@ -20,8 +20,17 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
         closeMembers();
     }
 
-    const addMembers = async () => {
-        //TODO implement add selected members to project
+    function addMembers() {
+        console.log(value)
+        project.members = value
+        editProject(project)
+            .then((data) => {
+                onClose();
+                loadData();
+            })
+            .catch((error) => {
+                console.log(error)
+            });
     };
 
     return (
@@ -83,7 +92,7 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                         Cancelar
                     </Button>
                     <Button
-                        onClick={addMembers}
+                        onClick={() => addMembers()}
                     >
                         Guardar
                     </Button>

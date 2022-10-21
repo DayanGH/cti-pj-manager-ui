@@ -9,49 +9,51 @@ import { NewMemberDialog } from '../components/members/dialog-new-member';
 import { useEffect, useState } from 'react';
 
 const Members = () => {
-    const [action, target, handleAction] = useTargetAction();
-    const [members, setMembers] = useState();
-    const [isloading, setloading] = useState(true);
+  const [action, target, handleAction] = useTargetAction();
+  const [members, setMembers] = useState();
+  const [isloading, setloading] = useState(true);
 
-    useEffect(() => {
-        loadData();
-    }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
-    function loadData() {
-        setloading(true);
-        fetchMembers()
-            .then((data) => {
-                setMembers(data);
-                setloading(false)
-            });
+  function loadData() {
+    setloading(true);
+    fetchMembers()
+      .then((data) => {
+        setMembers(data);
+        setloading(false)
+      });
 
-    }
-    if (isloading) return <p>cargando....</p>
+  }
+  if (isloading) return <p>cargando....</p>
   return (
-  <>
-    <Head>
-      <title>
-        Miembros
-      </title>
-    </Head>
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        p: 1
-      }}
-    >
-    <Toolbar title="Miembros" handleAction={handleAction} action="new_member"/>
-    {["new_member", "edit_member"].includes(action) && (
-      <NewMemberDialog
-        open
-        onAction={action}
-        handleClose={handleAction}
-        loadData={() => loadData()}
-    />)}
-    <MemberList members={members} />
-    </Box>
-  </>
+    <>
+      <Head>
+        <title>
+          Miembros
+        </title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 1
+        }}
+      >
+        <Toolbar title="Miembros"
+          handleAction={handleAction}
+          action="new_member" />
+        {["new_member", "edit_member"].includes(action) && (
+          <NewMemberDialog
+            open
+            onAction={action}
+            handleClose={handleAction}
+            loadData={() => loadData()}
+          />)}
+        <MemberList members={members} />
+      </Box>
+    </>
   );
 };
 
