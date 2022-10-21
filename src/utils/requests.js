@@ -30,10 +30,13 @@ export async function verifyToken(token) {
     return error.response;
   }
 }
+
+//Projects
 export const addProject = async (data) => {
   const response = await axiosInstance.post("projects/", data);
   return response.data;
 };
+
 export const editProject = async (data) => {
   const response = await axiosInstance.patch(`projects/${data.id}/`, data);
   return response.data;
@@ -53,6 +56,23 @@ export const deleteProject = async (id) => {
   return response.data;
 };
 
+export const fetchProjectsDetails = async (p_id) => {
+  const response = await axiosInstance.get(`/projects/${p_id}`);
+  return response.data;
+};
+
+//Programs
+export const fetchPrograms = async () => {
+  const response = await axiosInstance.get("/programs/");
+  return response.data;
+};
+
+export const fetchProgramDetails = async (p_id) => {
+  const response = await axiosInstance.get(`/programs/${p_id}`);
+  return response.data;
+};
+
+//Documents
 export const fetchDocuments = async () => {
   const response = await axiosInstance.get("/documents/");
   return response.data;
@@ -68,26 +88,6 @@ export const deleteDocument = async (id) => {
   return response.data;
 };
 
-export const fetchPrograms = async () => {
-  const response = await axiosInstance.get("/programs/");
-  return response.data;
-};
-export const fetchChiefs = async () => {
-  const response = await axiosInstance.get("/users/");
-  return response.data;
-};
-export const fetchProjectsDetails = async (p_id) => {
-  const response = await axiosInstance.get(`/projects/${p_id}`);
-  return response.data;
-};
-export const fetchProgramDetails = async (p_id) => {
-  const response = await axiosInstance.get(`/programs/${p_id}`);
-  return response.data;
-};
-export const fetchChiefDetails = async (p_id) => {
-  const response = await axiosInstance.get(`/user/${p_id}`);
-  return response.data;
-};
 export const fetchGroupDocuments = async (name, project) => {
   const response = await axiosInstance.get('/documentgroups/', {
     headers: {
@@ -97,11 +97,49 @@ export const fetchGroupDocuments = async (name, project) => {
   });
   return response.data;
 }
+
 export const addGroupDocuments = async (data) => {
   const response = await axiosInstance.post('/documentgroups/', data);
   return response.data;
 }
+
+//Members
 export const fetchMembers = async () => {
   const response = await axiosInstance.get("/members/");
   return response.data;
 };
+export const addMember = async (data) => {
+  const response = await axiosInstance.post("members/", data);
+  return response.data;
+};
+export const deleteMember = async (id) => {
+  const response = await axiosInstance.delete(`members/${id}/`);
+  return response.data;
+};
+
+//Users
+//TODO: Decide wether to use "chief" or user
+export const fetchChiefs = async () => {
+  const response = await axiosInstance.get("/users/");
+  return response.data;
+};
+export const fetchChiefDetails = async (p_id) => {
+  const response = await axiosInstance.get(`/user/${p_id}`);
+  return response.data;
+};
+
+export const fetchUsers = async () => {
+  const response = await axiosInstance.get("/users/");
+  return response.data;
+};
+
+export const addUser = async (data) => {
+  const response = await axiosInstance.post("users/", data);
+  return response.data;
+};
+export const deleteUser = async (id) => {
+  const response = await axiosInstance.delete(`users/${id}/`);
+  return response.data;
+};
+
+

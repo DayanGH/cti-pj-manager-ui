@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
 
 
+//TODO: instance?
 export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, ...rest }) => {
   const [data, setData] = useData({
     documents: [],

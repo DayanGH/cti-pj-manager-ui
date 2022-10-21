@@ -1,7 +1,7 @@
 import { Box, Typography, Button} from '@mui/material';
 import { AddIcon } from '../icons/add';
 
-export const Toolbar = ({ title , handleAction}) => {
+export const Toolbar = ({ title , handleAction, action}) => {
   return (
     <Box
                         sx={{
@@ -24,7 +24,11 @@ export const Toolbar = ({ title , handleAction}) => {
                             startIcon={(<AddIcon fontSize="small" />)}
                             color="primary"
                             variant="contained"
-                            onClick={() => handleAction("new_document")}
+                            onClick={() =>{
+                              console.log(action);
+                              handleAction(action);
+
+                            }}
                         >
                             Nuevo
                         </Button>

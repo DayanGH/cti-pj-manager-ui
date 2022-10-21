@@ -42,7 +42,7 @@ const Documentation = () => {
                     p:1
                 }}
             >
-                <Toolbar title="Documentos" handleAction={handleAction} />
+                <Toolbar title="Documentos" handleAction={handleAction} action="new_document"/>
                   {["new_document", "edit_document"].includes(action) && (
                     <NewSDocumentDialog
                         open
