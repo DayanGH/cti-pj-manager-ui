@@ -3,22 +3,13 @@ import { PopupMenu } from '../popup-menu';
 import { DocumentIcon } from 'src/icons/document';
 
 export const DocumentGrid = ({ documents, handleAction }) => {
-  return (
-    <Box
-      container
-      spacing={3}
-      sx={{
-        justifyContent: 'space-between',
-        display: 'flex',
-        wrap: 1
-      }}
-    >
-      {documents.slice(0, documents.length).map((document) => (
-        <Card>
+
+  const DocItem = ({document}) => {
+    return (
+      <Card>
           <Box
             sx={{
               alignItems: 'center',
-              minWidth: 280,
               display: 'flex',
               p: 1.5,
             }}
@@ -40,7 +31,18 @@ export const DocumentGrid = ({ documents, handleAction }) => {
             />
           </Box>
         </Card>
+    );
+  };
+
+  return (
+     <Box sx={{ width: '100%' }}>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      {documents.slice(0, documents.length).map((document) => (
+        <Grid item xs={6}>
+        <DocItem document={document}/>
+        </Grid>
       ))}
+    </Grid>
     </Box>
   );
 };
