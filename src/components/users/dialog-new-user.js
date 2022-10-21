@@ -38,10 +38,9 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
     >
       <DialogTitle>{onAction === 'new_user' ? "Nuevo usuario" : "Editar usuario"}</DialogTitle>
       <Box
-        sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
+        sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
       >
         <TextField
-          sx={{ mt: 2}}
           label="Nombre"
           onChange={() => setData({ ["name"]: event.target.value })}
           fullWidth

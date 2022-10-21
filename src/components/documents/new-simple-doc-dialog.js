@@ -33,10 +33,9 @@ export const NewSDocumentDialog = ({ open, handleClose, loadData, onAction, ...r
     >
       <DialogTitle>{onAction === 'new_document' ? "Nuevo documento" : "Editar documento"}</DialogTitle>
       <Box
-        sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
+        sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
       >
         <TextField
-          sx={{ mt: 1 }}
           onChange={(event) => setDocName(event.target.value)}
           label="Nombre" />
         <Button

@@ -88,33 +88,29 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
 
   if (ptype === 'nac' || (data.pj_type === 'papn' && ptype !== 'none')) {
     component = <TextField
-      sx={{ mt: 1 }}
+      sx={{ mt: 2 }}
       label="Tipo"
-      variant="standard"
       contentEditable={false}
       value='Proyectos Asociados a Programas Nacional'
     />
   } else if (ptype === 'sec' || (data.pj_type === 'paps' && ptype !== 'none')) {
     component = <TextField
-      sx={{ mt: 1 }}
+      sx={{ mt: 2 }}
       label="Tipo"
-      variant="standard"
       contentEditable={false}
       value='Proyectos Asociados a Programas Sectorial'
     />
   } else if (ptype === 'ter' || (data.pj_type === 'papt' && ptype !== 'none')) {
     component = <TextField
-      sx={{ mt: 1 }}
+      sx={{ mt: 2 }}
       label="Tipo"
-      variant="standard"
       contentEditable={false}
       value='Proyectos Asociados a Programas Territorial'
     />
   }
   else if (ptype === 'none') {
     component = <FormControl
-      variant="standard"
-      sx={{ mt: 1 }}
+      sx={{ mt: 2 }}
       error={'pj_type' in errors}
       helpertext={errors.pj_typen}>
       <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
@@ -144,23 +140,20 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     >
       <DialogTitle>{onAction === 'new' ? "Nuevo proyecto" : "Editar proyecto"}</DialogTitle>
       <Box
-        sx={{ px: 1, mx: 2, display: "flex", flexDirection: "column" }}
+        sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
       >
         <TextField
-          sx={{ mt: 1 }}
           label="Nombre"
           value={data.name}
-          variant="standard"
           error={'name' in errors}
           helperText={errors.name}
           onChange={(event) => {
             handleChangeField(event.target.value, 'name')
           }} />
         <TextField
-          sx={{ mt: 1 }}
+          sx={{ mt: 2 }}
           label="Código"
           value={data.project_code}
-          variant="standard"
           error={'project_code' in errors}
           helperText={errors.project_code}
           onChange={(event) => {
@@ -168,7 +161,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
 
           }} />
         <Autocomplete
-          sx={{ mt: 1 }}
+          sx={{ mt: 2 }}
           id="select-program"
           open={togglePrograms}
           onOpen={handleOpenPrograms}
@@ -204,7 +197,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             <TextField
               {...params}
               label="Programa"
-              variant="standard"
               error={'program' in errors}
               helperText={errors.program}
               InputProps={{
@@ -225,7 +217,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
         />
         {component}
         <Autocomplete
-          sx={{ mt: 1 }}
+          sx={{ mt: 2 }}
           id="select-chief"
           open={toggleChief}
           onOpen={handleOpenChiefs}
@@ -250,7 +242,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             <TextField
               {...params}
               label="Jefe"
-              variant="standard"
               error={'chief' in errors}
               helperText={errors.chief}
               InputProps={{
@@ -270,7 +261,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           )}
         />
         <TextField
-          sx={{ mt: 1 }}
+          sx={{ mt: 2 }}
           label="Financiamiento"
           type="number"
           inputProps={{ min: 0 }}
@@ -279,13 +270,12 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           onChange={(evt) =>
             handleChangeField(evt.target.value, "financing")
           }
-          variant="standard"
           fullWidth
           value={data.financing}
           InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
         />
         <FormControl
-          variant="standard"
+          sx={{ mt: 2 }}
           error={'project_classification' in errors}
           helpertext={errors.project_classification}>
           <InputLabel id="p_clasification">Clasificación</InputLabel>
@@ -304,46 +294,42 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             ))}
           </Select>
         </FormControl>
-        <Box sx={{ display: "flex", flexDirection: 'row' }} >
+        <Box sx={{ display: "flex", flexDirection: 'row', mt: 2 }} >
           <TextField
-            sx={{ mr: 1, mt: 1 }}
+            sx={{ mr: 1}}
             label="Fecha de inicio"
             type="date"
             value={data.start_date}
             error={'start_date' in errors}
             helperText={errors.start_date}
             onChange={(evt) => handleChangeField(evt.target.value, 'start_date')}
-            variant="standard"
             fullWidth
             InputLabelProps={{ shrink: true }}
           />
           <TextField
-            sx={{ mr: 1, mt: 1 }}
             label="Fecha de culminación"
             type="date"
             value={data.end_date}
             error={'end_date' in errors}
             helperText={errors.end_date}
             onChange={(evt) => handleChangeField(evt.target.value, 'end_date')}
-            variant="standard"
             fullWidth
             InputLabelProps={{ shrink: true }}
           />
         </Box>
         <TextField
-          sx={{ mr: 1, mt: 1 }}
+          sx={{ mt: 2 }}
           label="Entidad principal"
           type='text'
           value={data.main_entity}
           error={'main_entity' in errors}
           helperText={errors.main_entity}
           onChange={(evt) => handleChangeField(evt.target.value, 'main_entity')}
-          variant="standard"
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          sx={{ mr: 1, mt: 1 }}
+          sx={{ mt: 2 }}
           label="Entidades participantes"
           multiline
           value={data.entities}
@@ -352,7 +338,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           error={'entities' in errors}
           helperText={errors.entities}
           onChange={(evt) => handleChangeField(evt.target.value, 'entities')}
-          variant="standard"
           fullWidth
           InputLabelProps={{ shrink: true }}
         />

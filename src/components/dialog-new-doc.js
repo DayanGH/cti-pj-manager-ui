@@ -95,9 +95,9 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     >
       <DialogTitle>{onAction === 'new_document' ? "Nuevo documento" : "Editar documento"}</DialogTitle>
       <Box
-        sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
+        sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
       >
-        <FormControl variant="standard">
+        <FormControl>
           <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
@@ -113,8 +113,8 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             <MenuItem value={'document'}>Documento</MenuItem>
           </Select>
         </FormControl>
-        <FormControl variant="standard"
-          sx={{ mt: 1 }}
+        <FormControl
+          sx={{ mt: 2 }}
           error={'exist' in errors}
           helpertext={errors.exist}>
           <InputLabel id="demo-simple-select-filled-labeld">Nombre</InputLabel>
@@ -134,21 +134,19 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           </Select>
         </FormControl>
         <TextField
-          sx={{ mt: 1, display: showDate }}
+          sx={{ mt: 2, display: showDate }}
           label="Fecha"
           type="date"
           onChange={() => setDate(event.target.value)}
-          variant="standard"
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          sx={{ mt: 1, display: showCustomName }}
+          sx={{ mt: 2, display: showCustomName }}
           onChange={(event) => setCustomName(event.target.value)}
-          label="Nombre"
-          variant="standard" />
+          label="Nombre" />
         <Button
-          sx={{ mt: 1 }}
+          sx={{ mt: 2 }}
           variant="contained"
         >
           <input
