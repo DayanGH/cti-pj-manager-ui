@@ -1,22 +1,22 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
-import { addMember} from 'src/utils/requests';
+import { addUser} from 'src/utils/requests';
 import { useData } from '../../utils/hooks';
 
-export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
+export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
     const [data, setData] = useData({
     name: "",
     c_id: "",
     email: "",
-    organization: "",
-    type: "in"
+    type: "project_program_both_chief",
+    password: ""
   });
   const [errors, setErrors] = useData({});
 
-  const saveMember = async () => {
+  const saveUser = async () => {
     console.log(data);
 
-    addMember(data).then((data) => {
+    addUser(data).then((data) => {
         handleClose();
         loadData();
       })
@@ -36,7 +36,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
       fullWidth={true}
 
     >
-      <DialogTitle>{onAction === 'new_member' ? "Nuevo miembro" : "Editar miembro"}</DialogTitle>
+      <DialogTitle>{onAction === 'new_user' ? "Nuevo usuario" : "Editar usuario"}</DialogTitle>
       <Box
         sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
       >
@@ -56,8 +56,10 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
             value={data["type"]}
             onChange={() => setData({ ["type"]: event.target.value })}
           >
-            <MenuItem value={"out"}>Externo</MenuItem>
-            <MenuItem value={'in'}>Interno</MenuItem>
+            <MenuItem value={"project_program_both_chief"}>Jefe de Proyecto/ Programa / Ambos</MenuItem>
+            <MenuItem value={"human_resources"}>Recursos Humanos</MenuItem>
+            <MenuItem value={"economy"}>Economia</MenuItem>
+            <MenuItem value={"vicedec_inv_postgr"}>Vicedecano de Investigacion y Postgrado</MenuItem>
           </Select>
         </FormControl>
         <TextField
@@ -76,8 +78,17 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
         />
         <TextField
           sx={{ mt: 2}}
-          label="Organizacion"
-          onChange={() => setData({ ["organization"]: event.target.value })}
+          type="password"
+          label="Contrasena"
+          onChange={() => setData({ ["password"]: event.target.value })}
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          sx={{ mt: 2}}
+          type="password"
+          label="Confirmar Contrasena"
+          onChange={() => {}}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
@@ -90,7 +101,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
             Cancelar
           </Button>
           <Button
-            onClick={saveMember}
+            onClick={saveUser}
           >
             Guardar
           </Button>

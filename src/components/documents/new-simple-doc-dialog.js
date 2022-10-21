@@ -38,8 +38,7 @@ export const NewSDocumentDialog = ({ open, handleClose, loadData, onAction, ...r
         <TextField
           sx={{ mt: 1 }}
           onChange={(event) => setDocName(event.target.value)}
-          label="Nombre"
-          variant="standard" />
+          label="Nombre" />
         <Button
           sx={{ mt: 1 }}
           variant="contained"

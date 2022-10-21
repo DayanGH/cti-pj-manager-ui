@@ -6,6 +6,7 @@ import { Toolbar } from '../components/toolbar';
 import { useTargetAction } from "../utils/hooks";
 import { fetchUsers } from '../utils/requests';
 import { useEffect, useState } from 'react';
+import { NewUserDialog } from '../components/users/dialog-new-user';
 
 const Users = () => {
     const [action, target, handleAction] = useTargetAction();
@@ -40,7 +41,14 @@ const Users = () => {
         p: 1
       }}
     >
-    <Toolbar title="Usuarios" handleAction={handleAction}/>
+    <Toolbar title="Usuarios" handleAction={handleAction} action="new_user"/>
+    {["new_user", "edit_user"].includes(action) && (
+      <NewUserDialog
+        open
+        onAction={action}
+        handleClose={handleAction}
+        loadData={() => loadData()}
+    />)}
     <UserList users={users} />
     </Box>
   </>
