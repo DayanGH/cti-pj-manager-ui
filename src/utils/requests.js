@@ -141,7 +141,7 @@ export const fetchUsers = async () => {
 };
 
 export const addUser = async (data) => {
-  const response = await axiosInstance.post("users/", data);
+  const response = await axiosInstance.post("register/", data);
   return response.data;
 };
 export const deleteUser = async (id) => {

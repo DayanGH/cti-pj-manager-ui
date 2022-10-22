@@ -9,49 +9,52 @@ import { useEffect, useState } from 'react';
 import { NewUserDialog } from '../components/users/dialog-new-user';
 
 const Users = () => {
-    const [action, target, handleAction] = useTargetAction();
-    const [users, setUsers] = useState();
-    const [isloading, setloading] = useState(true);
+  const [action, target, handleAction] = useTargetAction();
+  const [users, setUsers] = useState();
+  const [isloading, setloading] = useState(true);
 
-    useEffect(() => {
-        loadData();
-    }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
-    function loadData() {
-        setloading(true);
-        fetchUsers()
-            .then((data) => {
-                setUsers(data);
-                setloading(false)
-            });
+  function loadData() {
+    setloading(true);
+    fetchUsers()
+      .then((data) => {
+        setUsers(data);
+        setloading(false)
+      });
 
-    }
-    if (isloading) return <p>cargando....</p>
+  }
+  if (isloading) return <p>cargando....</p>
   return (
-  <>
-    <Head>
-      <title>
-        Usuarios
-      </title>
-    </Head>
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        p: 1
-      }}
-    >
-    <Toolbar title="Usuarios" handleAction={handleAction} action="new_user"/>
-    {["new_user", "edit_user"].includes(action) && (
-      <NewUserDialog
-        open
-        onAction={action}
-        handleClose={handleAction}
-        loadData={() => loadData()}
-    />)}
-    <UserList users={users} />
-    </Box>
-  </>
+    <>
+      <Head>
+        <title>
+          Usuarios
+        </title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 1
+        }}
+      >
+        <Toolbar title="Usuarios"
+          handleAction={handleAction}
+          action="new_user" />
+
+        {["new_user", "edit_user"].includes(action) && (
+          <NewUserDialog
+            open
+            onAction={action}
+            handleClose={handleAction}
+            loadData={() => loadData()}
+          />)}
+        <UserList users={users} />
+      </Box>
+    </>
   );
 };
 

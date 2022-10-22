@@ -5,21 +5,24 @@ import { useData } from '../../utils/hooks';
 
 export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
   const [data, setData] = useData({
-    name: "",
-    c_id: "",
+    username: "",
+    password: "",
+    password2: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    type: "project_program_both_chief",
-    password: ""
+    chief_type: "project_program_both_chief",
   });
   const [errors, setErrors] = useData({});
 
   const saveUser = async () => {
-    console.log(data);
+    console.log(data)
 
-    addUser(data).then((data) => {
-      handleClose();
-      loadData();
-    })
+    await addUser(data)
+      .then((data) => {
+        handleClose();
+        loadData();
+      })
       .catch((error) => {
         setErrors(error.response.data)
         console.log(error.response.data)
@@ -42,19 +45,36 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
       >
         <TextField
           label="Nombre"
-          onChange={() => setData({ ["name"]: event.target.value })}
+          error={'first_name' in errors}
+          helperText={errors.first_name}
+          onChange={(event) => {
+            setData({ "first_name": event.target.value })
+            setData({ "username": event.target.value.split(' ')[0].toLowerCase() })
+          }}
           fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
+          InputLabelProps={{ shrink: true }} />
 
-        <FormControl sx={{ mt: 2 }}>
+        <TextField
+          sx={{ mt: 2 }}
+          label="Apellidos"
+          error={'last_name' in errors}
+          helperText={errors.last_name}
+          onChange={(event) => setData({ "last_name": event.target.value })}
+          fullWidth
+          InputLabelProps={{ shrink: true }} />
+
+        <FormControl
+          sx={{ mt: 2 }}
+          error={'chief_type' in errors}
+          helpertext={errors.chief_type}
+        >
           <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            value={data["type"]}
+            value={data["chief_type"]}
             label="Tipo"
-            onChange={() => setData({ ["type"]: event.target.value })}
+            onChange={(event) => setData({ "chief_type": event.target.value })}
           >
             <MenuItem value={"project_program_both_chief"}>Jefe de Proyecto/ Programa / Ambos</MenuItem>
             <MenuItem value={"human_resources"}>Recursos Humanos</MenuItem>
@@ -62,33 +82,35 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
             <MenuItem value={"vicedec_inv_postgr"}>Vicedecano de Investigacion y Postgrado</MenuItem>
           </Select>
         </FormControl>
+
         <TextField
           sx={{ mt: 2 }}
           label="Correo"
-          onChange={() => setData({ ["email"]: event.target.value })}
+          error={'email' in errors}
+          helperText={errors.email}
+          onChange={(event) => setData({ "email": event.target.value })}
           fullWidth
+          type={'email'}
           InputLabelProps={{ shrink: true }}
         />
+
         <TextField
           sx={{ mt: 2 }}
-          label="CID"
-          onChange={() => setData({ ["c_id"]: event.target.value })}
+          type="password"
+          label="Contrasña"
+          error={'password' in errors}
+          helperText={errors.password}
+          onChange={(event) => setData({ "password": event.target.value })}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
         <TextField
           sx={{ mt: 2 }}
           type="password"
-          label="Contrasena"
-          onChange={() => setData({ ["password"]: event.target.value })}
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          sx={{ mt: 2 }}
-          type="password"
-          label="Confirmar Contrasena"
-          onChange={() => { }}
+          error={'password2' in errors}
+          helperText={errors.password2}
+          label="Confirmar Contrasña"
+          onChange={(event) => { setData({ "password2": event.target.value }) }}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
@@ -96,12 +118,12 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}
         >
           <Button
-            onClick={handleClose}
+            onClick={() => handleClose()}
           >
             Cancelar
           </Button>
           <Button
-            onClick={saveUser}
+            onClick={() => saveUser()}
           >
             Guardar
           </Button>

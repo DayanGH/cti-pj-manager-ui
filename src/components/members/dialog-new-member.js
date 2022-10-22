@@ -44,6 +44,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
           label="Nombre"
           onChange={() => setData({ ["name"]: event.target.value })}
           fullWidth
+          InputLabelProps={{ shrink: true }}
         />
 
         <FormControl sx={{ mt: 2 }}>
@@ -69,7 +70,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
           label="Correo"
           onChange={(event) => setData({ "email": event.target.value })}
           fullWidth
-
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           sx={{ mt: 2 }}
@@ -78,16 +79,15 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
           fullWidth
           inputProps={{
             maxLength: 11,
-
           }}
-
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           sx={{ mt: 2 }}
           label="Organizacion"
           onChange={(event) => setData({ "organization": event.target.value })}
           fullWidth
-
+          InputLabelProps={{ shrink: true }}
         />
         <Box
           sx={{ pt: 2, display: "flex", justifyContent: "right" }}
