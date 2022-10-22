@@ -1,10 +1,10 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
-import { addUser} from 'src/utils/requests';
+import { addUser } from 'src/utils/requests';
 import { useData } from '../../utils/hooks';
 
 export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
-    const [data, setData] = useData({
+  const [data, setData] = useData({
     name: "",
     c_id: "",
     email: "",
@@ -17,13 +17,13 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
     console.log(data);
 
     addUser(data).then((data) => {
-        handleClose();
-        loadData();
-      })
-        .catch((error) => {
-          setErrors(error.response.data)
-          console.log(error.response.data)
-        });
+      handleClose();
+      loadData();
+    })
+      .catch((error) => {
+        setErrors(error.response.data)
+        console.log(error.response.data)
+      });
 
   };
 
@@ -47,12 +47,13 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
           InputLabelProps={{ shrink: true }}
         />
 
-        <FormControl sx={{ mt: 2}}>
+        <FormControl sx={{ mt: 2 }}>
           <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             value={data["type"]}
+            label="Tipo"
             onChange={() => setData({ ["type"]: event.target.value })}
           >
             <MenuItem value={"project_program_both_chief"}>Jefe de Proyecto/ Programa / Ambos</MenuItem>
@@ -62,21 +63,21 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
           </Select>
         </FormControl>
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           label="Correo"
           onChange={() => setData({ ["email"]: event.target.value })}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           label="CID"
           onChange={() => setData({ ["c_id"]: event.target.value })}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           type="password"
           label="Contrasena"
           onChange={() => setData({ ["password"]: event.target.value })}
@@ -84,10 +85,10 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          sx={{ mt: 2}}
+          sx={{ mt: 2 }}
           type="password"
           label="Confirmar Contrasena"
-          onChange={() => {}}
+          onChange={() => { }}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />

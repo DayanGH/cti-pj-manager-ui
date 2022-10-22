@@ -47,11 +47,17 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
         />
 
         <FormControl sx={{ mt: 2 }}>
-          <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
+          <InputLabel
+            id="demo-simple-select-filled-label"
+          >
+            Tipo
+          </InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             value={data["type"]}
+            label="Tipo"
+            variant={'outlined'}
             onChange={(event) => setData({ "type": event.target.value })}
           >
             <MenuItem value={"out"}>Externo</MenuItem>
@@ -70,6 +76,11 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
           label="CID"
           onChange={(event) => setData({ "c_id": event.target.value })}
           fullWidth
+          inputProps={{
+            maxLength: 11,
+
+          }}
+
         />
         <TextField
           sx={{ mt: 2 }}

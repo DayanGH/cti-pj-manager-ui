@@ -116,6 +116,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       <Select
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"
+        label="Tipo"
         value={pnapType}
         onChange={(event) => {
           handleChangeField(event.target.value, 'pj_type')
@@ -281,6 +282,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           <Select
             labelId="p_clasification"
             id="demo-simple-select-filled"
+            label="Clasificación"
             value={data.project_classification}
             onChange={(event) => {
               handleChangeField(event.target.value, 'project_classification')
