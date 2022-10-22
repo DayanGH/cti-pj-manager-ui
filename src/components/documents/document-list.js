@@ -8,7 +8,7 @@ import { DocumentIcon } from 'src/icons/document';
 export const DocumentList = ({ documents, groups, handleAction }) => {
 
 
-    const DocumentRow = ({ document }) => {
+    const DocumentRow = ({ document, action }) => {
         return (
             <TableRow
                 hover
@@ -38,7 +38,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                 </TableCell>
                 <TableCell sx={{ px: 0 }}>
                     <PopupMenu
-                        onAction={'project_document'}
+                        onAction={action}
                         handleAction={handleAction}
                         instance={document.id}
                     ></PopupMenu>
@@ -91,7 +91,8 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                                 <TableBody >
                                     {group.documents?.slice(0, group.documents?.length).map((document) => (
                                         <DocumentRow key={document.id}
-                                            document={document} />
+                                            document={document}
+                                            action={'group_document'} />
                                     ))}
                                 </TableBody>
                             </Table>
@@ -110,7 +111,8 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                     <TableBody>
                         {documents.slice(0, documents.length).map((document) => (
                             <DocumentRow key={document.id}
-                                document={document} />
+                                document={document}
+                                action={'project_document'} />
                         ))}
                     </TableBody>
                 </Table>

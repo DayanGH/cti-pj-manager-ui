@@ -88,7 +88,8 @@ export const deleteDocument = async (id) => {
   return response.data;
 };
 
-export const fetchGroupDocuments = async (name, project) => {
+//Documents Group
+export const fetchDocumentsGroup = async (name, project) => {
   const response = await axiosInstance.get('/documentgroups/', {
     headers: {
       "name": `${name}`,
@@ -98,8 +99,14 @@ export const fetchGroupDocuments = async (name, project) => {
   return response.data;
 }
 
-export const addGroupDocuments = async (data) => {
+export const addDocumentsGroup = async (data) => {
   const response = await axiosInstance.post('/documentgroups/', data);
+  return response.data;
+}
+
+//Group Documents
+export const deleteGroupDocuments = async (id) => {
+  const response = await axiosInstance.delete(`/groupdocuments/${id}/`);
   return response.data;
 }
 

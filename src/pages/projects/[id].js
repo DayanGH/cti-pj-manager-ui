@@ -49,7 +49,7 @@ const ProjectDetails = () => {
                     display: 'flex'
                 }}
             >
-                {["delete_project", "delete_project_doc"].includes(action) && (
+                {["delete_project", "delete_project_doc", "delete_project_group_doc"].includes(action) && (
                     <DeleteDialog
                         onAction={action}
                         open

@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export const PopupMenu = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [showItem, setshowItem] = useState(props.onAction === 'project' ? 'felx' : 'none');
     const openMenu = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -34,10 +35,11 @@ export const PopupMenu = (props) => {
                 open={openMenu}
                 onClose={handleCloseMenu}>
 
-                <MenuItem onClick={() => { props.onAction === 'project' ? props.handleAction("edit") : props.onAction === 'project_document' ? props.handleAction("edit_document") : props.onAction === 'program' ? console.log('program') : console.log('program_document'); handleCloseMenu() }}>
+                <MenuItem sx={{ display: showItem }}
+                    onClick={() => { props.onAction === 'project' ? props.handleAction("edit") : props.onAction === 'project_document' ? props.handleAction("edit_document") : props.onAction === 'program' ? console.log('program') : console.log('program_document'); handleCloseMenu() }}>
                     Editar
                 </MenuItem>
-                <MenuItem onClick={() => { props.onAction === 'project' ? props.handleAction("delete_project", props.instance) : props.onAction === 'project_document' ? props.handleAction("delete_project_doc", props.instance) : props.onAction === 'program' ? console.log('program') : console.log('program_document'); handleCloseMenu() }}>
+                <MenuItem onClick={() => { props.onAction === 'project' ? props.handleAction("delete_project", props.instance) : props.onAction === 'project_document' ? props.handleAction("delete_project_doc", props.instance) : props.onAction === 'group_document' ? props.handleAction("delete_project_group_doc", props.instance) : props.onAction === 'program' ? console.log('program') : console.log('program_document'); handleCloseMenu() }}>
                     Eliminar
                 </MenuItem>
             </Menu>

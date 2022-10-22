@@ -6,7 +6,7 @@ import {
     Button,
     DialogActions,
 } from "@mui/material";
-import { deleteDocument, deleteProject } from 'src/utils/requests';
+import { deleteDocument, deleteProject, deleteGroupDocuments } from 'src/utils/requests';
 import { useData } from 'src/utils/hooks';
 import router from "next/router";
 
@@ -16,7 +16,8 @@ export const DeleteDialog = (props) => {
 
 
     function handleSubmit(id) {
-        const func = props.onAction === 'delete_project' ? deleteProject : deleteDocument;
+        console.log(id)
+        const func = props.onAction === 'delete_project' ? deleteProject : props.onAction === 'delete_project_doc' ? deleteDocument : deleteGroupDocuments;
         func(id)
             .then((response) => {
                 props.onClose();
@@ -32,6 +33,8 @@ export const DeleteDialog = (props) => {
                 setErrors(error.response.data);
             });
     }
+    console.log(props.instance)
+
     return (
         <Dialog
             onClose={props.onClose}

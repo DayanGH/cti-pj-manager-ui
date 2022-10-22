@@ -1,6 +1,6 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useState } from 'react';
-import { addDocument, fetchGroupDocuments, addGroupDocuments } from 'src/utils/requests';
+import { addDocument, fetchDocumentsGroup, addDocumentsGroup } from 'src/utils/requests';
 import { useData } from '../../src/utils/hooks';
 
 export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
@@ -49,7 +49,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
       data.append("dtype", docName);
       add(data);
     } else {
-      await fetchGroupDocuments(docName, pj_id)
+      await fetchDocumentsGroup(docName, pj_id)
         .then((groupData) => {
           if (groupData.length === 1) {
             data.append("group", groupData[0].id);
@@ -61,7 +61,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             datatemp.append('name', saveName)
             datatemp.append('project', pj_id)
             datatemp.append('dtype', docName)
-            addGroupDocuments(datatemp)
+            addDocumentsGroup(datatemp)
               .then((dd) => {
                 data.append("group", dd.id);
                 data.append("file", file, saveName);
@@ -103,6 +103,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             value={type}
+            label='Tipo'
             onChange={(event) => {
               setType(event.target.value);
               setNames(event.target.value == 'document' ? documentNames : groupNames);
@@ -117,10 +118,11 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           sx={{ mt: 2 }}
           error={'exist' in errors}
           helpertext={errors.exist}>
-          <InputLabel id="demo-simple-select-filled-labeld">Nombre</InputLabel>
+          <InputLabel id="demo-simple-select-filled-label1">Nombre</InputLabel>
           <Select
-            labelId="demo-simple-select-filled-labell"
-            id="demo-simple-select-filledd"
+            labelId="demo-simple-select-filled-label1"
+            id="demo-simple-select-filled1"
+            label='Nombre'
             value={docName}
             onChange={(event) => {
               setDocName(event.target.value);
