@@ -8,6 +8,7 @@ import { ProjectsIcon } from '../icons/projects';
 import { ProgramsIcon } from '../icons/programs';
 import { DocumentIcon } from '../icons/document';
 import { InfoIcon } from '../icons/info';
+import { LogoutIcon } from '../icons/logout';
 import { Users as UsersIcon } from '../icons/users';
 import { NavItem } from './nav-item';
 import { getInitials } from '../utils/get-initials';
@@ -141,8 +142,13 @@ export const DashboardSidebar = (props) => {
             />
           ))}
         </Box>
-        <Divider sx={{ borderColor: '#2D3748' }} />
-
+        <Divider sx={{ borderColor: '#b8b8b8' }} />
+        <NavItem sx={{mt: 0.5}}
+              key={''}
+              icon={(<LogoutIcon fontSize="small" />)}
+              href={''}
+              title={'Cerrar sesion'}
+            />
       </Box>
     </>
   );
