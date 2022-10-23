@@ -2,18 +2,18 @@ import Head from 'next/head';
 import React from "react";
 import { Box, Container, Grid } from '@mui/material';
 import { Budget } from '../components/dashboard/budget';
-import { Sales } from '../components/dashboard/sales';
+import { MemberAmount } from '../components/dashboard/member-amount';
 import { TasksProgress } from '../components/dashboard/tasks-progress';
 import { TotalCustomers } from '../components/dashboard/total-customers';
 import { TotalProfit } from '../components/dashboard/total-profit';
-import { TrafficByDevice } from '../components/dashboard/traffic-by-device';
+import { ProjectsByTypology } from '../components/dashboard/projects-by-typology';
 import { DashboardLayout } from '../components/dashboard-layout';
 
 const Dashboard = () => {
 
   /*   function useAuthentication() {
       const router = useRouter();
-  
+
       useEffect(() => {
         if (loginState.status != 200) {
           router.push('/');
@@ -32,7 +32,7 @@ const Dashboard = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          p: 1
         }}
       >
         <Container maxWidth={false}>
@@ -42,57 +42,15 @@ const Dashboard = () => {
           >
             <Grid
               item
-              lg={3}
-              sm={6}
-              xl={3}
-              xs={12}
+              xs={6}
             >
-              <Budget />
+               <ProjectsByTypology sx={{ height: '100%' }} />
             </Grid>
             <Grid
               item
-              xl={3}
-              lg={3}
-              sm={6}
-              xs={12}
+              xs={6}
             >
-              <TotalCustomers />
-            </Grid>
-            <Grid
-              item
-              xl={3}
-              lg={3}
-              sm={6}
-              xs={12}
-            >
-              <TasksProgress />
-            </Grid>
-            <Grid
-              item
-              xl={3}
-              lg={3}
-              sm={6}
-              xs={12}
-            >
-              <TotalProfit sx={{ height: '100%' }} />
-            </Grid>
-            <Grid
-              item
-              lg={8}
-              md={12}
-              xl={9}
-              xs={12}
-            >
-              <Sales />
-            </Grid>
-            <Grid
-              item
-              lg={4}
-              md={6}
-              xl={3}
-              xs={12}
-            >
-              <TrafficByDevice sx={{ height: '100%' }} />
+               <MemberAmount />
             </Grid>
           </Grid>
         </Container>
