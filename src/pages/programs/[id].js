@@ -1,24 +1,29 @@
 import Head from 'next/head';
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/dialog-new-doc';
-import { AddIcon } from '../../icons/add';
-import { ContextMenuIcon } from '../../icons/context-menu';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { fetchProgramDetails } from '../../utils/requests'
+import { fetchProgramDetails } from '../../utils/requests';
+import { DeleteDialog } from '../../components/dialog-delete';
+import { SimpleDocumentList } from '../../components/documents/documents-simple-list';
+import { DocumentsToolbar } from '../../components/documents/documents-toolbar';
+import { useTargetAction } from "../../utils/hooks";
+import { NewProjectDialog } from 'src/components/dialog-new-project';
+import { DetailsPanel } from 'src/components/programs/details-panel';
 
 const ProgramDetails = () => {
     const router = useRouter();
     const { id } = router.query;
     const [pdetails, setPdetails] = useState();
-    const [open, setOpen] = useState(false);
     const [isloading, setloading] = useState(true);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [action, target, handleAction] = useTargetAction();
 
     useEffect(() => {
+        loadData(id);
+    }, [id]);
+
+    function loadData(id) {
         if (typeof id !== "undefined") {
             setloading(true);
             fetchProgramDetails(id)
@@ -27,13 +32,13 @@ const ProgramDetails = () => {
                     setloading(false)
                 });
         }
-    }, [id]);
-    if (isloading) return <p>loading....</p>
+    }
+    if (isloading) return <p>cargando....</p>
     return (
         <>
             <Head>
                 <title>
-                    Programa |{" " + pdetails.name}
+                    Proyecto |{" " + pdetails.name}
                 </title>
             </Head>
 
@@ -44,167 +49,47 @@ const ProgramDetails = () => {
                     display: 'flex'
                 }}
             >
-                <NewDocumentDialog open={open}
-                    handleClose={handleClose} />
+                {["delete_program", "delete_program_doc", "delete_program_group_doc"].includes(action) && (
+                    <DeleteDialog
+                        onAction={action}
+                        open
+                        instance={target}
+                        project_id={id}
+                        onClose={handleAction}
+                        loadData={() => loadData(id)}
+                    />
+                )}
+                {["new", "edit"].includes(action) && (
+                    <NewProjectDialog
+                        open
+                        onAction={action}
+                        instance={pdetails}
+                        onClose={handleAction}
+                        loadData={() => loadData(id)} />
+                )}
+                {["new_document", "edit_document"].includes(action) && (
+                    <NewDocumentDialog
+                        open
+                        onAction={action}
+                        handleClose={handleAction}
+                        pj_id={pdetails.id}
+                        loadData={() => loadData(id)}
+                    />)}
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <Box
-                        sx={{
-                            p: 1,
-                            display: 'flex',
-                            flexGrow: 1,
-                            borderBottom: 1,
-                            borderColor: 'divider',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Typography
-                            color="textPrimary"
-                            variant="h6"
-                        >
-                            Documentos
-                        </Typography>
-                        <Button
-                            startIcon={(<AddIcon fontSize="small" />)}
-                            color="primary"
-                            variant="contained"
-                            onClick={handleOpen}
-                        >
-                            Nuevo
-                        </Button>
-                    </Box>
+                    <DocumentsToolbar handleAction={handleAction} />
                     <Box sx={{ p: 1 }}>
-                        <PerfectScrollbar>
-                            <Table>
-                                <TableBody>
-                                    {pdetails.documents.slice(0, 10).map((document) => (
-                                        <TableRow
-                                            hover
-                                            key={document.id}
-                                        >
-                                            <TableCell>
-                                                <Box
-                                                    sx={{
-                                                        alignItems: 'center',
-                                                        display: 'flex',
-                                                    }}
-                                                >
-                                                    <img
-                                                        alt="Icon of a document"
-                                                        src="/static/images/document.svg"
-                                                        style={{
-                                                            display: 'inline-block',
-                                                            maxWidth: '100%',
-                                                            width: 40,
-                                                            height: 40
-                                                        }}
-                                                    />
-                                                    <Typography
-                                                        sx={{ mx: 1 }}
-                                                        color="textPrimary"
-                                                        variant="body1"
-                                                    >
-                                                        {document.name}
-                                                    </Typography>
-                                                </Box>
-                                            </TableCell>
-                                            <TableCell>
-                                                <ContextMenuIcon />
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </PerfectScrollbar>
+                        <SimpleDocumentList
+                            handleAction={handleAction}
+                            documents={pdetails.documents}
+                        />
                     </Box>
                 </Box>
-                <Box
-                    sx={{
-                        my: 1,
-                        p: 1,
-                        minWidth: "30%",
-                        maxWidth: "35%",
-                        borderLeft: 1,
-                        borderColor: 'divider'
-                    }}
-                >
-                    <Table>
-                        <TableBody>
-                            <TableRow
-                            >
-                                <TableCell>
-                                    <b>Jefe: </b>
-                                </TableCell>
-                                <TableCell>
-                                    {pdetails.chief}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow
-                            >
-                                <TableCell>
-                                    <b>Tipo: </b>
-                                </TableCell>
-                                <TableCell>
-                                    {pdetails.type}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow
-                            >
-                                <TableCell>
-                                    <b>Clasificación: </b>
-                                </TableCell>
-                                <TableCell>
-                                    {pdetails.project_classification}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow
-                            >
-                                <TableCell>
-                                    <b>Entidad principal: </b>
-                                </TableCell>
-                                <TableCell>
-                                    {pdetails.main_entity}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <b>Enidades: </b>
-                                </TableCell>
-                                <TableCell>
-                                    {pdetails.entities}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <b>Plazo: </b>
-                                </TableCell>
-                                <TableCell>
-                                    {pdetails.start_date} hasta {pdetails.end_date}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <b>Finaciamiento: </b>
-                                </TableCell>
-                                <TableCell>
-                                    ${pdetails.money}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <b>Miembros: </b>
-                                </TableCell>
-                                <TableCell>
-                                    <Button>
-                                        Administrar
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </Box>
+                <DetailsPanel pdetails={pdetails}
+                    handleAction={handleAction}
+                    action={action}
+                    loadData={() => loadData(id)} />
             </Box>
         </>)
 };

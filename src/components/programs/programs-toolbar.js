@@ -10,7 +10,7 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';
 import { useState } from 'react';
-import { NewProjectDialog } from '../dialog-new-project';
+import { NewProgramDialog } from './dialog-new-program';
 import { useTargetAction } from "../../utils/hooks";
 
 export const ProgramsToolbar = (props) => {
@@ -25,7 +25,7 @@ export const ProgramsToolbar = (props) => {
     <>
       <Box>
         {["new", "edit"].includes(action) && (
-          <NewProjectDialog
+          <NewProgramDialog
             open
             neww={action === "new"}
             instance={target}
