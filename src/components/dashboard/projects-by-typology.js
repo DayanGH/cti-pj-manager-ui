@@ -1,23 +1,20 @@
 import { Doughnut } from 'react-chartjs-2';
 import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
-import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import PhoneIcon from '@mui/icons-material/Phone';
-import TabletIcon from '@mui/icons-material/Tablet';
 
-export const TrafficByDevice = (props) => {
+export const ProjectsByTypology = (props) => {
   const theme = useTheme();
 
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
-        backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
+        data: [63, 15, 22, 10],
+        backgroundColor: ['#3F51B5', '#e53935', '#FB8C00', '#90B020'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels: ['Sectoriales', 'Territoriales', 'Nacionales', 'No asociados']
   };
 
   const options = {
@@ -44,28 +41,31 @@ export const TrafficByDevice = (props) => {
 
   const devices = [
     {
-      title: 'Desktop',
+      title: 'Sectoriales',
       value: 63,
-      icon: LaptopMacIcon,
       color: '#3F51B5'
     },
     {
-      title: 'Tablet',
+      title: 'Territoriales',
       value: 15,
-      icon: TabletIcon,
       color: '#E53935'
     },
     {
-      title: 'Mobile',
+      title: 'Nacionales',
       value: 23,
-      icon: PhoneIcon,
       color: '#FB8C00'
+    }
+    ,
+    {
+      title: 'No asociados',
+      value: 23,
+      color: '#90B020'
     }
   ];
 
   return (
     <Card {...props}>
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Por tipologia" />
       <Divider />
       <CardContent>
         <Box
@@ -88,7 +88,6 @@ export const TrafficByDevice = (props) => {
         >
           {devices.map(({
             color,
-            icon: Icon,
             title,
             value
           }) => (
@@ -99,7 +98,6 @@ export const TrafficByDevice = (props) => {
                 textAlign: 'center'
               }}
             >
-              <Icon color="action" />
               <Typography
                 color="textPrimary"
                 variant="body1"

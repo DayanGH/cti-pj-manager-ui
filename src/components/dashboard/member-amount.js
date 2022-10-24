@@ -3,7 +3,7 @@ import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from '@
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
-export const Sales = (props) => {
+export const MemberAmount = (props) => {
   const theme = useTheme();
 
   const data = {
@@ -92,7 +92,7 @@ export const Sales = (props) => {
             Last 7 days
           </Button>
         )}
-        title="Latest Sales"
+        title="Cantidad de miembros"
       />
       <Divider />
       <CardContent>
