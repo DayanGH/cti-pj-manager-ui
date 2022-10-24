@@ -3,6 +3,7 @@ import { AdminMembers } from '../dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
 
 export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
+    console.log(pdetails)
     return (
         <Box
             sx={{
@@ -13,14 +14,6 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                 borderColor: 'divider'
             }}
         >
-            {["admin_new"].includes(action) && (
-                <AdminMembers
-                    open
-                    onAction={action}
-                    onClose={handleAction}
-                    project={pdetails}
-                    loadData={() => loadData()} />
-            )}
             <Box
                 sx={{
                     p: 1,
@@ -104,16 +97,6 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                         </TableCell>
                         <TableCell>
                             ${pdetails.financing}
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <b>Miembros: </b>
-                        </TableCell>
-                        <TableCell>
-                            <Button onClick={() => handleAction("admin_new")}>
-                                Administrar
-                            </Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>

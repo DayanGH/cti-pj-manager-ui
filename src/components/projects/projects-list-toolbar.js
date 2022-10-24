@@ -12,12 +12,18 @@ import { AddIcon } from '../../icons/add';
 import { useState } from 'react';
 import { NewProjectDialog } from '../dialog-new-project';
 import { useTargetAction } from "../../utils/hooks";
+import { fetchProjects } from '../../utils/requests'
 
 export const ProjectsListToolbar = (props) => {
   const [open, setOpen] = useState(false);
   const [action, target, handleAction] = useTargetAction();
-  function loaddata() {
-    return props.loadData()
+  function loaddata(type) {
+    console.log(type)
+    fetchProjects(type === 0 ? "paps" : type === 1 ? "papt" : type === 2 ? "papn" : "pnap")
+      .then((data) => {
+        props.setProjects(data);
+        console.log(data)
+      });
   }
   return (
     <>
@@ -28,7 +34,7 @@ export const ProjectsListToolbar = (props) => {
             onAction={action}
             instance={target}
             onClose={handleAction}
-            loadData={() => loaddata()} />
+            loadData={(type) => loaddata(type)} />
         )}
         <Box
           sx={{
@@ -43,6 +49,7 @@ export const ProjectsListToolbar = (props) => {
             <Tabs value={props.activeTab}
               onChange={(event, newTab) => {
                 props.setActiveTab(newTab)
+                loaddata(newTab)
               }}
               centered>
               <Tab label="Sectoriales" />

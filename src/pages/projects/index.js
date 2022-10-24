@@ -12,8 +12,8 @@ function Projects() {
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
-    loadData(activeTab);
-  }, [activeTab]);
+    loadData(0);
+  }, []);
 
   function loadData(type) {
     setloading(true);
@@ -41,7 +41,7 @@ function Projects() {
         }}
       >
         <Container maxWidth={false}>
-          <ProjectsListToolbar loadData={() => loadData()}
+          <ProjectsListToolbar setProjects={setProjects}
             activeTab={activeTab}
             setActiveTab={setActiveTab} />
           <Box sx={{ mt: 3 }}>

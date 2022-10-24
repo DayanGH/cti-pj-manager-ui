@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
 
 
-export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, ...rest }) => {
+export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, ...rest }, props) => {
   const [data, setData] = useData({
     documents: [],
     document_groups: [],
@@ -75,14 +75,26 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   }
   function handleAddProject(data) {
     const func = onAction === 'new' ? addProject : editProject;
-    func(data)
-      .then((data) => {
-        onClose();
-        loadData();
-      })
-      .catch((error) => {
-        setErrors(error.response.data)
-      });
+    if (onAction === 'new') {
+      func(data)
+        .then((data) => {
+          onClose();
+          loadData(data.pj_type === "paps" ? 0 : data.pj_type === "papt" ? 1 : data.pj_type === "papn" ? 2 : 3);
+        })
+        .catch((error) => {
+          setErrors(error.response.data)
+        });
+    } else {
+      func(data)
+        .then((data) => {
+          onClose();
+          loadData();
+        })
+        .catch((error) => {
+          setErrors(error.response.data)
+        });
+    }
+
   }
 
   if (ptype === 'nac' || (data.pj_type === 'papn' && ptype !== 'none')) {

@@ -7,7 +7,7 @@ export const NavItem = (props) => {
   const { href, icon, title, ...others } = props;
   const router = useRouter();
 
-  const active = href ? (router.pathname === href || (router.pathname === '/projects/[id]' && href === "/projects")) : false;
+  const active = href ? (router.pathname === href || (router.pathname === '/projects/[id]' && href === "/projects") || (router.pathname === '/programs/[id]' && href === "/programs")) : false;
 
   return (
     <ListItem
