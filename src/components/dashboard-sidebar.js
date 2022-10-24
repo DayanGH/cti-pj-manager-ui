@@ -34,7 +34,7 @@ const items = [
     icon: (<UsersIcon fontSize="small" />),
     title: 'Usuarios'
   },
-    {
+  {
     href: '/members',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Miembros'
@@ -143,12 +143,12 @@ export const DashboardSidebar = (props) => {
           ))}
         </Box>
         <Divider sx={{ borderColor: '#b8b8b8' }} />
-        <NavItem sx={{mt: 0.5}}
-              key={''}
-              icon={(<LogoutIcon fontSize="small" />)}
-              href={''}
-              title={'Cerrar sesion'}
-            />
+        <NavItem sx={{ mt: 0.5 }}
+          key={''}
+          icon={(<LogoutIcon fontSize="small" />)}
+          href={'/projects'}
+          title={'Cerrar sesion'}
+        />
       </Box>
     </>
   );

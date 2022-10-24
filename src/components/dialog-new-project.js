@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
 
 
-export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, ...rest }, props) => {
+export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, setActiveTab, ...rest }) => {
   const [data, setData] = useData({
     documents: [],
     document_groups: [],
@@ -80,9 +80,11 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
         .then((data) => {
           onClose();
           loadData(data.pj_type === "paps" ? 0 : data.pj_type === "papt" ? 1 : data.pj_type === "papn" ? 2 : 3);
+          setActiveTab(data.pj_type === "paps" ? 0 : data.pj_type === "papt" ? 1 : data.pj_type === "papn" ? 2 : 3)
         })
         .catch((error) => {
-          setErrors(error.response.data)
+          setErrors(error)
+          console.log(error)
         });
     } else {
       func(data)
