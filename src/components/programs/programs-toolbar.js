@@ -15,8 +15,6 @@ import { useTargetAction } from "../../utils/hooks";
 
 export const ProgramsToolbar = (props) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [action, target, handleAction] = useTargetAction();
   function loaddata() {
     return props.loadData()
@@ -44,9 +42,9 @@ export const ProgramsToolbar = (props) => {
           <Box sx={{ borderBottom: 1, borderColor: 'divider', flexGrow: 1 }}>
             <Tabs value={0}
               centered>
+              <Tab label="Nacionales" />
               <Tab label="Sectoriales" />
               <Tab label="Territoriales" />
-              <Tab label="Nacionales" />
             </Tabs>
           </Box>
 

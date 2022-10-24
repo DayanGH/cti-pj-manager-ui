@@ -12,6 +12,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
     last_name: "",
     email: "",
     chief_type: "project_program_both_chief",
+    c_id: "",
   });
   const [errors, setErrors] = useData({});
 
@@ -61,8 +62,18 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, ...rest }
           helperText={errors.last_name}
           onChange={(event) => setData({ "last_name": event.target.value })}
           fullWidth
-          InputLabelProps={{ shrink: true }} />
-
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          sx={{ mt: 2 }}
+          label="Carnet de Identidad"
+          onChange={(event) => setData({ "c_id": event.target.value })}
+          fullWidth
+          inputProps={{
+            maxLength: 11,
+          }}
+          InputLabelProps={{ shrink: true }}
+        />
         <FormControl
           sx={{ mt: 2 }}
           error={'chief_type' in errors}

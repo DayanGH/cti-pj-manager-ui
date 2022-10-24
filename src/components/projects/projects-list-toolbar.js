@@ -9,20 +9,16 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';
-import { useState } from 'react';
 import { NewProjectDialog } from '../dialog-new-project';
 import { useTargetAction } from "../../utils/hooks";
 import { fetchProjects } from '../../utils/requests'
 
 export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects }) => {
-  const [open, setOpen] = useState(false);
   const [action, target, handleAction] = useTargetAction();
   function loaddata(type) {
-    console.log(type)
-    fetchProjects(type === 0 ? "paps" : type === 1 ? "papt" : type === 2 ? "papn" : "pnap")
+    fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
       .then((data) => {
         setProjects(data);
-        console.log(data)
       });
   }
   return (
@@ -53,9 +49,9 @@ export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects }) =>
                 loaddata(newTab)
               }}
               centered>
+              <Tab label="Nacionales" />
               <Tab label="Sectoriales" />
               <Tab label="Territoriales" />
-              <Tab label="Nacionales" />
               <Tab label="No asociados" />
             </Tabs>
           </Box>

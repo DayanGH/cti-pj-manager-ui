@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box, Container, Tab, Tabs, TabPanel } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { ProjectsListResults } from '../../components/projects/projects-list-results';
 import { ProjectsListToolbar } from '../../components/projects/projects-list-toolbar';
 import { DashboardLayout } from '../../components/dashboard-layout';
@@ -17,7 +17,7 @@ function Projects() {
 
   function loadData(type) {
     setloading(true);
-    fetchProjects(type === 0 ? "paps" : type === 1 ? "papt" : type === 2 ? "papn" : "pnap")
+    fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
       .then((data) => {
         setProjects(data);
         setloading(false)

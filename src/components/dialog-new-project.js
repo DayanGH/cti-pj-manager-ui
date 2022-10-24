@@ -79,8 +79,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
       func(data)
         .then((data) => {
           onClose();
-          loadData(data.pj_type === "paps" ? 0 : data.pj_type === "papt" ? 1 : data.pj_type === "papn" ? 2 : 3);
-          setActiveTab(data.pj_type === "paps" ? 0 : data.pj_type === "papt" ? 1 : data.pj_type === "papn" ? 2 : 3)
+          loadData(data.pj_type === "papn" ? 0 : data.pj_type === "paps" ? 1 : data.pj_type === "papt" ? 2 : 3);
+          setActiveTab(data.pj_type === "papn" ? 0 : data.pj_type === "paps" ? 1 : data.pj_type === "papt" ? 2 : 3)
         })
         .catch((error) => {
           setErrors(error)

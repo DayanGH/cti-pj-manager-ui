@@ -9,7 +9,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
     c_id: "",
     email: "",
     organization: "",
-    type: "in"
+    m_type: "in"
   });
   const [errors, setErrors] = useData({});
 
@@ -42,12 +42,17 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
       >
         <TextField
           label="Nombre"
+          error={'name' in errors}
+          helperText={errors.name}
           onChange={() => setData({ ["name"]: event.target.value })}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
 
-        <FormControl sx={{ mt: 2 }}>
+        <FormControl
+          sx={{ mt: 2 }}
+          error={'m_type' in errors}
+          helpertext={errors.m_type}>
           <InputLabel
             id="demo-simple-select-filled-label"
           >
@@ -56,25 +61,33 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            value={data["type"]}
+            value={data["m_type"]}
             label="Tipo"
             variant={'outlined'}
-            onChange={(event) => setData({ "type": event.target.value })}
+            onChange={(event) => {
+              console.log(event.target.value)
+              setData({ "m_type": event.target.value })
+            }}
           >
             <MenuItem value={"out"}>Externo</MenuItem>
             <MenuItem value={'in'}>Interno</MenuItem>
+            <MenuItem value={'stdnt'}>Estudiante</MenuItem>
           </Select>
         </FormControl>
         <TextField
           sx={{ mt: 2 }}
           label="Correo"
+          error={'email' in errors}
+          helperText={errors.email}
           onChange={(event) => setData({ "email": event.target.value })}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
         <TextField
           sx={{ mt: 2 }}
-          label="CID"
+          label="Carnet de Identidad"
+          error={'c_id' in errors}
+          helperText={errors.c_id}
           onChange={(event) => setData({ "c_id": event.target.value })}
           fullWidth
           inputProps={{
@@ -85,6 +98,8 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
         <TextField
           sx={{ mt: 2 }}
           label="Organizacion"
+          error={'organization' in errors}
+          helperText={errors.organization}
           onChange={(event) => setData({ "organization": event.target.value })}
           fullWidth
           InputLabelProps={{ shrink: true }}
