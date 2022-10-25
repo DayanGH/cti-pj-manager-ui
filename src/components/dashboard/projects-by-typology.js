@@ -1,6 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
+import {CopyIcon} from "../../icons/copy"
 
 
 export const ProjectsByTypology = ({projects}) => {
@@ -112,6 +113,10 @@ export const ProjectsByTypology = ({projects}) => {
             <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
           </Select>
         </FormControl>
+              <IconButton
+          size="small">
+            <CopyIcon fontSize="small" />
+      </IconButton>
         </Box>
       <Divider />
       <CardContent>

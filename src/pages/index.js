@@ -77,7 +77,7 @@ const Dashboard = () => {
               item
               xs={6}
             >
-               <MemberAmount />
+               <MemberAmount members={members}/>
             </Grid>
           </Grid>
         </Container>
