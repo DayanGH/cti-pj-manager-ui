@@ -88,6 +88,19 @@ export const deleteDocument = async (id) => {
   return response.data;
 };
 
+export const downloadDocument = async (id, filename) => {
+  const response = await axiosInstance.get(`documents/${id}/download`, { responseType: 'blob' })
+  .then((response)=>{
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+    })
+  //return response.data;
+};
+
 //Documents Group
 export const fetchDocumentsGroup = async (name, project) => {
   const response = await axiosInstance.get('/documentgroups/', {

@@ -1,6 +1,7 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import { PopupMenu } from '../popup-menu';
 import { DocumentIcon } from 'src/icons/document';
+import { downloadDocument } from 'src/utils/requests';
 
 export const DocumentGrid = ({ documents, handleAction }) => {
 
@@ -21,6 +22,7 @@ export const DocumentGrid = ({ documents, handleAction }) => {
             sx={{ mx: 1, flexGrow: 1 }}
             color="textPrimary"
             variant="body1"
+            onClick={() => downloadDocument(document.id, document.file)}
           >
             {document.name}
           </Typography>

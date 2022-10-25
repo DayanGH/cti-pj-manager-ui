@@ -30,9 +30,8 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             sx={{ mx: 1 }}
                             color="textPrimary"
                             variant="body1"
-
                         >
-                            {document.d_name}
+                            <a href={encodeURI(document.file)}>{document.d_name}</a>
                         </Typography>
                     </Box>
                 </TableCell>

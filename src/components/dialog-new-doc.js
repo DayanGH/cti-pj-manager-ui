@@ -41,6 +41,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
   const saveDocument = async () => {
     let data = new FormData();
     let saveName = showCustomName === "flex" ? customName : (type === 'document' ? (documentNames.find(item => item.key == docName)) : (groupNames.find(item => item.key == docName))).value;
+    saveName += "." + file.name.split(".").pop()
 
     if (type === "document") {
       data.append("file", file, saveName);

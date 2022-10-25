@@ -10,7 +10,8 @@ export const NewSDocumentDialog = ({ open, handleClose, loadData, onAction, ...r
 
   const saveDocument = async () => {
     let data = new FormData();
-      data.append("file", file, docName);
+
+      data.append("file", file, docName + "." + file.name.split(".").pop());
       data.append("name", docName);
       addDocument(data, "/documents/").then((data) => {
         handleClose();
