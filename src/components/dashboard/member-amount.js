@@ -92,7 +92,7 @@ export const MemberAmount = (props) => {
             Last 7 days
           </Button>
         )}
-        title="Cantidad de miembros"
+        title="Miembros"
       />
       <Divider />
       <CardContent>

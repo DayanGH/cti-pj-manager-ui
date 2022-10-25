@@ -1,20 +1,49 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { useEffect, useState } from 'react';
 
-export const ProjectsByTypology = (props) => {
+
+export const ProjectsByTypology = ({projects}) => {
   const theme = useTheme();
+  const [nac, setNac] = useState(0);
+  const [ter, setTer] = useState(0);
+  const [sec, setSec] = useState(0);
+  const [nas, setNas] = useState(0);
+  const [showBy, setShowBy] = useState("typology");
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  function loadData(){
+    let n=0, t = 0, s =0, na = 0;
+    projects.forEach( project => {
+      if(project.pj_type=="papn")
+        n++;
+      else if(project.pj_type=="papt")
+        t++;
+      else if(project.pj_type=="paps")
+        s++;
+      else if(project.pj_type.startsWith("pnap"))
+        na++;
+    } )
+    setNac(n)
+    setTer(t)
+    setSec(s)
+    setNas(na)
+  }
 
   const data = {
     datasets: [
       {
-        data: [63, 15, 22, 10],
+        data: [nac, ter, sec, nas],
         backgroundColor: ['#3F51B5', '#e53935', '#FB8C00', '#90B020'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Sectoriales', 'Territoriales', 'Nacionales', 'No asociados']
+    labels: ['Nacionales', 'Territoriales', 'Sectoriales' , 'No asociados']
   };
 
   const options = {
@@ -39,33 +68,51 @@ export const ProjectsByTypology = (props) => {
     }
   };
 
-  const devices = [
+  const types = [
     {
-      title: 'Sectoriales',
-      value: 63,
+      title: 'Nacionales',
+      value: nac,
       color: '#3F51B5'
     },
     {
       title: 'Territoriales',
-      value: 15,
+      value: ter,
       color: '#E53935'
     },
     {
-      title: 'Nacionales',
-      value: 23,
+      title: 'Sectoriales',
+      value: sec,
       color: '#FB8C00'
     }
     ,
     {
       title: 'No asociados',
-      value: 23,
+      value: nas,
       color: '#90B020'
     }
   ];
 
   return (
-    <Card {...props}>
-      <CardHeader title="Por tipologia" />
+    <Card>
+    <Box sx={{display: "flex", alignItems: "center", mr: 1}}>
+      <CardHeader title="Projectos" sx={{flexGrow: 1}} />
+      <FormControl>
+          <InputLabel id="demo-simple-select-filled-label">Datos</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={showBy}
+            label='Datos'
+            onChange={(event) => {
+              setShowBy(event.target.value);
+              data["datasets"]["data"] = [5, 9, 12, 3];
+            }}
+          >
+            <MenuItem value={'typology'}>Por tipologia</MenuItem>
+            <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
+          </Select>
+        </FormControl>
+        </Box>
       <Divider />
       <CardContent>
         <Box
@@ -86,7 +133,7 @@ export const ProjectsByTypology = (props) => {
             pt: 2
           }}
         >
-          {devices.map(({
+          {types.map(({
             color,
             title,
             value
@@ -109,7 +156,6 @@ export const ProjectsByTypology = (props) => {
                 variant="h4"
               >
                 {value}
-                %
               </Typography>
             </Box>
           ))}

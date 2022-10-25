@@ -21,10 +21,9 @@ function Projects() {
       .then((data) => {
         setProjects(data);
         setloading(false)
-        console.log(data)
       });
   }
-  if (isloading) return <p>loading....</p>
+  if (isloading) return <p>cargando....</p>
 
   return (
     <>

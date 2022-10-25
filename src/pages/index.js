@@ -8,8 +8,33 @@ import { TotalCustomers } from '../components/dashboard/total-customers';
 import { TotalProfit } from '../components/dashboard/total-profit';
 import { ProjectsByTypology } from '../components/dashboard/projects-by-typology';
 import { DashboardLayout } from '../components/dashboard-layout';
+import { fetchProjects } from '../utils/requests'
+import { fetchMembers } from '../utils/requests';
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
+  const [isloading, setloading] = useState(true);
+  const [members, setMembers] = useState();
+  const [projects, setProjects] = useState();
+
+    useEffect(() => {
+    loadData(0);
+  }, []);
+
+  function loadData(type) {
+    setloading(true);
+    fetchProjects("all")
+      .then((data) => {
+        setProjects(data);
+        fetchMembers()
+          .then((data) => {
+          setMembers(data);
+          setloading(false)
+        })
+      });
+  }
+
+ if (isloading) return <p>cargando....</p>
 
   /*   function useAuthentication() {
       const router = useRouter();
@@ -44,7 +69,9 @@ const Dashboard = () => {
               item
               xs={6}
             >
-               <ProjectsByTypology sx={{ height: '100%' }} />
+               <ProjectsByTypology
+                 projects={projects}
+                 sx={{ height: '100%' }} />
             </Grid>
             <Grid
               item
