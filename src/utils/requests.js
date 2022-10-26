@@ -88,8 +88,8 @@ export const deleteDocument = async (id) => {
   return response.data;
 };
 
-export const downloadDocument = async (id, filename) => {
-  const response = await axiosInstance.get(`documents/${id}/download`, { responseType: 'blob' })
+export const downloadDocument = async (path, filename) => {
+  const response = await axiosInstance.get(`${path}/download`, { responseType: 'blob' })
   .then((response)=>{
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');

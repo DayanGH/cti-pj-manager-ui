@@ -4,6 +4,7 @@ import { PopupMenu } from '../popup-menu';
 import { ExpandIcon } from 'src/icons/expand';
 import { CollapseIcon } from 'src/icons/collapse';
 import { DocumentIcon } from 'src/icons/document';
+import { downloadDocument } from 'src/utils/requests';
 
 export const DocumentList = ({ documents, groups, handleAction }) => {
 
@@ -14,6 +15,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                 hover
                 sx={{ display: 'flex' }}
                 key={document.id}
+                onClick={() => downloadDocument( "projectdocuments/" + document.id, document.file.split("/").pop())}
             >
                 <TableCell sx={{ flexGrow: 1 }}>
                     <Box
@@ -31,7 +33,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             color="textPrimary"
                             variant="body1"
                         >
-                            <a href={encodeURI(document.file)}>{document.d_name}</a>
+                            { document.d_name }
                         </Typography>
                     </Box>
                 </TableCell>
