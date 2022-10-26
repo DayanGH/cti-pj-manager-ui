@@ -16,6 +16,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     project_classification: "",
     pj_type: "",
     name: "",
+    strategics_sectors: "",
     project_code: "",
     program_code: "",
     main_entity: "",
@@ -34,6 +35,19 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     { key: 'i_d', value: 'Aplicada y de Desarrollo' },
     { key: 'inn', value: 'Innovación' }]
 
+  const strategics_sectors = [
+    { id: 'Turismo', value: 'Turismo' },
+    { id: 'Industria boitecnológica y farmacéutica', value: 'Industria boitecnológica y farmacéutica' },
+    { id: 'Electroenergético', value: 'Electroenergético' },
+    { id: 'Producción de alimentos', value: 'Producción de alimentos' },
+    { id: 'Construcciones', value: 'Construcciones' },
+    { id: 'Telecomunicaciones e Informática', value: 'Telecomunicaciones e Informática' },
+    { id: 'Logística y transporte', value: 'Logística y transporte' },
+    { id: 'Redes hidráulicas y sanitarias', value: 'Redes hidráulicas y sanitarias' },
+    { id: 'Agroindustria azucarera', value: 'Agroindustria azucarera' },
+    { id: 'Industria ligera', value: 'Industria ligera' },
+    { id: 'Servicios técnicos profesionales', value: 'Servicios técnicos profesionales' }]
+
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
   const [errors, setErrors] = useData({});
@@ -45,8 +59,10 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
 
   const [valueChief, setValueChief] = useState(data.chief !== null ? { id: data?.chief, name: instance?.chief_name } : null)
   const [inputValueChief, setInputValueChief] = useState('')
-  let component;
 
+  const [valueSectors, setValueSectors] = useState(instance?.sectors !== undefined ? instance?.sectors : [])
+  const [inputValueSectors, setInputValueSector] = useState('')
+  let component;
   const programsAsyncData = useAsync({
     deferFn: fetchPrograms,
   });
@@ -96,7 +112,23 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           setErrors(error.response.data)
         });
     }
+  }
+  function setStrategicsSectors(value) {
+    console.log(value)
+    let strategics_sectorstemp = ''
+    if (value.length === 0) {
+      handleChangeField("", "strategics_sectors")
+    } else {
+      for (let i = 0; i < value.length; i++) {
+        if (strategics_sectorstemp === '') {
+          strategics_sectorstemp += value[i].value
+        } else {
+          strategics_sectorstemp += ',' + value[i].value
+        }
 
+      }
+    }
+    handleChangeField(strategics_sectorstemp, 'strategics_sectors')
   }
 
   if (ptype === 'nac' || (data.pj_type === 'papn' && ptype !== 'none')) {
@@ -271,6 +303,31 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
                   </div>
                 ),
               }}
+            />
+          )}
+        />
+        <Autocomplete
+          multiple
+          sx={{ mt: 2 }}
+          id="select-sectors"
+          value={valueSectors}
+          onChange={(_, value) => {
+            setValueSectors(value)
+            setStrategicsSectors(value)
+          }}
+          inputValue={inputValueSectors}
+          onInputChange={(_, value) => {
+            setInputValueSector(value)
+          }}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          getOptionLabel={(option) => option.value}
+          options={strategics_sectors}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Sectores estratégicos"
+              error={'chief' in errors}
+              helperText={errors.chief}
             />
           )}
         />
