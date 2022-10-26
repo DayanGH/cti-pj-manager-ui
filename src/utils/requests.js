@@ -132,6 +132,10 @@ export const addMember = async (data) => {
   const response = await axiosInstance.post("members/", data);
   return response.data;
 };
+export const editMember = async (data) => {
+  const response = await axiosInstance.patch(`members/${data.id}/`, data);
+  return response.data;
+};
 export const deleteMember = async (id) => {
   const response = await axiosInstance.delete(`members/${id}/`);
   return response.data;

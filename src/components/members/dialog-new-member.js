@@ -1,25 +1,36 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
-import { addMember } from 'src/utils/requests';
-import { useData } from '../../utils/hooks';
+import { addMember, editMember } from 'src/utils/requests';
+import { useData, useTargetAction } from '../../utils/hooks';
+import { DeleteUsersMembersDialog } from '../dialog-delete-user-members';
 
-export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
+export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instance, ...rest }) => {
   const [data, setData] = useData({
     name: "",
     c_id: "",
     email: "",
     organization: "",
-    m_type: "in"
+    m_type: "in",
+    ...instance,
   });
   const [errors, setErrors] = useData({});
+  const [mainAction, setMainAction] = useState(onAction)
+  const [editable, setEditable] = useState(mainAction === 'new_member' ? false : true)
+  const [visible, setVisible] = useState(mainAction === 'new_member' ? "none" : "flex")
+  const [invisible, setInvisible] = useState(mainAction === 'new_member' ? "flex" : "none")
+
+  const [action, target, handleAction] = useTargetAction();
+
 
   const saveMember = async () => {
     console.log(data);
+    const func = mainAction === 'new_member' ? addMember : editMember;
 
-    addMember(data).then((data) => {
-      handleClose();
-      loadData();
-    })
+    await func(data)
+      .then((data) => {
+        handleClose();
+        loadData();
+      })
       .catch((error) => {
         setErrors(error.response.data)
         console.log(error.response.data)
@@ -29,97 +40,136 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, ...rest
 
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      maxWidth='xs'
-      fullWidth={true}
+    <>
+      {
+        ["delete_user", "delete_member",].includes(action) && (
+          <DeleteUsersMembersDialog
+            onAction={action}
+            open
+            instance={target}
+            onClose={handleAction}
+            closeMain={handleClose}
+            loadData={() => loadData()}
+          />
+        )
+      }
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth='xs'
+        fullWidth={true}
 
-    >
-      <DialogTitle>{onAction === 'new_member' ? "Nuevo miembro" : "Editar miembro"}</DialogTitle>
-      <Box
-        sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
       >
-        <TextField
-          label="Nombre"
-          error={'name' in errors}
-          helperText={errors.name}
-          onChange={() => setData({ ["name"]: event.target.value })}
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
-
-        <FormControl
-          sx={{ mt: 2 }}
-          error={'m_type' in errors}
-          helpertext={errors.m_type}>
-          <InputLabel
-            id="demo-simple-select-filled-label"
-          >
-            Tipo
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
-            value={data["m_type"]}
-            label="Tipo"
-            variant={'outlined'}
-            onChange={(event) => {
-              console.log(event.target.value)
-              setData({ "m_type": event.target.value })
-            }}
-          >
-            <MenuItem value={"out"}>Externo</MenuItem>
-            <MenuItem value={'in'}>Interno</MenuItem>
-            <MenuItem value={'stdnt'}>Estudiante</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          sx={{ mt: 2 }}
-          label="Correo"
-          error={'email' in errors}
-          helperText={errors.email}
-          onChange={(event) => setData({ "email": event.target.value })}
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          sx={{ mt: 2 }}
-          label="Carnet de Identidad"
-          error={'c_id' in errors}
-          helperText={errors.c_id}
-          onChange={(event) => setData({ "c_id": event.target.value })}
-          fullWidth
-          inputProps={{
-            maxLength: 11,
-          }}
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          sx={{ mt: 2 }}
-          label="Organizacion"
-          error={'organization' in errors}
-          helperText={errors.organization}
-          onChange={(event) => setData({ "organization": event.target.value })}
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
+        <DialogTitle>{mainAction === 'new_member' ? "Nuevo miembro" : mainAction === 'get_member' ? "Miembro" : "Editar miembro"}</DialogTitle>
         <Box
-          sx={{ pt: 2, display: "flex", justifyContent: "right" }}
+          sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
         >
-          <Button
-            onClick={handleClose}
+          <TextField
+            label="Nombre"
+            value={data.name}
+            error={'name' in errors}
+            helperText={errors.name}
+            onChange={(event) => setData({ "name": event.target.value })}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: editable }}
+          />
+
+          <FormControl
+            sx={{ mt: 2 }}
+            error={'m_type' in errors}
+            helpertext={errors.m_type}
           >
-            Cancelar
-          </Button>
-          <Button
-            onClick={saveMember}
+            <InputLabel
+              id="demo-simple-select-filled-label"
+            >
+              Tipo
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={data.m_type}
+              label="Tipo"
+              variant={'outlined'}
+              onChange={(event) => {
+                console.log(event.target.value)
+                setData({ "m_type": event.target.value })
+              }}
+            >
+              <MenuItem value={"out"}>Externo</MenuItem>
+              <MenuItem value={'in'}>Interno</MenuItem>
+              <MenuItem value={'stdnt'}>Estudiante</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            sx={{ mt: 2 }}
+            label="Correo"
+            value={data.email}
+            error={'email' in errors}
+            helperText={errors.email}
+            onChange={(event) => setData({ "email": event.target.value })}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: editable }}
+          />
+          <TextField
+            sx={{ mt: 2 }}
+            label="Carnet de Identidad"
+            value={data.c_id}
+            error={'c_id' in errors}
+            helperText={errors.c_id}
+            onChange={(event) => setData({ "c_id": event.target.value })}
+            fullWidth
+            inputProps={{
+              maxLength: 11,
+            }}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: editable }}
+          />
+          <TextField
+            sx={{ mt: 2 }}
+            label="Organizacion"
+            value={data.organization}
+            error={'organization' in errors}
+            helperText={errors.organization}
+            onChange={(event) => setData({ "organization": event.target.value })}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: editable }}
+          />
+          <Box
+            sx={{ pt: 2, display: "flex", justifyContent: "right" }}
           >
-            Guardar
-          </Button>
+            <Button
+              sx={{ display: invisible }}
+              onClick={handleClose}
+            >
+              Cancelar
+            </Button>
+            <Button
+              sx={{ display: invisible }}
+              onClick={saveMember}
+            >
+              Guardar
+            </Button>
+            <Button
+              color="error"
+              sx={{ display: visible }}
+              onClick={() => { handleAction('delete_member', instance?.id) }}
+            >
+              Eliminar
+            </Button>
+            <Button
+              sx={{ display: visible }}
+              onClick={() => { setMainAction('edit_member'), setEditable(false), setVisible('none'), setInvisible('flex') }}
+            >
+              Editar
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Dialog>
+      </Dialog>
+    </>
   );
+
 
 };

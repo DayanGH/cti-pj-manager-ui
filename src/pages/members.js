@@ -44,14 +44,17 @@ const Members = () => {
         <Toolbar title="Miembros"
           handleAction={handleAction}
           action="new_member" />
-        {["new_member", "edit_member"].includes(action) && (
+        {["new_member", "edit_member", "get_member"].includes(action) && (
           <NewMemberDialog
             open
             onAction={action}
             handleClose={handleAction}
             loadData={() => loadData()}
+            instance={target}
           />)}
-        <MemberList members={members} />
+        <MemberList members={members}
+          handleAction={handleAction}
+          action="get_member" />
       </Box>
     </>
   );

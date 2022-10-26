@@ -6,7 +6,7 @@ import {
     Button,
     DialogActions,
 } from "@mui/material";
-import { deleteDocument, deleteProject, deleteGroupDocuments } from 'src/utils/requests';
+import { deleteDocument, deleteProject, deleteGroupDocuments, deleteMember } from 'src/utils/requests';
 import { useData } from 'src/utils/hooks';
 import router from "next/router";
 

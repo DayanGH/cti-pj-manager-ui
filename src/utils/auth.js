@@ -15,7 +15,7 @@ export function LoginProvider({ children }) {
         const access_token = localStorage.getItem("access_token");
 
         async function verifyAccessToken() {
-            const response = await verifyToken(access_token);
+            const response = await verifyToken(access_token).catch((error) => console.log(error));;
             setState({
                 status: response.status,
                 user: JSON.parse(localStorage.getItem("user")),

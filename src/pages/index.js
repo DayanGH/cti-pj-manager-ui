@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [projects, setProjects] = useState();
   const [users, setUsers] = useState();
 
-    useEffect(() => {
+  useEffect(() => {
     loadData(0);
   }, []);
 
@@ -24,13 +24,17 @@ const Dashboard = () => {
         setProjects(data);
         fetchMembers()
           .then((data) => {
-          setMembers(data);
-          setloading(false)
-        })
-      });
+            setMembers(data);
+            setloading(false)
+          }).catch((error) => {
+            console.log(error)
+          });
+      }).catch((error) => {
+        console.log(error)
+      });;
   }
 
- if (isloading) return <p>cargando....</p>
+  if (isloading) return <p>cargando....</p>
 
   /*   function useAuthentication() {
       const router = useRouter();
@@ -65,15 +69,15 @@ const Dashboard = () => {
               item
               xs={6}
             >
-               <ProjectsByTypology
-                 projects={projects}
-                 sx={{ height: '100%' }} />
+              <ProjectsByTypology
+                projects={projects}
+                sx={{ height: '100%' }} />
             </Grid>
             <Grid
               item
               xs={6}
             >
-               <MemberAmount members={members}/>
+              <MemberAmount members={members} />
             </Grid>
           </Grid>
         </Container>

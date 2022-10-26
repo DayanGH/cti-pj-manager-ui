@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import router from 'next/router';
 
-export const MemberList = ({ members, ...rest }) => {
+export const MemberList = ({ members, handleAction, action, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -54,7 +54,7 @@ export const MemberList = ({ members, ...rest }) => {
                   hover
                   key={member.id}
                 >
-                  <TableCell onClick={() => console.log(member.id)}>
+                  <TableCell onClick={() => handleAction(action, member)}>
                     <UserEntry name={member.name} />
                   </TableCell>
                   <TableCell onClick={() => sendMail(member.email)}>

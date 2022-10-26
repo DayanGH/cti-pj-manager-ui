@@ -102,7 +102,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
         })
         .catch((error) => {
           setErrors(error)
-          console.log(error)
+          console.log(error.response.data)
         });
     } else {
       func(data)
