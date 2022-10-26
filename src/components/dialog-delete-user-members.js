@@ -36,7 +36,7 @@ export const DeleteUsersMembersDialog = (props) => {
             maxWidth="sm"
             fullWidth
         >
-            <DialogTitle> {props.onAction === 'delete_member' ? 'Eliminar meimbro' : 'Eliminar usuario'}</DialogTitle>
+            <DialogTitle> {props.onAction === 'delete_member' ? 'Eliminar miembro' : 'Eliminar usuario'}</DialogTitle>
             {props.onAction === 'delete_member' ?
                 <DialogContent>
                     ¿Está seguro de que desea eliminar el miembro de forma

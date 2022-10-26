@@ -86,6 +86,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
               Tipo
             </InputLabel>
             <Select
+              inputProps={{ readOnly: editable }}
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
               value={data.m_type}
