@@ -162,4 +162,11 @@ export const deleteUser = async (id) => {
   return response.data;
 };
 
+export const sendMail = async (dest) => {
+     const link = document.createElement('a');
+      link.href = 'mailto:' + dest;
+      document.body.appendChild(link);
+      link.click();
+};
+
 

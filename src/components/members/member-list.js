@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import { UserEntry } from '../users/user-entry'
+import { sendMail } from 'src/utils/requests';
 
 import {
   Box,
@@ -56,7 +57,7 @@ export const MemberList = ({ members, ...rest }) => {
                   <TableCell onClick={() => console.log(member.id)}>
                     <UserEntry name={member.name} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell onClick={() => sendMail(member.email)}>
                     {member.email}
                   </TableCell>
                   <TableCell>
