@@ -90,7 +90,7 @@ export const deleteDocument = async (id) => {
 
 export const downloadDocument = async (path, filename) => {
   const response = await axiosInstance.get(`${path}/download`, { responseType: 'blob' })
-  .then((response)=>{
+    .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -138,7 +138,6 @@ export const deleteMember = async (id) => {
 };
 
 //Users
-//TODO: Decide wether to use "chief" or user
 export const fetchChiefs = async () => {
   const response = await axiosInstance.get("/users/");
   return response.data;
@@ -163,10 +162,10 @@ export const deleteUser = async (id) => {
 };
 
 export const sendMail = async (dest) => {
-     const link = document.createElement('a');
-      link.href = 'mailto:' + dest;
-      document.body.appendChild(link);
-      link.click();
+  const link = document.createElement('a');
+  link.href = 'mailto:' + dest;
+  document.body.appendChild(link);
+  link.click();
 };
 
 

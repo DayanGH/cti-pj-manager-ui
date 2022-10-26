@@ -25,6 +25,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     end_date: "",
     financing: 0,
     program: null,
+    notes: "",
     ...instance,
   });
   const projectTypesNAP = [
@@ -62,6 +63,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
 
   const [valueSectors, setValueSectors] = useState(instance?.sectors !== undefined ? instance?.sectors : [])
   const [inputValueSectors, setInputValueSector] = useState('')
+  const [displayNotes, setdisplayNotes] = useState(onAction === 'new' ? "none" : "flex")
   let component;
   const programsAsyncData = useAsync({
     deferFn: fetchPrograms,
@@ -410,6 +412,19 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           error={'entities' in errors}
           helperText={errors.entities}
           onChange={(evt) => handleChangeField(evt.target.value, 'entities')}
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          sx={{ mt: 2, display: displayNotes }}
+          label="Notas"
+          multiline
+          value={data.notes}
+          maxRows={10}
+          type='text'
+          error={'notes' in errors}
+          helperText={errors.entities}
+          onChange={(evt) => handleChangeField(evt.target.value, 'notes')}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
