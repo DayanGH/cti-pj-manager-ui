@@ -9,6 +9,7 @@ export const MemberAmount = ({members}) => {
     const [out, setOut] = useState(0);
     const [stu, setStu] = useState(0);
     const [aso, setAso] = useState(0);
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
     loadData();
@@ -32,6 +33,8 @@ export const MemberAmount = ({members}) => {
     setOut(o)
     setStu(s)
     setAso(a)
+    setTotal(i+o+s)
+
   }
 
   return (
@@ -43,7 +46,7 @@ export const MemberAmount = ({members}) => {
       />
       <IconButton
           size="small"
-          onClick={() => navigator.clipboard.writeText("Internos: " + int)}
+          onClick={() => navigator.clipboard.writeText("Internos: " + int + " Estudiantes: " + stu + " Externos: " + out)}
           >
             <CopyIcon fontSize="small" />
       </IconButton>
@@ -52,6 +55,7 @@ export const MemberAmount = ({members}) => {
       <CardContent>
       <Table>
                 <TableBody>
+
                     <TableRow
                     >
                         <TableCell>
@@ -86,6 +90,15 @@ export const MemberAmount = ({members}) => {
                         </TableCell>
                         <TableCell>
                             {aso}
+                        </TableCell>
+                    </TableRow>
+                    <TableRow
+                    >
+                        <TableCell>
+                            <b>Total: </b>
+                        </TableCell>
+                        <TableCell>
+                            {total}
                         </TableCell>
                     </TableRow>
                     </TableBody>

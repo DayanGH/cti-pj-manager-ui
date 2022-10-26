@@ -114,7 +114,8 @@ export const ProjectsByTypology = ({projects}) => {
           </Select>
         </FormControl>
               <IconButton
-          size="small">
+                onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas )}
+                size="small">
             <CopyIcon fontSize="small" />
       </IconButton>
         </Box>

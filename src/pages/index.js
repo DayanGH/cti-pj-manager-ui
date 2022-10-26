@@ -1,21 +1,17 @@
 import Head from 'next/head';
 import React from "react";
 import { Box, Container, Grid } from '@mui/material';
-import { Budget } from '../components/dashboard/budget';
 import { MemberAmount } from '../components/dashboard/member-amount';
-import { TasksProgress } from '../components/dashboard/tasks-progress';
-import { TotalCustomers } from '../components/dashboard/total-customers';
-import { TotalProfit } from '../components/dashboard/total-profit';
 import { ProjectsByTypology } from '../components/dashboard/projects-by-typology';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { fetchProjects } from '../utils/requests'
-import { fetchMembers } from '../utils/requests';
+import { fetchMembers, fetchProjects, fetchUsers } from '../utils/requests';
 import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
   const [isloading, setloading] = useState(true);
   const [members, setMembers] = useState();
   const [projects, setProjects] = useState();
+  const [users, setUsers] = useState();
 
     useEffect(() => {
     loadData(0);
