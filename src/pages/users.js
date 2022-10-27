@@ -45,14 +45,17 @@ const Users = () => {
           handleAction={handleAction}
           action="new_user" />
 
-        {["new_user", "edit_user"].includes(action) && (
+        {["new_user", "edit_user", "get_user"].includes(action) && (
           <NewUserDialog
             open
             onAction={action}
             handleClose={handleAction}
             loadData={() => loadData()}
+            instance={target}
           />)}
-        <UserList users={users} />
+        <UserList users={users}
+          handleAction={handleAction}
+          action="get_user" />
       </Box>
     </>
   );

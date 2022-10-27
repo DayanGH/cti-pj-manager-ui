@@ -7,16 +7,13 @@ import { sendMail } from 'src/utils/requests';
 import {
   Box,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography
 } from '@mui/material';
-import router from 'next/router';
 
 export const MemberList = ({ members, handleAction, action, ...rest }) => {
   const [limit, setLimit] = useState(10);

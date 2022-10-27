@@ -23,7 +23,6 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
 
 
   const saveMember = async () => {
-    console.log(data);
     const func = mainAction === 'new_member' ? addMember : editMember;
 
     await func(data)

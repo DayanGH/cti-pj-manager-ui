@@ -7,18 +7,15 @@ import { sendMail } from 'src/utils/requests';
 import {
   Box,
   Card,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography
 } from '@mui/material';
-import router from 'next/router';
 
-export const UserList = ({ users, ...rest }) => {
+export const UserList = ({ users, handleAction, action, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -54,7 +51,7 @@ export const UserList = ({ users, ...rest }) => {
                   hover
                   key={user.id}
                 >
-                  <TableCell>
+                  <TableCell onClick={() => handleAction(action, user)}>
                     <UserEntry name={user.name} />
                   </TableCell>
                   <TableCell onClick={() => sendMail(user.email)}>

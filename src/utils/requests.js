@@ -164,7 +164,10 @@ export const deleteUser = async (id) => {
   const response = await axiosInstance.delete(`users/${id}/`);
   return response.data;
 };
-
+export const editUser = async (data) => {
+  const response = await axiosInstance.patch(`update_user/${data.id}/`, data);
+  return response.data;
+};
 export const sendMail = async (dest) => {
   const link = document.createElement('a');
   link.href = 'mailto:' + dest;
