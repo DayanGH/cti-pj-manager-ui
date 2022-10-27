@@ -1,6 +1,6 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
-import { addUser, editUser } from 'src/utils/requests';
+import { addUser, editPassword, editUser } from 'src/utils/requests';
 import { useData, useTargetAction } from '../../utils/hooks';
 import { DeleteUsersMembersDialog } from '../dialog-delete-user-members';
 
@@ -16,6 +16,10 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
     c_id: "",
     ...instance,
   });
+  const [data_pass, setDataPass] = useData({
+    password: "",
+    password2: "",
+  });
   const [errors, setErrors] = useData({});
   const [mainAction, setMainAction] = useState(onAction)
   const [editable, setEditable] = useState(mainAction === 'new_user' ? false : true)
@@ -23,19 +27,39 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
   const [invisible, setInvisible] = useState(mainAction === 'new_user' ? "flex" : "none")
 
   const [action, target, handleAction] = useTargetAction();
-  console.log(instance)
+
+
   const saveUser = async () => {
     const func = mainAction === 'new_user' ? addUser : editUser;
+    if (data.password !== instance.password) {
+      await editPassword(instance.id, data_pass)
+        .then((datae) => {
+          func(data)
+            .then((data) => {
+              handleClose();
+              loadData();
+            })
+            .catch((error) => {
+              setErrors(error.response.data)
+              console.log(error.response.data)
+            });
+        })
+        .catch((error) => {
+          setErrors(error.response.data)
+          console.log(error.response.data)
+        });
+    } else {
+      await func(data)
+        .then((data) => {
+          handleClose();
+          loadData();
+        })
+        .catch((error) => {
+          setErrors(error.response.data)
+          console.log(error.response.data)
+        });
+    }
 
-    await func(data)
-      .then((data) => {
-        handleClose();
-        loadData();
-      })
-      .catch((error) => {
-        setErrors(error.response.data)
-        console.log(error.response.data)
-      });
 
   };
 
@@ -92,7 +116,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
           <TextField
             sx={{ mt: 2 }}
             label="Carnet de Identidad"
-            value={data?.c_id}
+            value={data?.c_id === null ? "" : data?.c_id}
             error={'c_id' in errors}
             helperText={errors.c_id}
             onChange={(event) => setData({ "c_id": event.target.value })}
@@ -112,7 +136,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
-              value={data["chief_type"]}
+              value={data.chief_type}
               inputProps={{ readOnly: editable }}
               label="Tipo"
               onChange={(event) => setData({ "chief_type": event.target.value })}
@@ -138,23 +162,23 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
           />
 
           <TextField
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, display: invisible }}
             type="password"
-            label={mainAction === 'edit_user' ? "Nueva contrasña" : "Contrasña"}
+            label={mainAction === 'edit_user' ? "Nueva contrasña" : "Contraseña"}
             error={'password' in errors}
             helperText={errors.password}
-            onChange={(event) => setData({ "password": event.target.value })}
+            onChange={(event) => { setData({ "password": event.target.value }), setDataPass({ "password": event.target.value }) }}
             fullWidth
             InputLabelProps={{ shrink: true }}
             InputProps={{ readOnly: editable }}
           />
           <TextField
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, display: invisible }}
             type="password"
             error={'password2' in errors}
             helperText={errors.password2}
-            label="Confirmar Contrasña"
-            onChange={(event) => { setData({ "password2": event.target.value }) }}
+            label="Confirmar Contraseña"
+            onChange={(event) => { setData({ "password2": event.target.value }), setDataPass({ "password2": event.target.value }) }}
             fullWidth
             InputLabelProps={{ shrink: true }}
             InputProps={{ readOnly: editable }}

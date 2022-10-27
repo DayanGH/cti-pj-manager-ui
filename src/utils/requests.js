@@ -161,11 +161,15 @@ export const addUser = async (data) => {
   return response.data;
 };
 export const deleteUser = async (id) => {
-  const response = await axiosInstance.delete(`users/${id}/`);
+  const response = await axiosInstance.delete(`delete_user/${id}/`);
   return response.data;
 };
 export const editUser = async (data) => {
   const response = await axiosInstance.patch(`update_user/${data.id}/`, data);
+  return response.data;
+};
+export const editPassword = async (id, data) => {
+  const response = await axiosInstance.patch(`change_password/${id}/`, data);
   return response.data;
 };
 export const sendMail = async (dest) => {
