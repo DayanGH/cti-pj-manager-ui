@@ -55,11 +55,20 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                         <TableCell>
                             {pdetails.chief_name}
                             <IconButton
-                            size="small"
-                            onClick={() => sendMail(pdetails.chief_email)}
-                             >
-                           <MailIcon fontSize="small" />
-                          </IconButton>
+                                size="small"
+                                onClick={() => sendMail(pdetails.chief_email)}
+                            >
+                                <MailIcon fontSize="small" />
+                            </IconButton>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow sx={{display: pdetails.notes.length < 1 ? "none" : ""}}
+                    >
+                        <TableCell>
+                            <b>Notas </b>
+                        </TableCell>
+                        <TableCell>
+                            <b>{pdetails.notes}</b>
                         </TableCell>
                     </TableRow>
                     <TableRow
@@ -69,6 +78,15 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                         </TableCell>
                         <TableCell>
                             {pdetails.type}
+                        </TableCell>
+                    </TableRow>
+                    <TableRow
+                    >
+                        <TableCell>
+                            <b>Sectores estrategicos: </b>
+                        </TableCell>
+                        <TableCell>
+                            {pdetails.strategics_sectors}
                         </TableCell>
                     </TableRow>
                     <TableRow
