@@ -1,5 +1,5 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Table, TableBody, TableRow, TableCell, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
 
@@ -12,17 +12,17 @@ export const ProjectsByTypology = ({ projects }) => {
   const [nas, setNas] = useState(0);
   const [showBy, setShowBy] = useState("typology");
   const sectors = [
-      { amount: 0, value: 'Turismo' },
-      { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
-      { amount: 0, value: 'Electroenergético' },
-      { amount: 0, value: 'Producción de alimentos' },
-      { amount: 0, value: 'Construcciones' },
-      { amount: 0, value: 'Telecomunicaciones e Informática' },
-      { amount: 0, value: 'Logística y transporte' },
-      { amount: 0, value: 'Redes hidráulicas y sanitarias' },
-      { amount: 0, value: 'Agroindustria azucarera' },
-      { amount: 0, value: 'Industria ligera' },
-      { amount: 0, value: 'Servicios técnicos profesionales' }];
+    { amount: 0, value: 'Turismo' },
+    { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
+    { amount: 0, value: 'Electroenergético' },
+    { amount: 0, value: 'Producción de alimentos' },
+    { amount: 0, value: 'Construcciones' },
+    { amount: 0, value: 'Telecomunicaciones e Informática' },
+    { amount: 0, value: 'Logística y transporte' },
+    { amount: 0, value: 'Redes hidráulicas y sanitarias' },
+    { amount: 0, value: 'Agroindustria azucarera' },
+    { amount: 0, value: 'Industria ligera' },
+    { amount: 0, value: 'Servicios técnicos profesionales' }];
 
   useEffect(() => {
     loadData();
@@ -42,7 +42,7 @@ export const ProjectsByTypology = ({ projects }) => {
         na++;
 
       sectors.forEach(sector => {
-        if(project.strategics_sectors.includes(sector.value))
+        if (project.strategics_sectors.includes(sector.value))
           sector.amount++;
       })
     })
@@ -113,8 +113,8 @@ export const ProjectsByTypology = ({ projects }) => {
 
   const ByTypologyPie = () => {
     return (
-    <Box>
-            <Box
+      <Box>
+        <Box
           sx={{
             height: 300,
             position: 'relative'
@@ -159,7 +159,7 @@ export const ProjectsByTypology = ({ projects }) => {
             </Box>
           ))}
         </Box>
-        </Box>
+      </Box>
     );
   };
 
@@ -168,26 +168,27 @@ export const ProjectsByTypology = ({ projects }) => {
     sectors.forEach(sector => console.log(sector.amount))
     return (
       <Table>
-      <TableBody >
-        {sectors.slice(0, sectors.length).map((sector) => (
-              <TableRow key={sector.value}>
+        <TableBody >
+          {sectors.slice(0, sectors.length).map((sector) => (
+            <TableRow key={sector.value}>
               <TableCell>
                 <b>{sector.value}: </b>
               </TableCell>
               <TableCell>
                 {sector.amount}
               </TableCell>
-              </TableRow>
-        ))}
-      </TableBody>
-     </Table>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     );
   };
 
   return (
     <Card>
       <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
-        <CardHeader title="Projectos" sx={{ flexGrow: 1 }} />
+        <CardHeader title="Projectos"
+          sx={{ flexGrow: 1 }} />
         <FormControl>
           <InputLabel id="demo-simple-select-filled-label">Datos</InputLabel>
           <Select
@@ -204,15 +205,18 @@ export const ProjectsByTypology = ({ projects }) => {
             <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
           </Select>
         </FormControl>
-        <IconButton
-          onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
-          size="small">
-          <CopyIcon fontSize="small" />
-        </IconButton>
+        <Tooltip title="Copiar">
+          <IconButton
+            onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
+            size="small"
+            title='Copiar'>
+            <CopyIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </Box>
       <Divider />
       <CardContent>
-      { showBy == "typology" ? <ByTypologyPie/> : <BySectorsTable/> }
+        {showBy == "typology" ? <ByTypologyPie /> : <BySectorsTable />}
       </CardContent>
     </Card>
   );

@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { AppBar, Badge, Box, IconButton, Toolbar, Tooltip, Typography, Button } from '@mui/material';
+import { AppBar, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import { Bell as BellIcon } from '../icons/bell';
-import { UserCircle as UserCircleIcon } from '../icons/user-circle';
-import { Users as UsersIcon } from '../icons/users';
-import { useState } from 'react';
+
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -55,10 +52,10 @@ export const DashboardNavbar = (props) => {
               GePCTI
             </Typography>
             <Typography
-              sx={{ color: 'black'}}
+              sx={{ color: 'black' }}
               variant="subtitle2"
             >
-            Gestión de programas y proyectos CTI
+              Gestión de programas y proyectos CTI
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />

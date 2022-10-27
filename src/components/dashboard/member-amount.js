@@ -1,5 +1,4 @@
-import { Bar } from 'react-chartjs-2';
-import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme, Table, TableBody, TableRow, TableCell, IconButton } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Divider, Table, TableBody, TableRow, TableCell, IconButton, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
 
@@ -44,12 +43,14 @@ export const MemberAmount = ({ members }) => {
           title="Miembros"
           sx={{ flexGrow: 1 }}
         />
-        <IconButton
-          size="small"
-          onClick={() => navigator.clipboard.writeText("Internos: " + int + " Estudiantes: " + stu + " Externos: " + out)}
-        >
-          <CopyIcon fontSize="small" />
-        </IconButton>
+        <Tooltip title="Copiar">
+          <IconButton
+            size="small"
+            onClick={() => navigator.clipboard.writeText("Internos: " + int + " Estudiantes: " + stu + " Externos: " + out)}
+          >
+            <CopyIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </Box>
       <Divider />
       <CardContent>

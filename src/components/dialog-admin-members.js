@@ -1,4 +1,4 @@
-import { Dialog, Button, TextField, Box, DialogTitle, CircularProgress, Autocomplete, IconButton } from '@mui/material';
+import { Dialog, Button, TextField, Box, DialogTitle, CircularProgress, Autocomplete, IconButton, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useAsync } from 'react-async';
 import { fetchMembers, editProject } from 'src/utils/requests';
@@ -47,19 +47,21 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                 >
                     Administrar miembros
                 </DialogTitle>
-                <IconButton
-                    onClick={() => {
-                        let members = "";
-                        value.forEach(v => {
-                            members += v["name"] + ", "
-                        })
-                        navigator.clipboard.writeText(members)
-                    }}
-                    sx={{ mr: 2 }}
-                    size="small"
-                >
-                    <CopyIcon fontSize="small" />
-                </IconButton>
+                <Tooltip title="Copiar">
+                    <IconButton
+                        onClick={() => {
+                            let members = "";
+                            value.forEach(v => {
+                                members += v["name"] + ", "
+                            })
+                            navigator.clipboard.writeText(members)
+                        }}
+                        sx={{ mr: 2 }}
+                        size="small"
+                    >
+                        <CopyIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
             </Box>
             <Box
                 sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
