@@ -9,7 +9,6 @@ export const DocumentGrid = ({ documents, handleAction }) => {
     return (
       <Card>
         <Box
-          onClick={() => downloadDocument( "documents/" + document.id, document.file.split("/").pop())}
           sx={{
             alignItems: 'center',
             display: 'flex',
@@ -20,6 +19,7 @@ export const DocumentGrid = ({ documents, handleAction }) => {
             sx={{ color: "secondary.main" }}
             fontSize="large" />
           <Typography
+            onClick={() => downloadDocument( "documents/" + document.id, document.file.split("/").pop())}
             sx={{ mx: 1, flexGrow: 1 }}
             color="textPrimary"
             variant="body1"

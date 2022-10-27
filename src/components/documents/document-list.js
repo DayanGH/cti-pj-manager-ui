@@ -15,7 +15,6 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                 hover
                 sx={{ display: 'flex' }}
                 key={document.id}
-                onClick={() => downloadDocument( "projectdocuments/" + document.id, document.file.split("/").pop())}
             >
                 <TableCell sx={{ flexGrow: 1 }}>
                     <Box
@@ -29,6 +28,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             sx={{ color: "secondary.main" }}
                             fontSize="large" />
                         <Typography
+                            onClick={() => downloadDocument( "projectdocuments/" + document.id, document.file.split("/").pop())}
                             sx={{ mx: 1 }}
                             color="textPrimary"
                             variant="body1"
