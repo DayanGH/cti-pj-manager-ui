@@ -1,9 +1,9 @@
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
-import { AdminMembers } from '../dialog-admin-members';
+import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, IconButton } from '@mui/material';
 import { PopupMenu } from '../popup-menu';
-
-export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
-    console.log(pdetails)
+import { MailIcon } from 'src/icons/mail';
+import { sendMail } from 'src/utils/requests';
+export const DetailsPanel = ({ programDetails, handleAction }) => {
+    console.log(programDetails)
     return (
         <Box
             sx={{
@@ -29,12 +29,12 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                     color="textPrimary"
                     variant="h6"
                 >
-                    {pdetails.name}
+                    {programDetails.name}
                 </Typography>
                 <PopupMenu
-                    onAction={'project'}
+                    onAction={'program'}
                     handleAction={handleAction}
-                    instance={pdetails}
+                    instance={programDetails}
                 ></PopupMenu>
             </Box>
             <Table>
@@ -45,7 +45,22 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Jefe: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.chief_name}
+                            {programDetails.chief}
+                            <IconButton
+                                size="small"
+                                onClick={() => sendMail(programDetails.chief_email)}
+                            >
+                                <MailIcon fontSize="small" />
+                            </IconButton>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow
+                    >
+                        <TableCell>
+                            <b>Secretario: </b>
+                        </TableCell>
+                        <TableCell>
+                            {programDetails.secretary}
                         </TableCell>
                     </TableRow>
                     <TableRow
@@ -54,16 +69,16 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Tipo: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.type}
+                            {programDetails.type}
                         </TableCell>
                     </TableRow>
                     <TableRow
                     >
                         <TableCell>
-                            <b>Clasificación: </b>
+                            <b>Sectores estrategicos: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.classification}
+                            {programDetails.strategics_sectors}
                         </TableCell>
                     </TableRow>
                     <TableRow
@@ -72,7 +87,7 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Entidad principal: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.main_entity}
+                            {programDetails.main_entity}
                         </TableCell>
                     </TableRow>
                     <TableRow>
@@ -80,7 +95,15 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Enidades: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.entities}
+                            {programDetails.entities}
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <b>Proyectos asociados: </b>
+                        </TableCell>
+                        <TableCell>
+                            {programDetails.pj_amount}
                         </TableCell>
                     </TableRow>
                     <TableRow>
@@ -88,7 +111,7 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Plazo: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.start_date} hasta {pdetails.end_date}
+                            {programDetails.start_date} hasta {programDetails.end_date}
                         </TableCell>
                     </TableRow>
                     <TableRow>
@@ -96,7 +119,7 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Finaciamiento: </b>
                         </TableCell>
                         <TableCell>
-                            ${pdetails.financing}
+                            ${programDetails.money}
                         </TableCell>
                     </TableRow>
                 </TableBody>

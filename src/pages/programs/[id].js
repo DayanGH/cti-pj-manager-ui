@@ -15,7 +15,7 @@ import { DetailsPanel } from 'src/components/programs/details-panel';
 const ProgramDetails = () => {
     const router = useRouter();
     const { id } = router.query;
-    const [pdetails, setPdetails] = useState();
+    const [programDetails, setProgramDetails] = useState();
     const [isloading, setloading] = useState(true);
     const [action, target, handleAction] = useTargetAction();
 
@@ -28,7 +28,7 @@ const ProgramDetails = () => {
             setloading(true);
             fetchProgramDetails(id)
                 .then((data) => {
-                    setPdetails(data);
+                    setProgramDetails(data);
                     setloading(false)
                 });
         }
@@ -38,7 +38,7 @@ const ProgramDetails = () => {
         <>
             <Head>
                 <title>
-                    Proyecto |{" " + pdetails.name}
+                    Proyecto |{" " + programDetails.name}
                 </title>
             </Head>
 
@@ -63,7 +63,7 @@ const ProgramDetails = () => {
                     <NewProjectDialog
                         open
                         onAction={action}
-                        instance={pdetails}
+                        instance={programDetails}
                         onClose={handleAction}
                         loadData={() => loadData(id)} />
                 )}
@@ -72,7 +72,7 @@ const ProgramDetails = () => {
                         open
                         onAction={action}
                         handleClose={handleAction}
-                        pj_id={pdetails.id}
+                        pj_id={programDetails.id}
                         loadData={() => loadData(id)}
                     />)}
                 <Box
@@ -82,11 +82,11 @@ const ProgramDetails = () => {
                     <Box sx={{ p: 1 }}>
                         <SimpleDocumentList
                             handleAction={handleAction}
-                            documents={pdetails.documents}
+                            documents={programDetails.documents}
                         />
                     </Box>
                 </Box>
-                <DetailsPanel pdetails={pdetails}
+                <DetailsPanel programDetails={programDetails}
                     handleAction={handleAction}
                     action={action}
                     loadData={() => loadData(id)} />

@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, TableContainer, IconButton } from '@mui/material';
+import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, IconButton } from '@mui/material';
 import { AdminMembers } from '../dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
 import { MailIcon } from 'src/icons/mail';
@@ -62,7 +62,7 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             </IconButton>
                         </TableCell>
                     </TableRow>
-                    <TableRow sx={{display: pdetails.notes.length < 1 ? "none" : ""}}
+                    <TableRow sx={{ display: pdetails.notes.length < 1 ? "none" : "" }}
                     >
                         <TableCell>
                             <b>Notas </b>

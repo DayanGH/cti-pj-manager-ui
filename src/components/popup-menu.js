@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export const PopupMenu = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [showItem, setshowItem] = useState(props.onAction === 'project' ? 'felx' : 'none');
+    const [showItem, setshowItem] = useState(props.onAction === 'project' || props.onAction === 'program' ? 'felx' : 'none');
     const openMenu = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
