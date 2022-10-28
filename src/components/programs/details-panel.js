@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, IconButton } from '@mui/material';
+import { Box, Typography, Table, TableBody, TableRow, TableCell, IconButton } from '@mui/material';
 import { PopupMenu } from '../popup-menu';
 import { MailIcon } from 'src/icons/mail';
 import { sendMail } from 'src/utils/requests';

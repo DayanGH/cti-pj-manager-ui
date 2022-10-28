@@ -6,23 +6,23 @@ import {
     Button,
     DialogActions,
 } from "@mui/material";
-import { deleteDocument, deleteProject, deleteGroupDocuments } from 'src/utils/requests';
+import { deleteProgram } from 'src/utils/requests';
 import { useData } from 'src/utils/hooks';
 import router from "next/router";
 
 
-export const DeleteDialog = (props) => {
+export const DeleteProgramsDialog = (props) => {
     const [errors, setErrors] = useData({});
 
 
     function handleSubmit(id) {
         console.log(id)
-        const func = props.onAction === 'delete_project' ? deleteProject : props.onAction === 'delete_project_doc' ? deleteDocument : deleteGroupDocuments;
+        const func = props.onAction === 'delete_program' ? deleteProgram : null;
         func(id)
             .then((response) => {
                 props.onClose();
-                if (props.onAction === 'delete_project') {
-                    router.push('/projects')
+                if (props.onAction === 'delete_program') {
+                    router.push('/programs')
                 } else {
                     props.loadData()
                 }
@@ -42,10 +42,10 @@ export const DeleteDialog = (props) => {
             maxWidth="sm"
             fullWidth
         >
-            <DialogTitle> {props.onAction === 'delete_project' ? 'Eliminar proyecto' : 'Eliminar documento'}</DialogTitle>
-            {props.onAction === 'delete_project' ?
+            <DialogTitle> {props.onAction === 'delete_program' ? 'Eliminar programa' : 'Eliminar documento'}</DialogTitle>
+            {props.onAction === 'delete_program' ?
                 <DialogContent>
-                    Al eliminar el proyecto{" "}
+                    Al eliminar el programa{" "}
                     <u><i>{props.instance.name}</i></u>
                     <b> se eliminarán todos los datos asociados.Esta acción no puede deshacerse.</b>
                     <br />
@@ -63,7 +63,7 @@ export const DeleteDialog = (props) => {
                     Cancelar
                 </Button>
                 <Button color="error"
-                    onClick={props.onAction === 'delete_project' ? () => handleSubmit(props.instance.id) : () => handleSubmit(props.instance)}>
+                    onClick={props.onAction === 'delete_program' ? () => handleSubmit(props.instance.id) : () => handleSubmit(props.instance)}>
                     Eliminar
                 </Button>
             </DialogActions>

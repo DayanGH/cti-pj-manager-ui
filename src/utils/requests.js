@@ -72,6 +72,11 @@ export const fetchProgramDetails = async (p_id) => {
   return response.data;
 };
 
+export const deleteProgram = async (id) => {
+  const response = await axiosInstance.delete(`programs/${id}/`);
+  return response.data;
+};
+
 //Documents
 export const fetchDocuments = async () => {
   const response = await axiosInstance.get("/documents/");

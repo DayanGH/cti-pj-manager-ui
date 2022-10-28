@@ -5,12 +5,12 @@ import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProgramDetails } from '../../utils/requests';
-import { DeleteDialog } from '../../components/dialog-delete';
 import { SimpleDocumentList } from '../../components/documents/documents-simple-list';
 import { DocumentsToolbar } from '../../components/documents/documents-toolbar';
 import { useTargetAction } from "../../utils/hooks";
-import { NewProjectDialog } from 'src/components/dialog-new-project';
 import { DetailsPanel } from 'src/components/programs/details-panel';
+import { DeleteProgramsDialog } from 'src/components/programs/dialog-delete-programs';
+import { NewProgramDialog } from 'src/components/programs/dialog-new-program';
 
 const ProgramDetails = () => {
     const router = useRouter();
@@ -50,17 +50,17 @@ const ProgramDetails = () => {
                 }}
             >
                 {["delete_program", "delete_program_doc", "delete_program_group_doc"].includes(action) && (
-                    <DeleteDialog
+                    <DeleteProgramsDialog
                         onAction={action}
                         open
                         instance={target}
-                        project_id={id}
+                        program_id={id}
                         onClose={handleAction}
                         loadData={() => loadData(id)}
                     />
                 )}
                 {["new", "edit"].includes(action) && (
-                    <NewProjectDialog
+                    <NewProgramDialog
                         open
                         onAction={action}
                         instance={programDetails}
