@@ -164,7 +164,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
           <TextField
             sx={{ mt: 2, display: invisible }}
             type="password"
-            label={mainAction === 'edit_user' ? "Nueva contrasña" : "Contraseña"}
+            label={mainAction === 'edit_user' ? "Nueva contraseña" : "Contraseña"}
             error={'password' in errors}
             helperText={errors.password}
             onChange={(event) => { setData({ "password": event.target.value }), setDataPass({ "password": event.target.value }) }}
