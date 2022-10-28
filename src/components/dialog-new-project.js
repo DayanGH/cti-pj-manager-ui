@@ -1,4 +1,4 @@
-import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, InputAdornment } from '@mui/material';
+import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, InputAdornment, FormHelperText } from '@mui/material';
 import { useState } from 'react';
 import { useToggleState, useData } from 'src/utils/hooks';
 import { fetchPrograms, fetchChiefs, addProject, editProject } from 'src/utils/requests';
@@ -101,7 +101,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           setActiveTab(data.pj_type === "papn" ? 0 : data.pj_type === "paps" ? 1 : data.pj_type === "papt" ? 2 : 3)
         })
         .catch((error) => {
-          setErrors(error)
+          setErrors(error.response.data)
           console.log(error.response.data)
         });
     } else {
@@ -158,8 +158,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   else if (ptype === 'none') {
     component = <FormControl
       sx={{ mt: 2 }}
-      error={'pj_type' in errors}
-      helpertext={errors.pj_typen}>
+      error={'pj_type' in errors}>
       <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
       <Select
         labelId="demo-simple-select-filled-label"
@@ -176,6 +175,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             key={type.key}>{type.value}</MenuItem>
         ))}
       </Select>
+      <FormHelperText>{errors.pj_type}</FormHelperText>
     </FormControl>
   }
   return (
@@ -349,8 +349,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
         />
         <FormControl
           sx={{ mt: 2 }}
-          error={'project_classification' in errors}
-          helpertext={errors.project_classification}>
+          error={'project_classification' in errors}>
           <InputLabel id="p_clasification">Clasificación</InputLabel>
           <Select
             labelId="p_clasification"
@@ -367,6 +366,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
                 key={classif.key}>{classif.value}</MenuItem>
             ))}
           </Select>
+          <FormHelperText>{errors.project_classification}</FormHelperText>
         </FormControl>
         <Box sx={{ display: "flex", flexDirection: 'row', mt: 2 }} >
           <TextField

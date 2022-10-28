@@ -1,4 +1,4 @@
-import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
 import { useState } from 'react';
 import { addDocument, fetchDocumentsGroup, addDocumentsGroup } from 'src/utils/requests';
 import { useData } from '../../src/utils/hooks';
@@ -117,8 +117,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
         </FormControl>
         <FormControl
           sx={{ mt: 2 }}
-          error={'exist' in errors}
-          helpertext={errors.exist}>
+          error={'exist' in errors}>
           <InputLabel id="demo-simple-select-filled-label1">Nombre</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label1"
@@ -135,6 +134,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
                 key={name.key}>{name.value}</MenuItem>
             ))}
           </Select>
+          <FormHelperText>{errors.exist}</FormHelperText>
         </FormControl>
         <TextField
           sx={{ mt: 2, display: showDate }}
