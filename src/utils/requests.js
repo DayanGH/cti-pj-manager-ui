@@ -76,6 +76,14 @@ export const deleteProgram = async (id) => {
   const response = await axiosInstance.delete(`programs/${id}/`);
   return response.data;
 };
+export const addProgram = async (data) => {
+  const response = await axiosInstance.post('programs/', data);
+  return response.data;
+};
+export const editProgram = async (data) => {
+  const response = await axiosInstance.patch(`programs/${data.id}/`, data);
+  return response.data;
+};
 
 //Documents
 export const fetchDocuments = async () => {

@@ -45,7 +45,7 @@ export const DetailsPanel = ({ programDetails, handleAction }) => {
                             <b>Jefe: </b>
                         </TableCell>
                         <TableCell>
-                            {programDetails.chief}
+                            {programDetails.chief_name}
                             <IconButton
                                 size="small"
                                 onClick={() => sendMail(programDetails.chief_email)}

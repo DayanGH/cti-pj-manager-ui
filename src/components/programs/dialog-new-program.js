@@ -1,7 +1,7 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, InputAdornment, FormHelperText } from '@mui/material';
 import { useState } from 'react';
 import { useToggleState, useData } from 'src/utils/hooks';
-import { fetchPrograms, fetchChiefs, addProject, editProject } from 'src/utils/requests';
+import { fetchChiefs, addProgram, editProgram } from 'src/utils/requests';
 import Autocomplete from '@mui/material/Autocomplete'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useAsync } from "react-async";
@@ -12,7 +12,7 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
     documents: [],
     document_groups: [],
     chief: null,
-    p_type: "",
+    ptype: "",
     name: "",
     strategics_sectors: "",
     program_code: "",
@@ -44,17 +44,15 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
 
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
   const [errors, setErrors] = useData({});
-  const [ptype, setPtype] = useState(data.pj_type === "pnap_di" || data.pj_type === "pnap_de" || data.pj_type === "" ? 'none' : data.pj_type)
-  const [value, setValue] = useState(data.program !== null ? { id: data?.program, name: instance?.program_name } : null)
-  const [inputValue, setInputValue] = useState('')
+
 
   const [valueChief, setValueChief] = useState(data.chief !== null ? { id: data?.chief, name: instance?.chief_name } : null)
   const [inputValueChief, setInputValueChief] = useState('')
 
   const [valueSectors, setValueSectors] = useState(instance?.sectors !== undefined ? instance?.sectors : [])
   const [inputValueSectors, setInputValueSector] = useState('')
-  const [displayNotes, setdisplayNotes] = useState(onAction === 'new' ? "none" : "flex")
-  let component;
+
+
   const chiefsAsyncData = useAsync({
     deferFn: fetchChiefs,
   });
@@ -72,13 +70,13 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
     setData({ [field]: value });
   }
   function handleAddProject(data) {
-    const func = onAction === 'new' ? addProject : editProject;
+    const func = onAction === 'new' ? addProgram : editProgram;
     if (onAction === 'new') {
       func(data)
         .then((data) => {
           onClose();
-          loadData(data.pj_type === "papn" ? 0 : data.pj_type === "paps" ? 1 : data.pj_type === "papt" ? 2 : 3);
-          setActiveTab(data.pj_type === "papn" ? 0 : data.pj_type === "paps" ? 1 : data.pj_type === "papt" ? 2 : 3)
+          loadData(/* data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : 2 */);
+          //setActiveTab(data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : data.pjtype === "ter" ? 2 : 3)
         })
         .catch((error) => {
           setErrors(error.response.data)
@@ -96,7 +94,6 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
     }
   }
   function setStrategicsSectors(value) {
-    console.log(value)
     let strategics_sectorstemp = ''
     if (value.length === 0) {
       handleChangeField("", "strategics_sectors")
@@ -136,11 +133,11 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
         <TextField
           sx={{ mt: 2 }}
           label="Código"
-          value={data.project_code}
-          error={'project_code' in errors}
-          helperText={errors.project_code}
+          value={data.program_code}
+          error={'program_code' in errors}
+          helperText={errors.program_code}
           onChange={(event) => {
-            handleChangeField(event.target.value, 'project_code')
+            handleChangeField(event.target.value, 'program_code')
 
           }} />
         <Autocomplete
@@ -187,6 +184,36 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
             />
           )}
         />
+        <TextField
+          sx={{ mt: 2 }}
+          label="Secretario"
+          value={data.secretary}
+          error={'secretary' in errors}
+          helperText={errors.entities}
+          onChange={(evt) => handleChangeField(evt.target.value, 'secretary')}
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
+        <FormControl
+          sx={{ mt: 2 }}
+          error={'ptype' in errors}>
+          <InputLabel id="ptype">Tipo de programa</InputLabel>
+          <Select
+            labelId="ptype"
+            id="demo-simple-select-filled"
+            label="Tipo de programa"
+            value={data.ptype}
+            onChange={(event) => {
+              handleChangeField(event.target.value, 'ptype')
+            }}
+          >
+            {programTypes.map((classif) => (
+              <MenuItem value={classif.key}
+                key={classif.key}>{classif.value}</MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>{errors.ptype}</FormHelperText>
+        </FormControl>
         <Autocomplete
           multiple
           sx={{ mt: 2 }}
@@ -207,8 +234,8 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
             <TextField
               {...params}
               label="Sectores estratégicos"
-              error={'chief' in errors}
-              helperText={errors.chief}
+              error={'strategics_sectors' in errors}
+              helperText={errors.strategics_sectors}
             />
           )}
         />
@@ -217,36 +244,15 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
           label="Financiamiento"
           type="number"
           inputProps={{ min: 0 }}
-          error={'financing' in errors}
-          helperText={errors.financing}
+          error={'money' in errors}
+          helperText={errors.money}
           onChange={(evt) =>
-            handleChangeField(evt.target.value, "financing")
+            handleChangeField(evt.target.value, "money")
           }
           fullWidth
-          value={data.financing}
+          value={data.money}
           InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
         />
-        <FormControl
-          sx={{ mt: 2 }}
-          error={'project_classification' in errors}>
-          <InputLabel id="p_clasification">Clasificación</InputLabel>
-          <Select
-            labelId="p_clasification"
-            id="demo-simple-select-filled"
-            label="Clasificación"
-            value={data.project_classification}
-            onChange={(event) => {
-              handleChangeField(event.target.value, 'project_classification')
-              setpClass(event.target.value)
-            }}
-          >
-            {projectsClass.map((classif) => (
-              <MenuItem value={classif.key}
-                key={classif.key}>{classif.value}</MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>{errors.project_classification}</FormHelperText>
-        </FormControl>
         <Box sx={{ display: "flex", flexDirection: 'row', mt: 2 }} >
           <TextField
             sx={{ mr: 1 }}
@@ -291,19 +297,6 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
           error={'entities' in errors}
           helperText={errors.entities}
           onChange={(evt) => handleChangeField(evt.target.value, 'entities')}
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          sx={{ mt: 2, display: displayNotes }}
-          label="Notas"
-          multiline
-          value={data.notes}
-          maxRows={10}
-          type='text'
-          error={'notes' in errors}
-          helperText={errors.entities}
-          onChange={(evt) => handleChangeField(evt.target.value, 'notes')}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />

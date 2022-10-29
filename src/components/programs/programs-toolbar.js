@@ -25,7 +25,7 @@ export const ProgramsToolbar = (props) => {
         {["new", "edit"].includes(action) && (
           <NewProgramDialog
             open
-            neww={action === "new"}
+            onAction={action}
             instance={target}
             onClose={handleAction}
             loadData={() => loaddata()} />
