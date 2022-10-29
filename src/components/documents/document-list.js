@@ -104,6 +104,19 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
         );
     };
 
+    const GroupsTable = () => {
+      return (
+         <Table>
+                    <TableBody>
+                        {groups.slice(0, groups.length).map((group) => (
+                            <GroupRow key={group.id}
+                                group={group} />
+                        ))}
+                    </TableBody>
+                </Table>
+      );
+    };
+
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
@@ -117,14 +130,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                         ))}
                     </TableBody>
                 </Table>
-                <Table>
-                    <TableBody>
-                        {groups.slice(0, groups.length).map((group) => (
-                            <GroupRow key={group.id}
-                                group={group} />
-                        ))}
-                    </TableBody>
-                </Table>
+                { typeof groups !== "undefined" ? <GroupsTable/> : <Box/>}
             </TableContainer>
         </Paper>
     );

@@ -5,7 +5,7 @@ import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProgramDetails } from '../../utils/requests';
-import { SimpleDocumentList } from '../../components/documents/documents-simple-list';
+import { DocumentList } from '../../components/documents/document-list';
 import { DocumentsToolbar } from '../../components/documents/documents-toolbar';
 import { useTargetAction } from "../../utils/hooks";
 import { DetailsPanel } from 'src/components/programs/details-panel';
@@ -80,9 +80,10 @@ const ProgramDetails = () => {
                 >
                     <DocumentsToolbar handleAction={handleAction} />
                     <Box sx={{ p: 1 }}>
-                        <SimpleDocumentList
+                        <DocumentList
                             handleAction={handleAction}
                             documents={programDetails.documents}
+                            groups={programDetails.document_groups}
                         />
                     </Box>
                 </Box>
