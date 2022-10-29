@@ -9,14 +9,15 @@ import { fetchPrograms } from '../../utils/requests'
 function Programs() {
   const [programs, setPrograms] = useState();
   const [isloading, setloading] = useState(true);
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
-    loadData();
+    loadData(0);
   }, []);
 
-  function loadData() {
+  function loadData(type) {
     setloading(true);
-    fetchPrograms()
+    fetchPrograms(type === 0 ? "nac" : type === 1 ? "sec" : "ter")
       .then((data) => {
         setPrograms(data);
         setloading(false)
@@ -40,7 +41,9 @@ function Programs() {
         }}
       >
         <Container maxWidth={false}>
-          <ProgramsToolbar loadData={() => loadData()} />
+          <ProgramsToolbar setPrograms={setPrograms}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab} />
           <Box sx={{ mt: 3 }}>
             <ProgramList programs={programs || []} />
           </Box>

@@ -9,15 +9,17 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';
-import { useState } from 'react';
 import { NewProgramDialog } from './dialog-new-program';
 import { useTargetAction } from "../../utils/hooks";
+import { fetchPrograms } from 'src/utils/requests';
 
-export const ProgramsToolbar = (props) => {
-  const [open, setOpen] = useState(false);
+export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms }) => {
   const [action, target, handleAction] = useTargetAction();
-  function loaddata() {
-    return props.loadData()
+  function loaddata(type) {
+    fetchPrograms(type === 0 ? "nac" : type === 1 ? "sec" : "ter")
+      .then((data) => {
+        setPrograms(data);
+      });
   }
   return (
     <>
@@ -28,7 +30,8 @@ export const ProgramsToolbar = (props) => {
             onAction={action}
             instance={target}
             onClose={handleAction}
-            loadData={() => loaddata()} />
+            loadData={(type) => loaddata(type)}
+            setActiveTab={setActiveTab} />
         )}
         <Box
           sx={{
@@ -40,7 +43,11 @@ export const ProgramsToolbar = (props) => {
           }}
         >
           <Box sx={{ borderBottom: 1, borderColor: 'divider', flexGrow: 1 }}>
-            <Tabs value={0}
+            <Tabs value={activeTab}
+              onChange={(event, newTab) => {
+                setActiveTab(newTab)
+                loaddata(newTab)
+              }}
               centered>
               <Tab label="Nacionales" />
               <Tab label="Sectoriales" />

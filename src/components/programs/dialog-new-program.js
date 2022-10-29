@@ -75,12 +75,12 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
       func(data)
         .then((data) => {
           onClose();
-          loadData(/* data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : 2 */);
-          //setActiveTab(data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : data.pjtype === "ter" ? 2 : 3)
+          loadData(data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : 2);
+          setActiveTab(data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : 2)
         })
         .catch((error) => {
           setErrors(error.response.data)
-          console.log(error.response.data)
+          console.log(error)
         });
     } else {
       func(data)
@@ -90,6 +90,7 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
         })
         .catch((error) => {
           setErrors(error.response.data)
+          console.log(error)
         });
     }
   }

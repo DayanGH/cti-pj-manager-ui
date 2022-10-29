@@ -62,8 +62,12 @@ export const fetchProjectsDetails = async (p_id) => {
 };
 
 //Programs
-export const fetchPrograms = async () => {
-  const response = await axiosInstance.get("/programs/");
+export const fetchPrograms = async (classification) => {
+  const response = await axiosInstance.get("/programs/", {
+    headers: {
+      "program-classification": `${classification}`
+    }
+  });
   return response.data;
 };
 

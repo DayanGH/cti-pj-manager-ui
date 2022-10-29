@@ -75,7 +75,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
 
   function handleOpenPrograms() {
     openPrograms();
-    programsAsyncData.run();
+    programsAsyncData.run('all');
   }
   function handleClosePrograms() {
     closePrograms();

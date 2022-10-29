@@ -16,7 +16,6 @@ export const DeleteProgramsDialog = (props) => {
 
 
     function handleSubmit(id) {
-        console.log(id)
         const func = props.onAction === 'delete_program' ? deleteProgram : null;
         func(id)
             .then((response) => {
@@ -33,7 +32,6 @@ export const DeleteProgramsDialog = (props) => {
                 setErrors(error.response.data);
             });
     }
-    console.log(props.instance)
 
     return (
         <Dialog
