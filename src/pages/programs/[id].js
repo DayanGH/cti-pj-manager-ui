@@ -38,7 +38,7 @@ const ProgramDetails = () => {
         <>
             <Head>
                 <title>
-                    Proyecto |{" " + programDetails.name}
+                    Programa |{" " + programDetails.name}
                 </title>
             </Head>
 
