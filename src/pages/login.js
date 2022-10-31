@@ -68,7 +68,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Inicio de Sesión | CTIPM</title>
+        <title>Inicio de Sesión | GePCTI</title>
       </Head>
       <Box
         component="main"
@@ -82,17 +82,14 @@ const Login = () => {
         <Container
           maxWidth="sm"
           align="center">
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3, alignItems: "center" }}>
               <Typography
-                color="textPrimary"
+                color="secondary.main"
                 variant="h4"
                 align='center'
               >
-                Bienvenido
+                GePCTI
               </Typography>
               <Typography
                 color="textSecondary"
