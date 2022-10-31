@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { AppBar, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Bell as BellIcon } from '../icons/bell';
+import { useEffect, useState } from 'react';
 
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
@@ -12,6 +13,19 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
+  const [user_id, setUserId] = useState("");
+
+
+  useEffect(() => {
+    getID()
+  });
+
+  function getID() {
+    if (typeof window !== 'undefined' && localStorage.getItem("user_id") !== null) {
+      setUserId(localStorage.getItem("user_id"))
+    }
+  }
+  console.log(user_id)
 
   return (
     <>

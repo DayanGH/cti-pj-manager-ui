@@ -205,13 +205,16 @@ export const ProjectsByTypology = ({ projects }) => {
             <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
           </Select>
         </FormControl>
+
         <Tooltip title="Copiar">
-          <IconButton
-            onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
-            size="small"
-            title='Copiar'>
-            <CopyIcon fontSize="small" />
-          </IconButton>
+          <Box>
+            <IconButton
+              onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
+              size="small"
+              title='Copiar'>
+              <CopyIcon fontSize="small" />
+            </IconButton>
+          </Box>
         </Tooltip>
       </Box>
       <Divider />

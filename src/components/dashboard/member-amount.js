@@ -44,6 +44,7 @@ export const MemberAmount = ({ members }) => {
           sx={{ flexGrow: 1 }}
         />
         <Tooltip title="Copiar">
+
           <IconButton
             size="small"
             onClick={() => navigator.clipboard.writeText("Internos: " + int + " Estudiantes: " + stu + " Externos: " + out)}
