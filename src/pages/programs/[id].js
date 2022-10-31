@@ -11,6 +11,7 @@ import { useTargetAction } from "../../utils/hooks";
 import { DetailsPanel } from 'src/components/programs/details-panel';
 import { DeleteProgramsDialog } from 'src/components/programs/dialog-delete-programs';
 import { NewProgramDialog } from 'src/components/programs/dialog-new-program';
+import { DeleteDocumentsDialog } from 'src/components/dialog-delete-documents';
 
 const ProgramDetails = () => {
     const router = useRouter();
@@ -49,7 +50,15 @@ const ProgramDetails = () => {
                     display: 'flex'
                 }}
             >
-                {["delete_program", "delete_program_doc", "delete_program_group_doc"].includes(action) && (
+                {["delete_simple_doc", "delete_project_doc", 'delete_project_doc_group', 'delete_program_doc', 'delete_program_doc_group'].includes(action) && (
+                    <DeleteDocumentsDialog
+                        open
+                        instance={target}
+                        onAction={action}
+                        handleClose={handleAction}
+                        loadData={() => loadData(id)}
+                    />)}
+                {["delete_program"].includes(action) && (
                     <DeleteProgramsDialog
                         onAction={action}
                         open
@@ -79,9 +88,12 @@ const ProgramDetails = () => {
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <Toolbar title="Documentos" handleAction={handleAction} action="new_document" />
+                    <Toolbar title="Documentos"
+                        handleAction={handleAction}
+                        action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
+                            source={'programs'}
                             handleAction={handleAction}
                             documents={programDetails.documents}
                             groups={programDetails.document_groups}

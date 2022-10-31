@@ -6,7 +6,8 @@ import { Toolbar } from '../components/toolbar';
 import { NewSDocumentDialog } from '../components/documents/new-simple-doc-dialog';
 import { useTargetAction } from "../utils/hooks";
 import { useEffect, useState } from 'react';
-import { fetchDocuments } from '../utils/requests';
+import { fetchSimpleDocuments } from '../utils/requests';
+import { DeleteDocumentsDialog } from 'src/components/dialog-delete-documents';
 
 const Documentation = () => {
     const [action, target, handleAction] = useTargetAction();
@@ -19,7 +20,7 @@ const Documentation = () => {
 
     function loadData() {
         setloading(true);
-        fetchDocuments()
+        fetchSimpleDocuments()
             .then((data) => {
                 setDocuments(data);
                 setloading(false)
@@ -39,13 +40,23 @@ const Documentation = () => {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    p:1
+                    p: 1
                 }}
             >
-                <Toolbar title="Documentos" handleAction={handleAction} action="new_document"/>
-                  {["new_document", "edit_document"].includes(action) && (
+                <Toolbar title="Documentos"
+                    handleAction={handleAction}
+                    action="new_document" />
+                {["new_document", "edit_document"].includes(action) && (
                     <NewSDocumentDialog
                         open
+                        onAction={action}
+                        handleClose={handleAction}
+                        loadData={() => loadData()}
+                    />)}
+                {["delete_simple_doc", "delete_project_doc", 'delete_project_doc_group', 'delete_program_doc'].includes(action) && (
+                    <DeleteDocumentsDialog
+                        open
+                        instance={target}
                         onAction={action}
                         handleClose={handleAction}
                         loadData={() => loadData()}

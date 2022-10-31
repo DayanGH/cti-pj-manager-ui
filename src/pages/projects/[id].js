@@ -5,12 +5,13 @@ import { NewDocumentDialog } from '../../components/dialog-new-doc';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests';
-import { DeleteDialog } from '../../components/dialog-delete';
+import { DeleteDialog } from '../../components/projects/dialog-delete-projects';
 import { DocumentList } from '../../components/documents/document-list';
 import { Toolbar } from '../../components/toolbar';
 import { useTargetAction } from "../../utils/hooks";
 import { NewProjectDialog } from 'src/components/dialog-new-project';
 import { DetailsPanel } from 'src/components/projects/details-panel';
+import { DeleteDocumentsDialog } from 'src/components/dialog-delete-documents';
 
 const ProjectDetails = () => {
     const router = useRouter();
@@ -49,7 +50,15 @@ const ProjectDetails = () => {
                     display: 'flex'
                 }}
             >
-                {["delete_project", "delete_project_doc", "delete_project_group_doc"].includes(action) && (
+                {["delete_simple_doc", "delete_project_doc", 'delete_project_doc_group', 'delete_program_doc', 'delete_program_doc_group'].includes(action) && (
+                    <DeleteDocumentsDialog
+                        open
+                        instance={target}
+                        onAction={action}
+                        handleClose={handleAction}
+                        loadData={() => loadData(id)}
+                    />)}
+                {["delete_project"].includes(action) && (
                     <DeleteDialog
                         onAction={action}
                         open
@@ -79,9 +88,12 @@ const ProjectDetails = () => {
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <Toolbar title="Documentos" handleAction={handleAction} action="new_document"/>
+                    <Toolbar title="Documentos"
+                        handleAction={handleAction}
+                        action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
+                            source={'projects'}
                             handleAction={handleAction}
                             documents={pdetails.documents}
                             groups={pdetails.document_groups}

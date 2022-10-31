@@ -90,8 +90,12 @@ export const editProgram = async (data) => {
 };
 
 //Documents
-export const fetchDocuments = async () => {
+export const fetchSimpleDocuments = async () => {
   const response = await axiosInstance.get("/documents/");
+  return response.data;
+};
+export const deleteSimpleDocuments = async (id) => {
+  const response = await axiosInstance.delete(`/documents/${id}/`);
   return response.data;
 };
 
@@ -102,6 +106,10 @@ export const addDocument = async (data, route) => {
 
 export const deleteDocument = async (id) => {
   const response = await axiosInstance.delete(`projectdocuments/${id}/`);
+  return response.data;
+};
+export const deleteProgramDocument = async (id) => {
+  const response = await axiosInstance.delete(`programdocuments/${id}/`);
   return response.data;
 };
 
@@ -137,6 +145,10 @@ export const addDocumentsGroup = async (data, path) => {
 //Group Documents
 export const deleteGroupDocuments = async (id) => {
   const response = await axiosInstance.delete(`/groupdocuments/${id}/`);
+  return response.data;
+}
+export const deleteProgramGroupDocuments = async (id) => {
+  const response = await axiosInstance.delete(`/programgroupdocuments/${id}/`);
   return response.data;
 }
 

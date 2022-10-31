@@ -6,8 +6,7 @@ import { CollapseIcon } from 'src/icons/collapse';
 import { DocumentIcon } from 'src/icons/document';
 import { downloadDocument } from 'src/utils/requests';
 
-export const DocumentList = ({ documents, groups, handleAction }) => {
-
+export const DocumentList = ({ documents, groups, handleAction, source }) => {
 
     const DocumentRow = ({ document, action }) => {
         return (
@@ -28,12 +27,12 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             sx={{ color: "secondary.main" }}
                             fontSize="large" />
                         <Typography
-                            onClick={() => downloadDocument( document.path + document.id, document.file.split("/").pop())}
+                            onClick={() => downloadDocument(document.path + document.id, document.file.split("/").pop())}
                             sx={{ mx: 1 }}
                             color="textPrimary"
                             variant="body1"
                         >
-                            { document.d_name }
+                            {document.d_name}
                         </Typography>
                     </Box>
                 </TableCell>
@@ -93,7 +92,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                                     {group.documents?.slice(0, group.documents?.length).map((document) => (
                                         <DocumentRow key={document.id}
                                             document={document}
-                                            action={'group_document'} />
+                                            action={source === 'projects' ? 'group_document' : 'program_group_document'} />
                                     ))}
                                 </TableBody>
                             </Table>
@@ -105,16 +104,16 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
     };
 
     const GroupsTable = () => {
-      return (
-         <Table>
-                    <TableBody>
-                        {groups.slice(0, groups.length).map((group) => (
-                            <GroupRow key={group.id}
-                                group={group} />
-                        ))}
-                    </TableBody>
-                </Table>
-      );
+        return (
+            <Table>
+                <TableBody>
+                    {groups.slice(0, groups.length).map((group) => (
+                        <GroupRow key={group.id}
+                            group={group} />
+                    ))}
+                </TableBody>
+            </Table>
+        );
     };
 
     return (
@@ -126,11 +125,11 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                         {documents.slice(0, documents.length).map((document) => (
                             <DocumentRow key={document.id}
                                 document={document}
-                                action={'project_document'} />
+                                action={source === 'projects' ? 'project_document' : 'program_document'} />
                         ))}
                     </TableBody>
                 </Table>
-                { typeof groups !== "undefined" ? <GroupsTable/> : <Box/>}
+                {typeof groups !== "undefined" ? <GroupsTable /> : <Box />}
             </TableContainer>
         </Paper>
     );

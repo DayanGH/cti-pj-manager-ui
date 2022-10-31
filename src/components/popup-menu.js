@@ -39,7 +39,7 @@ export const PopupMenu = (props) => {
                     onClick={() => { props.onAction === 'project' ? props.handleAction("edit") : props.onAction === 'program' ? props.handleAction("edit") : console.log('other'); handleCloseMenu() }}>
                     Editar
                 </MenuItem>
-                <MenuItem onClick={() => { props.onAction === 'project' ? props.handleAction("delete_project", props.instance) : props.onAction === 'project_document' ? props.handleAction("delete_project_doc", props.instance) : props.onAction === 'group_document' ? props.handleAction("delete_project_group_doc", props.instance) : props.onAction === 'program' ? props.handleAction("delete_program", props.instance) : console.log('program_document'); handleCloseMenu() }}>
+                <MenuItem onClick={() => { props.onAction === 'project' ? props.handleAction("delete_project", props.instance) : props.onAction === 'project_document' ? props.handleAction("delete_project_doc", props.instance) : props.onAction === 'group_document' ? props.handleAction("delete_project_doc_group", props.instance) : props.onAction === 'program' ? props.handleAction("delete_program", props.instance) : props.onAction === 'program_document' ? props.handleAction("delete_program_doc", props.instance) : props.onAction === 'simple_doc' ? props.handleAction("delete_simple_doc", props.instance) : props.handleAction('delete_program_doc_group', props.instance); handleCloseMenu() }}>
                     Eliminar
                 </MenuItem>
             </Menu>

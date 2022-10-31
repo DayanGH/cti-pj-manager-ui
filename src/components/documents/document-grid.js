@@ -19,7 +19,7 @@ export const DocumentGrid = ({ documents, handleAction }) => {
             sx={{ color: "secondary.main" }}
             fontSize="large" />
           <Typography
-            onClick={() => downloadDocument( "documents/" + document.id, document.file.split("/").pop())}
+            onClick={() => downloadDocument("documents/" + document.id, document.file.split("/").pop())}
             sx={{ mx: 1, flexGrow: 1 }}
             color="textPrimary"
             variant="body1"
@@ -27,7 +27,7 @@ export const DocumentGrid = ({ documents, handleAction }) => {
             {document.name}
           </Typography>
           <PopupMenu
-            onAction={'document'}
+            onAction={'simple_doc'}
             handleAction={handleAction}
             instance={document.id}
           />

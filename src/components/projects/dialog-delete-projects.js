@@ -6,26 +6,28 @@ import {
     Button,
     DialogActions,
 } from "@mui/material";
-import { deleteProgram } from 'src/utils/requests';
+import { deleteProject, } from 'src/utils/requests';
 import { useData } from 'src/utils/hooks';
 import router from "next/router";
 
 
-export const DeleteProgramsDialog = (props) => {
+export const DeleteDialog = (props) => {
     const [errors, setErrors] = useData({});
 
 
     function handleSubmit(id) {
-        const func = props.onAction === 'delete_program' ? deleteProgram : null;
+        console.log(id)
+        const func = props.onAction === 'delete_project' ? deleteProject : null;
         func(id)
             .then((response) => {
                 props.onClose();
-                router.push('/programs')
+                router.push('/projects')
             })
             .catch((error) => {
                 setErrors(error.response.data);
             });
     }
+    console.log(props.instance)
 
     return (
         <Dialog
@@ -34,16 +36,15 @@ export const DeleteProgramsDialog = (props) => {
             maxWidth="sm"
             fullWidth
         >
-            <DialogTitle> Eliminar programa</DialogTitle>
+            <DialogTitle> Eliminar proyecto</DialogTitle>
             <DialogContent>
-                Al eliminar el programa{" "}
+                Al eliminar el proyecto{" "}
                 <u><i>{props.instance.name}</i></u>
                 <b> se eliminarán todos los datos asociados.Esta acción no puede deshacerse.</b>
                 <br />
                 <br />
                 ¿Está seguro de que desea eliminarlo?
             </DialogContent>
-
 
             <DialogActions>
                 <Button
