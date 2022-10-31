@@ -119,18 +119,18 @@ export const downloadDocument = async (path, filename) => {
 };
 
 //Documents Group
-export const fetchDocumentsGroup = async (name, project) => {
-  const response = await axiosInstance.get('/documentgroups/', {
+export const fetchDocumentsGroup = async (name, p, path) => {
+  const response = await axiosInstance.get(path, {
     headers: {
       "name": `${name}`,
-      "project": `${project}`
+      "project": `${p}`
     }
   });
   return response.data;
 }
 
-export const addDocumentsGroup = async (data) => {
-  const response = await axiosInstance.post('/documentgroups/', data);
+export const addDocumentsGroup = async (data, path) => {
+  const response = await axiosInstance.post(path, data);
   return response.data;
 }
 
@@ -195,5 +195,3 @@ export const sendMail = async (dest) => {
   document.body.appendChild(link);
   link.click();
 };
-
-

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProgramDetails } from '../../utils/requests';
 import { DocumentList } from '../../components/documents/document-list';
-import { DocumentsToolbar } from '../../components/documents/documents-toolbar';
+import { Toolbar } from '../../components/toolbar';
 import { useTargetAction } from "../../utils/hooks";
 import { DetailsPanel } from 'src/components/programs/details-panel';
 import { DeleteProgramsDialog } from 'src/components/programs/dialog-delete-programs';
@@ -73,12 +73,13 @@ const ProgramDetails = () => {
                         onAction={action}
                         handleClose={handleAction}
                         pj_id={programDetails.id}
+                        mix="program"
                         loadData={() => loadData(id)}
                     />)}
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <DocumentsToolbar handleAction={handleAction} />
+                    <Toolbar title="Documentos" handleAction={handleAction} action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
                             handleAction={handleAction}

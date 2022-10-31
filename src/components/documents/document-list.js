@@ -28,7 +28,7 @@ export const DocumentList = ({ documents, groups, handleAction }) => {
                             sx={{ color: "secondary.main" }}
                             fontSize="large" />
                         <Typography
-                            onClick={() => downloadDocument( "projectdocuments/" + document.id, document.file.split("/").pop())}
+                            onClick={() => downloadDocument( document.path + document.id, document.file.split("/").pop())}
                             sx={{ mx: 1 }}
                             color="textPrimary"
                             variant="body1"

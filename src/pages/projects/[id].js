@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests';
 import { DeleteDialog } from '../../components/dialog-delete';
 import { DocumentList } from '../../components/documents/document-list';
-import { DocumentsToolbar } from '../../components/documents/documents-toolbar';
+import { Toolbar } from '../../components/toolbar';
 import { useTargetAction } from "../../utils/hooks";
 import { NewProjectDialog } from 'src/components/dialog-new-project';
 import { DetailsPanel } from 'src/components/projects/details-panel';
@@ -73,12 +73,13 @@ const ProjectDetails = () => {
                         onAction={action}
                         handleClose={handleAction}
                         pj_id={pdetails.id}
+                        mix="project"
                         loadData={() => loadData(id)}
                     />)}
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <DocumentsToolbar handleAction={handleAction} />
+                    <Toolbar title="Documentos" handleAction={handleAction} action="new_document"/>
                     <Box sx={{ p: 1 }}>
                         <DocumentList
                             handleAction={handleAction}
