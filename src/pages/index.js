@@ -2,6 +2,7 @@ import Head from 'next/head';
 import React from "react";
 import { Box, Container, Grid } from '@mui/material';
 import { MemberAmount } from '../components/dashboard/member-amount';
+import { Budget } from '../components/dashboard/budget';
 import { ProjectsByTypology } from '../components/dashboard/projects-by-typology';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { fetchMembers, fetchProjects, fetchUsers } from '../utils/requests';
@@ -74,10 +75,27 @@ const Dashboard = () => {
                 sx={{ height: '100%' }} />
             </Grid>
             <Grid
+            item
+             xs={6}>
+            <Grid
+            container
+
+            spacing={3}
+          >
+          <Grid
               item
-              xs={6}
+              xs={12}
+            >
+              <Budget budget="258 358 CUP" />
+            </Grid>
+            <Grid
+              item
+              xs={12}
             >
               <MemberAmount members={members} />
+            </Grid>
+
+            </Grid>
             </Grid>
           </Grid>
         </Container>

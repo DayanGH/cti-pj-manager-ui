@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { addDocument, fetchDocumentsGroup, addDocumentsGroup } from 'src/utils/requests';
 import { useData } from '../../src/utils/hooks';
 
-export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, mix, ...rest }) => {
+export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
   const [type, setType] = useState("document")
   const [showCustomName, setShowCustomName] = useState("none")
   const [showDate, setShowDate] = useState("none")
@@ -17,27 +17,27 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     { key: 'other', value: 'Otro' },
     { key: 'profile', value: 'Perfil' },
     { key: 'contract', value: 'Contract' },
-    { key: 'rsjf', value: 'Resolución de nombramiento del jefe de proyecto' },
+    { key: 'rsjf', value: 'Resolución de nombramiento del equipo de dirección' },
     { key: 'cidef', value: 'Compatibilización con los intereses de la Defensa' },
-    { key: 'roap', value: 'Resolución oficial de aprobación del proyecto' },
-    { key: 'dapp', value: 'Dictamen de aprobación del proyecto por el programa' },
-    { key: 'dapcca', value: 'Dictamen de aprobación del proyecto por el CCA' },
+    { key: 'dap', value: 'Documento de aprobación del programa' },
+    { key: 'daeg', value: 'Documento de aprobación de la entidad gestora'},
     { key: 'dpddp', value: 'Documentos de planificación del diseño y desarrollo del producto' },
     { key: 'csbie', value: 'Certifico del salario básico de los investigadores externos' },
     { key: 'fciie', value: 'Fotos escaneadas del carné de identidad de los investigadores' }]
   const [names, setNames] = useState(documentNames)
   const groupNames = [
-    { key: 'dpac', value: 'Desglose del presupuesto del año en curso' },
-    { key: 'mca', value: 'Anexo 15 Modelo de certificación de actividades' },
-    { key: 'isp', value: 'Anexo 13 Informe semestral del proyecto' },
-    { key: 'ict', value: 'Informe científico técnico' },
-    { key: 'dapiscca', value: 'Dictamen de aprobación del informe semestral por el CCA' },
-    { key: 'dgeri', value: 'Dictamen del Grupo de Expertos sobre los resultados y el Informe de la Etapa' },
-    { key: 'mnig', value: 'Anexo 16 Modelo de Notificación de Ingresos/Gastos' },
-    { key: 'bcpr', value: 'Base de cálculo para el pago por remuneración' },
-    { key: 'acpp', value: 'Acta de conformidad de los participantes del proyecto' },
-    { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
-    { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos' }]
+                      { key: 'dpac', value: 'Desglose del presupuesto del año en curso'},
+                      { key: 'mca', value: 'Anexo 15 Modelo de certificación de actividades'},
+                      { key: 'rdlc', value: 'Resultados de la convocatoria'},
+                      { key: 'rpe', value: 'Relación de proyectos en ejecucion'},
+                      { key: 'arge', value: 'Actas de las reuniones del grupo de expertos'},
+                      { key: 'iar', value: 'Informe anual de resultados del programa'},
+                      { key: 'ifp', value: 'Informe final del programa'},
+                      { key: 'bcpr', value: 'Base de cálculo para el pago por remuneración'},
+                      { key: 'acpp', value: 'Acta de conformidad de los participantes del programa'},
+                      { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
+                      { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos'}
+  ]
 
   const saveDocument = async () => {
     let data = new FormData();
@@ -46,14 +46,13 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     if (type === "document") {
       saveName += "." + file.name.split(".").pop()
       data.append("file", file, saveName);
-      data.append(mix, pj_id);
+      data.append("program", pj_id);
       data.append("name", saveName);
       data.append("dtype", docName);
       add(data);
     } else {
       saveName += "_" + date + "." + file.name.split(".").pop()
-      let path = mix === "project" ? "/documentgroups/" : "/programdocumentgroups/"
-      await fetchDocumentsGroup(docName, pj_id, path)
+      await fetchDocumentsGroup(docName, pj_id, "/programdocumentgroups/")
         .then((groupData) => {
           if (groupData.length === 1) {
             data.append("group", groupData[0].id);
@@ -63,9 +62,9 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           } else if (groupData.length === 0) {
             let datatemp = new FormData();
             datatemp.append('name', saveName)
-            datatemp.append(mix, pj_id)
+            datatemp.append("program", pj_id)
             datatemp.append('dtype', docName)
-            addDocumentsGroup(datatemp, path)
+            addDocumentsGroup(datatemp, "/programdocumentgroups/")
               .then((dd) => {
                 data.append("group", dd.id);
                 data.append("file", file, saveName);
@@ -77,11 +76,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     }
     function add(data) {
       //TODO: Verify response and validate data before closing
-      let path = ""
-      if(mix === "project")
-          path = type == "document" ? "/projectdocuments/" : "/groupdocuments/"
-      else
-          path = type == "document" ? "/programdocuments/" : "/programgroupdocuments/"
+      let path = type == "document" ? "/programdocuments/" : "/programgroupdocuments/"
       addDocument(data, path).then((data) => {
         handleClose();
         loadData();
