@@ -1,5 +1,6 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Table, TableBody, TableRow, TableCell, Tooltip } from '@mui/material';
+import { ProjectsBySectors } from "./projects-by-sector"
+import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
 
@@ -11,24 +12,12 @@ export const ProjectsByTypology = ({ projects }) => {
   const [sec, setSec] = useState(0);
   const [nas, setNas] = useState(0);
   const [showBy, setShowBy] = useState("typology");
-  const sectors = [
-    { amount: 0, value: 'Turismo' },
-    { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
-    { amount: 0, value: 'Electroenergético' },
-    { amount: 0, value: 'Producción de alimentos' },
-    { amount: 0, value: 'Construcciones' },
-    { amount: 0, value: 'Telecomunicaciones e Informática' },
-    { amount: 0, value: 'Logística y transporte' },
-    { amount: 0, value: 'Redes hidráulicas y sanitarias' },
-    { amount: 0, value: 'Agroindustria azucarera' },
-    { amount: 0, value: 'Industria ligera' },
-    { amount: 0, value: 'Servicios técnicos profesionales' }];
 
   useEffect(() => {
-    loadData();
-  }, []);
+    loadTypologyData()
+  })
 
-  function loadData() {
+  function loadTypologyData() {
     let n = 0, t = 0, s = 0, na = 0;
 
     projects.forEach(project => {
@@ -40,16 +29,12 @@ export const ProjectsByTypology = ({ projects }) => {
         s++;
       else if (project.pj_type.startsWith("pnap"))
         na++;
-
-      sectors.forEach(sector => {
-        if (project.strategics_sectors.includes(sector.value))
-          sector.amount++;
-      })
     })
     setNac(n)
     setTer(t)
     setSec(s)
     setNas(na)
+    console.log("ima")
   }
 
   const data = {
@@ -163,27 +148,8 @@ export const ProjectsByTypology = ({ projects }) => {
     );
   };
 
-  const BySectorsTable = () => {
-    console.log(sectors)
-    sectors.forEach(sector => console.log(sector.amount))
-    return (
-      <Table>
-        <TableBody >
-          {sectors.slice(0, sectors.length).map((sector) => (
-            <TableRow key={sector.value}>
-              <TableCell>
-                <b>{sector.value}: </b>
-              </TableCell>
-              <TableCell>
-                {sector.amount}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    );
-  };
 
+  let component = showBy == "typology" ? <ByTypologyPie /> : <ProjectsBySectors projects={projects} />
   return (
     <Card>
       <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
@@ -198,31 +164,22 @@ export const ProjectsByTypology = ({ projects }) => {
             label='Datos'
             onChange={(event) => {
               setShowBy(event.target.value);
-              data["datasets"]["data"] = [5, 9, 12, 3];
             }}
           >
             <MenuItem value={'typology'}>Por tipologia</MenuItem>
             <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
           </Select>
         </FormControl>
-
-        <Tooltip title="Copiar">
-          <Box>
-            <IconButton
-              onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
-              size="small"
-              title='Copiar'>
-              <CopyIcon fontSize="small" />
-            </IconButton>
-          </Box>
-        </Tooltip>
+        <IconButton
+          onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
+          size="small">
+          <CopyIcon fontSize="small" />
+        </IconButton>
       </Box>
       <Divider />
       <CardContent>
-        {showBy == "typology" ? <ByTypologyPie /> : <BySectorsTable />}
+        {component}
       </CardContent>
     </Card>
   );
-};
-
-
+};

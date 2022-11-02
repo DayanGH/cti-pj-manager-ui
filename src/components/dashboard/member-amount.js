@@ -15,7 +15,7 @@ export const MemberAmount = ({ members }) => {
   }, []);
 
   function loadData() {
-    let i = 0, o = 0, s = 0, a = 0;
+    let i = 0, o = 0, s = 0;
     members.forEach(member => {
 
       if (member.m_type == "in")
@@ -25,13 +25,10 @@ export const MemberAmount = ({ members }) => {
       else if (member.m_type == "stdnt")
         s++;
 
-      if (member.projects.length > 0)
-        a++;
     })
     setInt(i)
     setOut(o)
     setStu(s)
-    setAso(a)
     setTotal(i + o + s)
 
   }
@@ -83,15 +80,6 @@ export const MemberAmount = ({ members }) => {
               </TableCell>
               <TableCell>
                 {stu}
-              </TableCell>
-            </TableRow>
-            <TableRow
-            >
-              <TableCell>
-                <b>Asociados a proyecto: </b>
-              </TableCell>
-              <TableCell>
-                {aso}
               </TableCell>
             </TableRow>
             <TableRow
