@@ -34,7 +34,6 @@ export const ProjectsByTypology = ({ projects }) => {
     setTer(t)
     setSec(s)
     setNas(na)
-    console.log("ima")
   }
 
   const data = {
@@ -182,4 +181,5 @@ export const ProjectsByTypology = ({ projects }) => {
       </CardContent>
     </Card>
   );
-};
+};
+

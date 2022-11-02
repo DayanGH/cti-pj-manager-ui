@@ -1,31 +1,30 @@
 import { Bar } from "react-chartjs-2";
-import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from "@mui/material";
-import { useEffect, useState } from 'react';
+import { Box, useTheme } from "@mui/material";
+import { useCallback, useEffect, useState } from 'react';
 
-export const ProjectsBySectors = ({projects}) => {
+export const ProjectsBySectors = ({ projects }) => {
   const theme = useTheme();
   const [sData, setSData] = useState([])
   const [sLabels, setSLabels] = useState([])
 
-  const sectors = [
-    { amount: 0, value: 'Turismo' },
-    { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
-    { amount: 0, value: 'Electroenergético' },
-    { amount: 0, value: 'Producción de alimentos' },
-    { amount: 0, value: 'Construcciones' },
-    { amount: 0, value: 'Telecomunicaciones e Informática' },
-    { amount: 0, value: 'Logística y transporte' },
-    { amount: 0, value: 'Redes hidráulicas y sanitarias' },
-    { amount: 0, value: 'Agroindustria azucarera' },
-    { amount: 0, value: 'Industria ligera' },
-    { amount: 0, value: 'Servicios técnicos profesionales' }];
-
-
   useEffect(() => {
-    loadData()
-  })
+    loadData();
+  }, [loadData])
 
-  function loadData() {
+  const loadData = useCallback(() => {
+
+    const sectors = [
+      { amount: 0, value: 'Turismo' },
+      { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
+      { amount: 0, value: 'Electroenergético' },
+      { amount: 0, value: 'Producción de alimentos' },
+      { amount: 0, value: 'Construcciones' },
+      { amount: 0, value: 'Telecomunicaciones e Informática' },
+      { amount: 0, value: 'Logística y transporte' },
+      { amount: 0, value: 'Redes hidráulicas y sanitarias' },
+      { amount: 0, value: 'Agroindustria azucarera' },
+      { amount: 0, value: 'Industria ligera' },
+      { amount: 0, value: 'Servicios técnicos profesionales' }]
 
     projects.forEach(project => {
       sectors.forEach(sector => {
@@ -37,14 +36,12 @@ export const ProjectsBySectors = ({projects}) => {
     let d = []
     let l = []
     sectors.forEach(sector => {
-        d.push(sector["amount"])
-        sLabels.push(sector["value"])
-      })
-      //setSData(d)
-      //setSLabels(l)
-
-    console.log("Hola")
-  }
+      d.push(sector["amount"])
+      sLabels.push(sector.value)
+    })
+    setSData(d)
+    setSLabels(l)
+  }, [projects, sLabels])
 
   const barData = {
     datasets: [
@@ -113,14 +110,15 @@ export const ProjectsBySectors = ({projects}) => {
 
   return (
 
-        <Box
-          sx={{
-            height: 400,
-            position: "relative",
-          }}
-        >
-          <Bar data={barData} options={barOptions} />
-        </Box>
+    <Box
+      sx={{
+        height: 400,
+        position: "relative",
+      }}
+    >
+      <Bar data={barData}
+        options={barOptions} />
+    </Box>
 
   );
 };

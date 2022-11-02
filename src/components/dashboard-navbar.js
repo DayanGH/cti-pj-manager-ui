@@ -25,7 +25,6 @@ export const DashboardNavbar = (props) => {
       setUserId(localStorage.getItem("user_id"))
     }
   }
-  console.log(user_id)
 
   return (
     <>
