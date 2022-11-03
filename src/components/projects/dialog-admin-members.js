@@ -2,13 +2,16 @@ import { Dialog, Button, TextField, Box, DialogTitle, CircularProgress, Autocomp
 import { useState } from 'react';
 import { useAsync } from 'react-async';
 import { fetchMembers, editProject } from 'src/utils/requests';
-import { useData, useToggleState } from '../../utils/hooks';
+import { useData, useTargetAction, useToggleState } from '../../utils/hooks';
 import { CopyIcon } from 'src/icons/copy';
+import { AddIcon } from 'src/icons/add';
+import { NewMemberDialog } from '../members/dialog-new-member';
 
 export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest }) => {
     const [errors, setErrors] = useData({});
     const [value, setValue] = useState(project.members)
     const [inputValue, setInputValue] = useState('')
+    const [action, target, handleAction] = useTargetAction();
     const [toggleMembers, openMembers, closeMembers] = useToggleState();
     const membersAsyncData = useAsync({
         deferFn: fetchMembers,
@@ -34,92 +37,113 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
     };
 
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            maxWidth='xs'
-            fullWidth={true}
+        <>
+            {
+                ["new_member_p"].includes(action) && (
+                    <NewMemberDialog
+                        open
+                        onAction={action}
+                        handleClose={handleAction}
+                        setValue={setValue}
 
-        >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-                <DialogTitle
-                    sx={{ flexGrow: 1 }}
-                >
-                    Administrar miembros
-                </DialogTitle>
-                <Tooltip title="Copiar">
-                    <IconButton
-                        onClick={() => {
-                            let members = "";
-                            value.forEach(v => {
-                                members += v["name"] + ", "
-                            })
-                            navigator.clipboard.writeText(members)
-                        }}
-                        sx={{ mr: 2 }}
-                        size="small"
-                    >
-                        <CopyIcon fontSize="small" />
-                    </IconButton>
-                </Tooltip>
-            </Box>
-            <Box
-                sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
+                        instance={target}
+                    />)
+            }
+            <Dialog
+                open={open}
+                onClose={onClose}
+                maxWidth='xs'
+                fullWidth={true}
+
             >
-
-                <Autocomplete
-                    multiple
-                    id="select-members"
-                    open={toggleMembers}
-                    value={value}
-                    onOpen={handleOpenMembers}
-                    onClose={handleCloseMembers}
-                    options={membersAsyncData.data || []}
-                    onChange={(_, value) => { setValue(value) }}
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    getOptionLabel={(option) => option.name}
-                    loading={membersAsyncData.isLoading}
-                    inputValue={inputValue}
-                    onInputChange={(_, value) => {
-                        setInputValue(value)
-                    }}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label="Miembros"
-                            variant="standard"
-                            InputProps={{
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <div>
-                                        {membersAsyncData.isLoading ? (
-                                            <CircularProgress
-                                                color="inherit"
-                                                size={20} />
-                                        ) : null}
-                                        {params.InputProps.endAdornment}
-                                    </div>
-                                ),
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <DialogTitle
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Administrar miembros
+                    </DialogTitle>
+                    <Tooltip title="Copiar">
+                        <IconButton
+                            onClick={() => {
+                                let members = "";
+                                value.forEach(v => {
+                                    members += v["name"] + ", "
+                                })
+                                navigator.clipboard.writeText(members)
                             }}
-                        />
-                    )}
-                />
-                <Box
-                    sx={{ pt: 2, display: "flex", justifyContent: "right" }}
-                >
-                    <Button
-                        onClick={onClose}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        onClick={() => addMembers()}
-                    >
-                        Guardar
-                    </Button>
+                            sx={{ mr: 2 }}
+                            size="small"
+                        >
+                            <CopyIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                 </Box>
-            </Box>
-        </Dialog >
+                <Box
+                    sx={{ px: 2, mx: 2, display: "flex", flexDirection: "column" }}
+                >
+
+                    <Autocomplete
+                        multiple
+                        id="select-members"
+                        open={toggleMembers}
+                        value={value}
+                        onOpen={handleOpenMembers}
+                        onClose={handleCloseMembers}
+                        options={membersAsyncData.data || []}
+                        onChange={(_, value) => { setValue(value), console.log(value) }}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        getOptionLabel={(option) => option.name}
+                        loading={membersAsyncData.isLoading}
+                        inputValue={inputValue}
+                        onInputChange={(_, value) => {
+                            setInputValue(value)
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Miembros"
+                                variant="standard"
+                                InputProps={{
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <div>
+                                            {membersAsyncData.isLoading ? (
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20} />
+                                            ) : null}
+                                            {params.InputProps.endAdornment}
+                                        </div>
+                                    ),
+                                }}
+                            />
+                        )}
+                    />
+                    <Box
+                        sx={{ pt: 2, display: "flex", mb: 1 }}
+                    >
+                        <Button
+
+                            onClick={() => handleAction('new_member_p')}
+                        >
+                            Nuevo
+                        </Button>
+                        <Box sx={{ flexGrow: 1 }}></Box>
+                        <Button
+                            onClick={onClose}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                            onClick={() => addMembers()}
+                        >
+                            Guardar
+                        </Button>
+                    </Box>
+                </Box>
+            </Dialog >
+        </>
     );
+
 
 };

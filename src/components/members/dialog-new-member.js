@@ -4,7 +4,7 @@ import { addMember, editMember } from 'src/utils/requests';
 import { useData, useTargetAction } from '../../utils/hooks';
 import { DeleteUsersMembersDialog } from './dialog-delete-user-members';
 
-export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instance, ...rest }) => {
+export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instance, setValue, ...rest }) => {
   const [data, setData] = useData({
     name: "",
     c_id: "",
@@ -15,20 +15,25 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
   });
   const [errors, setErrors] = useData({});
   const [mainAction, setMainAction] = useState(onAction)
-  const [editable, setEditable] = useState(mainAction === 'new_member' ? false : true)
-  const [visible, setVisible] = useState(mainAction === 'new_member' ? "none" : "flex")
-  const [invisible, setInvisible] = useState(mainAction === 'new_member' ? "flex" : "none")
+  const [editable, setEditable] = useState(mainAction.startsWith('new_member') ? false : true)
+  const [visible, setVisible] = useState(mainAction.startsWith('new_member') ? "none" : "flex")
+  const [invisible, setInvisible] = useState(mainAction.startsWith('new_member') ? "flex" : "none")
 
   const [action, target, handleAction] = useTargetAction();
 
 
   const saveMember = async () => {
-    const func = mainAction === 'new_member' ? addMember : editMember;
+    const func = mainAction === 'new_member' || mainAction === 'new_member_p' ? addMember : editMember;
 
     await func(data)
       .then((data) => {
         handleClose();
-        loadData();
+        if (mainAction === 'new_member' || mainAction === 'edit_member') {
+          loadData();
+        } else {
+          setValue(data)
+        }
+
       })
       .catch((error) => {
         setErrors(error.response.data)
@@ -59,7 +64,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
         fullWidth={true}
 
       >
-        <DialogTitle>{mainAction === 'new_member' ? "Nuevo miembro" : mainAction === 'get_member' ? "Miembro" : "Editar miembro"}</DialogTitle>
+        <DialogTitle>{mainAction.startsWith('new_member') ? "Nuevo miembro" : mainAction === 'get_member' ? "Miembro" : "Editar miembro"}</DialogTitle>
         <Box
           sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
         >
