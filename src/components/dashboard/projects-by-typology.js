@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
 
 
-export const ProjectsByTypology = ({ projects }) => {
+export const ProjectsByTypology = ({ sectorsData, typologyData }) => {
   const theme = useTheme();
   const [nac, setNac] = useState(0);
   const [ter, setTer] = useState(0);
@@ -13,7 +13,7 @@ export const ProjectsByTypology = ({ projects }) => {
   const [nas, setNas] = useState(0);
   const [showBy, setShowBy] = useState("typology");
 
-  useEffect(() => {
+  /* useEffect(() => {
     loadTypologyData()
   })
 
@@ -34,12 +34,12 @@ export const ProjectsByTypology = ({ projects }) => {
     setTer(t)
     setSec(s)
     setNas(na)
-  }
+  } */
 
   const data = {
     datasets: [
       {
-        data: [nac, ter, sec, nas],
+        data: typologyData,
         backgroundColor: ['#3F51B5', '#e53935', '#FB8C00', '#90B020'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
@@ -74,23 +74,23 @@ export const ProjectsByTypology = ({ projects }) => {
   const types = [
     {
       title: 'Nacionales',
-      value: nac,
+      value: typologyData[0],
       color: '#3F51B5'
     },
     {
       title: 'Territoriales',
-      value: ter,
+      value: typologyData[1],
       color: '#E53935'
     },
     {
       title: 'Sectoriales',
-      value: sec,
+      value: typologyData[2],
       color: '#FB8C00'
     }
     ,
     {
       title: 'No asociados',
-      value: nas,
+      value: typologyData[3],
       color: '#90B020'
     }
   ];
@@ -148,7 +148,7 @@ export const ProjectsByTypology = ({ projects }) => {
   };
 
 
-  let component = showBy == "typology" ? <ByTypologyPie /> : <ProjectsBySectors projects={projects} />
+  let component = showBy == "typology" ? <ByTypologyPie /> : <ProjectsBySectors sectorsData={sectorsData} />
   return (
     <Card>
       <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>

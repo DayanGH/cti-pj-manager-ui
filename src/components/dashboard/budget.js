@@ -1,7 +1,7 @@
 import { Avatar, Card, CardContent, Grid, Typography } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-export const Budget = ({budget}) => (
+export const Budget = ({ budget }) => (
   <Card>
     <CardContent>
       <Grid
@@ -21,7 +21,7 @@ export const Budget = ({budget}) => (
             color="textPrimary"
             variant="h4"
           >
-            {budget}
+            {'$ ' + budget}
           </Typography>
         </Grid>
         <Grid item>

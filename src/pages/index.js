@@ -11,18 +11,53 @@ import { useEffect, useState } from 'react';
 const Dashboard = () => {
   const [isloading, setloading] = useState(true);
   const [members, setMembers] = useState();
-  const [projects, setProjects] = useState();
-  const [users, setUsers] = useState();
+  const [sectorsData, setSectorsData] = useState([]);
+  const [typologyData, setTypologyData] = useState([])
+  const [budget, setBudget] = useState(0);
 
   useEffect(() => {
-    loadData(0);
+    loadData();
+    console.log("hi")
   }, []);
 
-  function loadData(type) {
+  function loadData() {
+    let d = [0, 0, 0, 0]
     setloading(true);
     fetchProjects("all")
       .then((data) => {
-        setProjects(data);
+        let m = 0
+        let sectors = [
+          { amount: 0, value: 'Turismo' },
+          { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
+          { amount: 0, value: 'Electroenergético' },
+          { amount: 0, value: 'Producción de alimentos' },
+          { amount: 0, value: 'Construcciones' },
+          { amount: 0, value: 'Telecomunicaciones e Informática' },
+          { amount: 0, value: 'Logística y transporte' },
+          { amount: 0, value: 'Redes hidráulicas y sanitarias' },
+          { amount: 0, value: 'Agroindustria azucarera' },
+          { amount: 0, value: 'Industria ligera' },
+          { amount: 0, value: 'Servicios técnicos profesionales' }]
+
+        data.forEach(project => {
+          if (project.pj_type == "papn")
+            d[0]++;
+          else if (project.pj_type == "papt")
+            d[1]++;
+          else if (project.pj_type == "paps")
+            d[2]++;
+          else if (project.pj_type.startsWith("pnap"))
+            d[3]++;
+
+          sectors.forEach(sector => {
+            if (project.strategics_sectors.includes(sector.value))
+              sector.amount++;
+          })
+          m += parseInt(project.financing)
+        })
+        setTypologyData(d)
+        setSectorsData(sectors)
+        setBudget(m)
         fetchMembers()
           .then((data) => {
             setMembers(data);
@@ -33,6 +68,8 @@ const Dashboard = () => {
       }).catch((error) => {
         console.log(error)
       });;
+
+
   }
 
   if (isloading) return <p>cargando....</p>
@@ -71,31 +108,32 @@ const Dashboard = () => {
               xs={6}
             >
               <ProjectsByTypology
-                projects={projects}
+                sectorsData={sectorsData}
+                typologyData={typologyData}
                 sx={{ height: '100%' }} />
             </Grid>
             <Grid
-            item
-             xs={6}>
-            <Grid
-            container
-
-            spacing={3}
-          >
-          <Grid
               item
-              xs={12}
-            >
-              <Budget budget="258 358 CUP" />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-            >
-              <MemberAmount members={members} />
-            </Grid>
+              xs={6}>
+              <Grid
+                container
 
-            </Grid>
+                spacing={3}
+              >
+                <Grid
+                  item
+                  xs={12}
+                >
+                  <Budget budget={budget} />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                >
+                  <MemberAmount members={members} />
+                </Grid>
+
+              </Grid>
             </Grid>
           </Grid>
         </Container>

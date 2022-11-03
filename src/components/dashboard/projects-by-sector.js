@@ -2,9 +2,9 @@ import { Bar } from "react-chartjs-2";
 import { Box, useTheme } from "@mui/material";
 import { useCallback, useEffect, useState } from 'react';
 
-export const ProjectsBySectors = ({ projects }) => {
+export const ProjectsBySectors = ({ sectorsData }) => {
   const theme = useTheme();
-  const [sData, setSData] = useState([])
+  const [sData, setSData] = useState()
   const [sLabels, setSLabels] = useState([])
 
   useEffect(() => {
@@ -12,36 +12,15 @@ export const ProjectsBySectors = ({ projects }) => {
   }, [loadData])
 
   const loadData = useCallback(() => {
-
-    const sectors = [
-      { amount: 0, value: 'Turismo' },
-      { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
-      { amount: 0, value: 'Electroenergético' },
-      { amount: 0, value: 'Producción de alimentos' },
-      { amount: 0, value: 'Construcciones' },
-      { amount: 0, value: 'Telecomunicaciones e Informática' },
-      { amount: 0, value: 'Logística y transporte' },
-      { amount: 0, value: 'Redes hidráulicas y sanitarias' },
-      { amount: 0, value: 'Agroindustria azucarera' },
-      { amount: 0, value: 'Industria ligera' },
-      { amount: 0, value: 'Servicios técnicos profesionales' }]
-
-    projects.forEach(project => {
-      sectors.forEach(sector => {
-        if (project.strategics_sectors.includes(sector.value))
-          sector.amount++;
-      })
-    })
-
     let d = []
     let l = []
-    sectors.forEach(sector => {
+    sectorsData.forEach(sector => {
       d.push(sector["amount"])
-      sLabels.push(sector.value)
+      l.push(sector.value)
     })
     setSData(d)
     setSLabels(l)
-  }, [projects, sLabels])
+  }, [sectorsData])
 
   const barData = {
     datasets: [
@@ -56,7 +35,7 @@ export const ProjectsBySectors = ({ projects }) => {
         maxBarThickness: 10,
       }
     ],
-    labels: ["Turismo", "Industria boitecnológica y farmacéutica", "Electroenergético", "Producción de alimentos", "Construcciones", "Telecomunicaciones e Informática", "Logística y transporte", "Redes hidráulicas y sanitarias", "Agroindustria azucarera", "Industria ligera", "Servicios técnicos profesionales"],
+    labels: sLabels,
   };
 
   const barOptions = {
