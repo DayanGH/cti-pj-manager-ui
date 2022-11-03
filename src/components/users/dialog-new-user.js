@@ -2,7 +2,7 @@ import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, M
 import { useState } from 'react';
 import { addUser, editPassword, editUser } from 'src/utils/requests';
 import { useData, useTargetAction } from '../../utils/hooks';
-import { DeleteUsersMembersDialog } from '../dialog-delete-user-members';
+import { DeleteUsersMembersDialog } from '../members/dialog-delete-user-members';
 
 export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance, ...rest }) => {
   const [data, setData] = useData({

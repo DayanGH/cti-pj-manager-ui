@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Box } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
-import { NewDocumentDialog } from '../../components/dialog-new-doc';
+import { NewDocumentDialog } from '../../components/projects/dialog-new-doc';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProgramDetails } from '../../utils/requests';
@@ -11,7 +11,8 @@ import { useTargetAction } from "../../utils/hooks";
 import { DetailsPanel } from 'src/components/programs/details-panel';
 import { DeleteProgramsDialog } from 'src/components/programs/dialog-delete-programs';
 import { NewProgramDialog } from 'src/components/programs/dialog-new-program';
-import { DeleteDocumentsDialog } from 'src/components/dialog-delete-documents';
+import { DeleteDocumentsDialog } from 'src/components/documents/dialog-delete-documents';
+import { NewProgramDocumentDialog } from 'src/components/programs/dialog-new-program-doc';
 
 const ProgramDetails = () => {
     const router = useRouter();
@@ -76,13 +77,12 @@ const ProgramDetails = () => {
                         onClose={handleAction}
                         loadData={() => loadData(id)} />
                 )}
-                {["new_document", "edit_document"].includes(action) && (
-                    <NewDocumentDialog
+                {["new_document"].includes(action) && (
+                    <NewProgramDocumentDialog
                         open
                         onAction={action}
                         handleClose={handleAction}
                         pj_id={programDetails.id}
-                        mix="program"
                         loadData={() => loadData(id)}
                     />)}
                 <Box

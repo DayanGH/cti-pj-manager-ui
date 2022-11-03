@@ -1,9 +1,9 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
 import { useState } from 'react';
 import { addDocument, fetchDocumentsGroup, addDocumentsGroup } from 'src/utils/requests';
-import { useData } from '../../src/utils/hooks';
+import { useData } from '../../utils/hooks';
 
-export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
+export const NewProgramDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
   const [type, setType] = useState("document")
   const [showCustomName, setShowCustomName] = useState("none")
   const [showDate, setShowDate] = useState("none")
@@ -20,23 +20,23 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     { key: 'rsjf', value: 'Resolución de nombramiento del equipo de dirección' },
     { key: 'cidef', value: 'Compatibilización con los intereses de la Defensa' },
     { key: 'dap', value: 'Documento de aprobación del programa' },
-    { key: 'daeg', value: 'Documento de aprobación de la entidad gestora'},
+    { key: 'daeg', value: 'Documento de aprobación de la entidad gestora' },
     { key: 'dpddp', value: 'Documentos de planificación del diseño y desarrollo del producto' },
     { key: 'csbie', value: 'Certifico del salario básico de los investigadores externos' },
     { key: 'fciie', value: 'Fotos escaneadas del carné de identidad de los investigadores' }]
   const [names, setNames] = useState(documentNames)
   const groupNames = [
-                      { key: 'dpac', value: 'Desglose del presupuesto del año en curso'},
-                      { key: 'mca', value: 'Anexo 15 Modelo de certificación de actividades'},
-                      { key: 'rdlc', value: 'Resultados de la convocatoria'},
-                      { key: 'rpe', value: 'Relación de proyectos en ejecucion'},
-                      { key: 'arge', value: 'Actas de las reuniones del grupo de expertos'},
-                      { key: 'iar', value: 'Informe anual de resultados del programa'},
-                      { key: 'ifp', value: 'Informe final del programa'},
-                      { key: 'bcpr', value: 'Base de cálculo para el pago por remuneración'},
-                      { key: 'acpp', value: 'Acta de conformidad de los participantes del programa'},
-                      { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
-                      { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos'}
+    { key: 'dpac', value: 'Desglose del presupuesto del año en curso' },
+    { key: 'mca', value: 'Anexo 15 Modelo de certificación de actividades' },
+    { key: 'rdlc', value: 'Resultados de la convocatoria' },
+    { key: 'rpe', value: 'Relación de proyectos en ejecucion' },
+    { key: 'arge', value: 'Actas de las reuniones del grupo de expertos' },
+    { key: 'iar', value: 'Informe anual de resultados del programa' },
+    { key: 'ifp', value: 'Informe final del programa' },
+    { key: 'bcpr', value: 'Base de cálculo para el pago por remuneración' },
+    { key: 'acpp', value: 'Acta de conformidad de los participantes del programa' },
+    { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
+    { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos' }
   ]
 
   const saveDocument = async () => {

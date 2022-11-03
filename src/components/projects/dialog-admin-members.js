@@ -2,7 +2,7 @@ import { Dialog, Button, TextField, Box, DialogTitle, CircularProgress, Autocomp
 import { useState } from 'react';
 import { useAsync } from 'react-async';
 import { fetchMembers, editProject } from 'src/utils/requests';
-import { useData, useToggleState } from '../../src/utils/hooks';
+import { useData, useToggleState } from '../../utils/hooks';
 import { CopyIcon } from 'src/icons/copy';
 
 export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest }) => {

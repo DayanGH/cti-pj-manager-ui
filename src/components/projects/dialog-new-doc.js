@@ -1,9 +1,9 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
 import { useState } from 'react';
 import { addDocument, fetchDocumentsGroup, addDocumentsGroup } from 'src/utils/requests';
-import { useData } from '../../src/utils/hooks';
+import { useData } from '../../utils/hooks';
 
-export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, mix, ...rest }) => {
+export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
   const [type, setType] = useState("document")
   const [showCustomName, setShowCustomName] = useState("none")
   const [showDate, setShowDate] = useState("none")
@@ -46,14 +46,13 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     if (type === "document") {
       saveName += "." + file.name.split(".").pop()
       data.append("file", file, saveName);
-      data.append(mix, pj_id);
+      data.append("project", pj_id);
       data.append("name", saveName);
       data.append("dtype", docName);
       add(data);
     } else {
       saveName += "_" + date + "." + file.name.split(".").pop()
-      let path = mix === "project" ? "/documentgroups/" : "/programdocumentgroups/"
-      await fetchDocumentsGroup(docName, pj_id, path)
+      await fetchDocumentsGroup(docName, pj_id, "/documentgroups/")
         .then((groupData) => {
           if (groupData.length === 1) {
             data.append("group", groupData[0].id);
@@ -63,9 +62,9 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
           } else if (groupData.length === 0) {
             let datatemp = new FormData();
             datatemp.append('name', saveName)
-            datatemp.append(mix, pj_id)
+            datatemp.append("project", pj_id)
             datatemp.append('dtype', docName)
-            addDocumentsGroup(datatemp, path)
+            addDocumentsGroup(datatemp, "/documentgroups/")
               .then((dd) => {
                 data.append("group", dd.id);
                 data.append("file", file, saveName);
@@ -77,11 +76,9 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     }
     function add(data) {
       //TODO: Verify response and validate data before closing
-      let path = ""
-      if(mix === "project")
-          path = type == "document" ? "/projectdocuments/" : "/groupdocuments/"
-      else
-          path = type == "document" ? "/programdocuments/" : "/programgroupdocuments/"
+
+      let path = type == "document" ? "/projectdocuments/" : "/groupdocuments/"
+
       addDocument(data, path).then((data) => {
         handleClose();
         loadData();

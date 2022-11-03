@@ -1,5 +1,5 @@
 import { Box, Typography, Button, Table, TableBody, TableRow, TableCell, IconButton } from '@mui/material';
-import { AdminMembers } from '../dialog-admin-members';
+import { AdminMembers } from './dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
 import { MailIcon } from 'src/icons/mail';
 import { sendMail } from 'src/utils/requests';
@@ -60,6 +60,15 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             >
                                 <MailIcon fontSize="small" />
                             </IconButton>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow sx={{ display: pdetails.program === null ? "none" : "" }}
+                    >
+                        <TableCell>
+                            <b>Programa </b>
+                        </TableCell>
+                        <TableCell>
+                            {pdetails.program_name}
                         </TableCell>
                     </TableRow>
                     <TableRow sx={{ display: pdetails.notes.length < 1 ? "none" : "" }}

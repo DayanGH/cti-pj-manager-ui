@@ -29,8 +29,11 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     ...instance,
   });
   const projectTypesNAP = [
-    { key: 'pnap_di', value: 'Proyectos No Asociados a Programas Demanda Interna' },
-    { key: 'pnap_de', value: 'Proyectos No Asociados a Programas Demanda Externa' }]
+    { key: 'pnap_pe', value: 'Proyectos No Asociados a Programas (PE)' },
+    { key: 'pnap_pne', value: 'Proyectos No Asociados a Programas (PNE)' },
+    { key: 'pnap_pdl', value: 'Proyectos No Asociados a Programas (PDL)' },
+    { key: 'pnap_prci', value: 'Proyectos No Asociados a Programas (PRCI)' },
+    { key: 'pnap_pi', value: 'Proyectos No Asociados a Programas (PI)' }]
   const projectsClass = [
     { key: 'i_bas', value: 'De Investigación Básica' },
     { key: 'i_d', value: 'Aplicada y de Desarrollo' },
@@ -52,10 +55,10 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
   const [errors, setErrors] = useData({});
-  const [ptype, setPtype] = useState(data.pj_type === "pnap_di" || data.pj_type === "pnap_de" || data.pj_type === "" ? 'none' : data.pj_type)
+  const [ptype, setPtype] = useState(data.pj_type.startsWith("pnap_") ? 'none' : data.pj_type)
   const [value, setValue] = useState(data.program !== null ? { id: data?.program, name: instance?.program_name } : null)
   const [inputValue, setInputValue] = useState('')
-  const [pnapType, setPnapType] = useState(data.pj_type === "pnap_di" ? "pnap_di" : data.pj_type === "pnap_de" ? "pnap_de" : "")
+  const [pnapType, setPnapType] = useState(data.pj_type)
   const [pClass, setpClass] = useState("")
 
   const [valueChief, setValueChief] = useState(data.chief !== null ? { id: data?.chief, name: instance?.chief_name } : null)

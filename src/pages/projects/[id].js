@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Box } from '@mui/material';
 import { DashboardLayout } from '../../components/dashboard-layout';
-import { NewDocumentDialog } from '../../components/dialog-new-doc';
+import { NewDocumentDialog } from '../../components/projects/dialog-new-doc';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchProjectsDetails } from '../../utils/requests';
@@ -9,9 +9,9 @@ import { DeleteDialog } from '../../components/projects/dialog-delete-projects';
 import { DocumentList } from '../../components/documents/document-list';
 import { Toolbar } from '../../components/toolbar';
 import { useTargetAction } from "../../utils/hooks";
-import { NewProjectDialog } from 'src/components/dialog-new-project';
+import { NewProjectDialog } from 'src/components/projects/dialog-new-project';
 import { DetailsPanel } from 'src/components/projects/details-panel';
-import { DeleteDocumentsDialog } from 'src/components/dialog-delete-documents';
+import { DeleteDocumentsDialog } from 'src/components/documents/dialog-delete-documents';
 
 const ProjectDetails = () => {
     const router = useRouter();
@@ -35,6 +35,7 @@ const ProjectDetails = () => {
         }
     }
     if (isloading) return <p>cargando....</p>
+    console.log(pdetails)
     return (
         <>
             <Head>
@@ -76,13 +77,12 @@ const ProjectDetails = () => {
                         onClose={handleAction}
                         loadData={() => loadData(id)} />
                 )}
-                {["new_document", "edit_document"].includes(action) && (
+                {["new_document"].includes(action) && (
                     <NewDocumentDialog
                         open
                         onAction={action}
                         handleClose={handleAction}
                         pj_id={pdetails.id}
-                        mix="project"
                         loadData={() => loadData(id)}
                     />)}
                 <Box

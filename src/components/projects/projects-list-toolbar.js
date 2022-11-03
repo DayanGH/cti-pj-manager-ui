@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';
-import { NewProjectDialog } from '../dialog-new-project';
+import { NewProjectDialog } from './dialog-new-project';
 import { useTargetAction } from "../../utils/hooks";
 import { fetchProjects } from '../../utils/requests'
 

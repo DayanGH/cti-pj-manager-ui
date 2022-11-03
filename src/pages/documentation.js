@@ -7,7 +7,7 @@ import { NewSDocumentDialog } from '../components/documents/new-simple-doc-dialo
 import { useTargetAction } from "../utils/hooks";
 import { useEffect, useState } from 'react';
 import { fetchSimpleDocuments } from '../utils/requests';
-import { DeleteDocumentsDialog } from 'src/components/dialog-delete-documents';
+import { DeleteDocumentsDialog } from 'src/components/documents/dialog-delete-documents';
 
 const Documentation = () => {
     const [action, target, handleAction] = useTargetAction();
