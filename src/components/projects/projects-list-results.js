@@ -13,9 +13,11 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Tooltip
 } from '@mui/material';
 import router from 'next/router';
+import { AlertIcon } from 'src/icons/status-alert';
+import { OkIcon } from 'src/icons/status-ok';
 
 export const ProjectsListResults = ({ projects, ...rest }) => {
   const [selectedProjectsIds, setSelectedProjectsIds] = useState([]);
@@ -73,7 +75,9 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                     {project.project_classification}
                   </TableCell>
                   <TableCell>
-                    <Checkbox />
+                    <Tooltip title={project.notes.length < 1 ? "Sin notas" : project.notes}>
+                      {project.notes.length < 1 ? <OkIcon fontSize="small" sx={{color: "green"}}/> : <AlertIcon fontSize="small" sx={{color: "red"}} /> }
+                    </Tooltip>
                   </TableCell>
                   <TableCell>
                     {project.end_date}

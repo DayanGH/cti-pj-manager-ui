@@ -76,8 +76,8 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                         <TableCell>
                             <b>Notas </b>
                         </TableCell>
-                        <TableCell>
-                            <b>{pdetails.notes}</b>
+                        <TableCell sx={{color: "red"}}>
+                            {pdetails.notes}
                         </TableCell>
                     </TableRow>
                     <TableRow
