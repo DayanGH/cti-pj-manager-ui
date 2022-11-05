@@ -35,7 +35,6 @@ const ProjectDetails = () => {
         }
     }
     if (isloading) return <p>cargando....</p>
-    console.log(pdetails)
     return (
         <>
             <Head>

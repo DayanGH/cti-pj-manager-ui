@@ -12,6 +12,7 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
     const [inputValue, setInputValue] = useState('')
     const [action, target, handleAction] = useTargetAction();
     const [toggleMembers, openMembers, closeMembers] = useToggleState();
+    const [focused, setFocused] = useState(false);
     const membersAsyncData = useAsync({
         deferFn: fetchMembers,
     });
@@ -44,7 +45,9 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                         onAction={action}
                         handleClose={handleAction}
                         setValue={setValue}
+                        value={value}
                         instance={target}
+                        setFocused={setFocused}
                     />)
             }
             <Dialog
@@ -83,6 +86,7 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                     <Autocomplete
                         multiple
                         id="select-members"
+                        autoHighlight
                         open={toggleMembers}
                         value={value}
                         onOpen={handleOpenMembers}
@@ -109,6 +113,8 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                                 {...params}
                                 label="Miembros"
                                 variant="standard"
+                                autoFocus={focused}
+
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (

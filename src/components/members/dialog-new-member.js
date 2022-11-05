@@ -4,7 +4,7 @@ import { addMember, editMember } from 'src/utils/requests';
 import { useData, useTargetAction } from '../../utils/hooks';
 import { DeleteUsersMembersDialog } from './dialog-delete-user-members';
 
-export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instance, setValue, ...rest }) => {
+export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instance, setValue, value, setFocused, ...rest }) => {
   const [data, setData] = useData({
     name: "",
     c_id: "",
@@ -14,6 +14,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
     ...instance,
   });
   const [errors, setErrors] = useData({});
+  const [members, setNewMembers] = useState(value)
   const [mainAction, setMainAction] = useState(onAction)
   const [editable, setEditable] = useState(mainAction.startsWith('new_member') ? false : true)
   const [visible, setVisible] = useState(mainAction.startsWith('new_member') ? "none" : "flex")
@@ -31,8 +32,9 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
         if (mainAction === 'new_member' || mainAction === 'edit_member') {
           loadData();
         } else {
-          setValue(data)
-          console.log(data)
+          members.push(data)
+          setValue(members)
+          setFocused(true)
         }
 
       })
