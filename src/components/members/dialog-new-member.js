@@ -121,8 +121,8 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
             sx={{ mt: 2 }}
             label="Carnet de Identidad"
             value={data.c_id}
-            error={'c_id' in errors}
-            helperText={errors.c_id}
+            error={errors?.exist ? 'exist' in errors : 'c_id' in errors}
+            helperText={errors?.exist ? errors.exist : errors.c_id}
             onChange={(event) => setData({ "c_id": event.target.value })}
             fullWidth
             inputProps={{
