@@ -32,6 +32,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
           loadData();
         } else {
           setValue(data)
+          console.log(data)
         }
 
       })

@@ -4,7 +4,6 @@ import { useAsync } from 'react-async';
 import { fetchMembers, editProject } from 'src/utils/requests';
 import { useData, useTargetAction, useToggleState } from '../../utils/hooks';
 import { CopyIcon } from 'src/icons/copy';
-import { AddIcon } from 'src/icons/add';
 import { NewMemberDialog } from '../members/dialog-new-member';
 
 export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest }) => {
@@ -45,7 +44,6 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                         onAction={action}
                         handleClose={handleAction}
                         setValue={setValue}
-
                         instance={target}
                     />)
             }
@@ -90,13 +88,21 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                         onOpen={handleOpenMembers}
                         onClose={handleCloseMembers}
                         options={membersAsyncData.data || []}
-                        onChange={(_, value) => { setValue(value), console.log(value) }}
+                        onChange={(_, value) => { setValue(value) }}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         getOptionLabel={(option) => option.name}
                         loading={membersAsyncData.isLoading}
                         inputValue={inputValue}
                         onInputChange={(_, value) => {
                             setInputValue(value)
+                        }}
+                        renderOption={(props, option) => {
+                            return (
+                                <li {...props}
+                                    key={option.id}>
+                                    {option.name}
+                                </li>
+                            )
                         }}
                         renderInput={(params) => (
                             <TextField

@@ -31,9 +31,9 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
 
   const saveUser = async () => {
     const func = mainAction === 'new_user' ? addUser : editUser;
-    if (data.password !== instance.password) {
+    if (data.password !== instance?.password && mainAction !== 'new_user') {
       await editPassword(instance.id, data_pass)
-        .then((datae) => {
+        .then((data_update_pass) => {
           func(data)
             .then((data) => {
               handleClose();
@@ -41,12 +41,10 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
             })
             .catch((error) => {
               setErrors(error.response.data)
-              console.log(error.response.data)
             });
         })
         .catch((error) => {
           setErrors(error.response.data)
-          console.log(error.response.data)
         });
     } else {
       await func(data)
@@ -56,7 +54,6 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
         })
         .catch((error) => {
           setErrors(error.response.data)
-          console.log(error.response.data)
         });
     }
 
@@ -96,7 +93,6 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
             helperText={errors.first_name}
             onChange={(event) => {
               setData({ "first_name": event.target.value })
-              setData({ "username": event.target.value.split(' ')[0].toLowerCase() })
             }}
             fullWidth
             InputLabelProps={{ shrink: true }}
@@ -109,6 +105,17 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
             error={'last_name' in errors}
             helperText={errors.last_name}
             onChange={(event) => setData({ "last_name": event.target.value })}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: editable }}
+          />
+          <TextField
+            sx={{ mt: 2 }}
+            label="Usuario"
+            value={data.username}
+            error={'username' in errors}
+            helperText={errors.username}
+            onChange={(event) => setData({ "username": event.target.value })}
             fullWidth
             InputLabelProps={{ shrink: true }}
             InputProps={{ readOnly: editable }}
