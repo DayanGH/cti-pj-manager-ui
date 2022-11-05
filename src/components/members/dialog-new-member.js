@@ -34,6 +34,7 @@ export const NewMemberDialog = ({ open, handleClose, loadData, onAction, instanc
         } else {
           members.push(data)
           setValue(members)
+          setFocused(false)
           setFocused(true)
         }
 
