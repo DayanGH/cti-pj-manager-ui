@@ -112,6 +112,7 @@ export const NewProgramDocumentDialog = ({ open, handleClose, pj_id, loadData, o
               setType(event.target.value);
               setNames(event.target.value == 'document' ? documentNames : groupNames);
               setShowDate(event.target.value == "group" ? "flex" : "none");
+              setShowCustomName('none')
             }}
           >
             <MenuItem value={'group'}>Grupo</MenuItem>

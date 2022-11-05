@@ -114,6 +114,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
               setType(event.target.value);
               setNames(event.target.value == 'document' ? documentNames : groupNames);
               setShowDate(event.target.value == "group" ? "flex" : "none");
+              setShowCustomName('none')
             }}
           >
             <MenuItem value={'group'}>Grupo</MenuItem>
