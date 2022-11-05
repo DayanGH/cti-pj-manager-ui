@@ -55,7 +55,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
   const [errors, setErrors] = useData({});
-  const [ptype, setPtype] = useState(data.pj_type.startsWith("pnap_") ? 'none' : data.pj_type)
+  const [ptype, setPtype] = useState(data.pj_type.startsWith("pnap_") || data.pj_type === "" ? 'none' : data.pj_type)
   const [value, setValue] = useState(data.program !== null ? { id: data?.program, name: instance?.program_name } : null)
   const [inputValue, setInputValue] = useState('')
   const [pnapType, setPnapType] = useState(data.pj_type)
@@ -244,6 +244,14 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           getOptionLabel={(option) => option.name}
           options={programsAsyncData.data || []}
           loading={programsAsyncData.isLoading}
+          renderOption={(props, option) => {
+            return (
+              <li {...props}
+                key={option.id}>
+                {option.name}
+              </li>
+            )
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -289,6 +297,14 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           getOptionLabel={(option) => option.name}
           options={chiefsAsyncData.data || []}
           loading={chiefsAsyncData.isLoading}
+          renderOption={(props, option) => {
+            return (
+              <li {...props}
+                key={option.id}>
+                {option.name}
+              </li>
+            )
+          }}
           renderInput={(params) => (
             <TextField
               {...params}

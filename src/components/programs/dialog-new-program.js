@@ -75,8 +75,8 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
       func(data)
         .then((data) => {
           onClose();
-          loadData(data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : 2);
-          setActiveTab(data.pjtype === "nac" ? 0 : data.pjtype === "sec" ? 1 : 2)
+          loadData(data.ptype === "nac" ? 0 : data.ptype === "sec" ? 1 : 2);
+          setActiveTab(data.ptype === "nac" ? 0 : data.ptype === "sec" ? 1 : 2)
         })
         .catch((error) => {
           setErrors(error.response.data)
@@ -163,6 +163,14 @@ export const NewProgramDialog = ({ open, loadData, onClose, onAction, instance, 
           getOptionLabel={(option) => option.name}
           options={chiefsAsyncData.data || []}
           loading={chiefsAsyncData.isLoading}
+          renderOption={(props, option) => {
+            return (
+              <li {...props}
+                key={option.id}>
+                {option.name}
+              </li>
+            )
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
