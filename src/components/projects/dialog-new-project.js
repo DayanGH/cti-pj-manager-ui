@@ -52,6 +52,14 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     { id: 'Industria ligera', value: 'Industria ligera' },
     { id: 'Servicios técnicos profesionales', value: 'Servicios técnicos profesionales' }]
 
+  const entities = [
+    { key: 'other', value: 'Otro' },
+    { key: 'facim', value: 'FACIM' },
+    { key: 'facing', value: 'FACING' },
+    { key: 'one31', value: 'One31' },
+    { key: 'wetv', value: 'WeTV' },
+    { key: 'gmmtv', value: 'GMMTV' }]
+
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
   const [errors, setErrors] = useData({});
@@ -59,7 +67,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [value, setValue] = useState(data.program !== null ? { id: data?.program, name: instance?.program_name } : null)
   const [inputValue, setInputValue] = useState('')
   const [pnapType, setPnapType] = useState(data.pj_type)
-  const [pClass, setpClass] = useState("")
+  const [eType, setEType] = useState("facim")
+
 
   const [valueChief, setValueChief] = useState(data.chief !== null ? { id: data?.chief, name: instance?.chief_name } : null)
   const [inputValueChief, setInputValueChief] = useState('')
@@ -410,9 +419,28 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             InputLabelProps={{ shrink: true }}
           />
         </Box>
+        <Box sx={{display: "flex", mt: 2}}>
+        <FormControl
+          sx={{flexGrow: 1, minWidth: 140}}>
+          <InputLabel id="demo-simple-select-filled-label1">Entidad principal</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label1"
+            id="demo-simple-select-filled1"
+            label='Entidad principal'
+            value={eType}
+            onChange={(event) => {
+              handleChangeField(event.target.value, 'main_entity');
+              //setShowCustomEntity(event.target.value == "other" ? "" : "none");
+            }}
+          >
+            {entities.map((entity) => (
+              <MenuItem value={entity.key}
+                key={entity.key}>{entity.value}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
-          sx={{ mt: 2 }}
-          label="Entidad principal"
+          sx={{ ml: 0.5 }}
           type='text'
           value={data.main_entity}
           error={'main_entity' in errors}
@@ -421,6 +449,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
+        </Box>
         <TextField
           sx={{ mt: 2 }}
           label="Entidades participantes"

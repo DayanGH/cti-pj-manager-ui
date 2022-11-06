@@ -49,9 +49,6 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                   Clasificación
                 </TableCell>
                 <TableCell>
-                  Revisión
-                </TableCell>
-                <TableCell>
                   Finalización
                 </TableCell>
               </TableRow>
@@ -66,18 +63,18 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
 
                   <TableCell onClick={() => router.push(`/projects/${project.id}`)}
                   >
+                  <Box sx={{display: "flex", alignItems: "center"}}>
                     {project.name}
+                    <Tooltip title={project.notes}>
+                      <AlertIcon fontSize="small" sx={{color: "red", ml: 0.5, display: project.notes.status === "0" ? "none" : ""}} />
+                    </Tooltip>
+                    </Box>
                   </TableCell>
                   <TableCell>
                     <UserEntry name={project.chief}/>
                   </TableCell>
                   <TableCell>
                     {project.project_classification}
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip title={project.notes.length < 1 ? "Sin notas" : project.notes}>
-                      {project.notes.length < 1 ? <OkIcon fontSize="small" sx={{color: "green"}}/> : <AlertIcon fontSize="small" sx={{color: "red"}} /> }
-                    </Tooltip>
                   </TableCell>
                   <TableCell>
                     {project.end_date}
