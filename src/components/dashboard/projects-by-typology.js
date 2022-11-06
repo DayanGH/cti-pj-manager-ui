@@ -1,6 +1,6 @@
 import { Doughnut } from 'react-chartjs-2';
 import { ProjectsBySectors } from "./projects-by-sector"
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Table, TableBody, TableRow, TableCell, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
 
@@ -169,11 +169,16 @@ export const ProjectsByTypology = ({ sectorsData, typologyData }) => {
             <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
           </Select>
         </FormControl>
-        <IconButton
-          onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
-          size="small">
-          <CopyIcon fontSize="small" />
-        </IconButton>
+        <Tooltip title="Copiar">
+          <Box>
+            <IconButton
+              onClick={() => navigator.clipboard.writeText("Nacionales: " + nac + " Territoriales: " + ter + " Sectoriales: " + sec + " No asociados: " + nas)}
+              size="small"
+              title='Copiar'>
+              <CopyIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </Tooltip>
       </Box>
       <Divider />
       <CardContent>
