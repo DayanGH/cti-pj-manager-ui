@@ -77,7 +77,7 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                     {project.project_classification}
                   </TableCell>
                   <TableCell>
-                    {project.end_date}
+                    {new Date() >= new Date(project.end_date) ? <b>{project.end_date}</b> : project.end_date}
                   </TableCell>
                 </TableRow>
               ))}
