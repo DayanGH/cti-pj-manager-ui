@@ -10,6 +10,7 @@ function Programs() {
   const [programs, setPrograms] = useState();
   const [isloading, setloading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     loadData(0);
@@ -41,11 +42,11 @@ function Programs() {
         }}
       >
         <Container maxWidth={false}>
-          <ProgramsToolbar setPrograms={setPrograms}
+          <ProgramsToolbar setQuery={setQuery} setPrograms={setPrograms}
             activeTab={activeTab}
             setActiveTab={setActiveTab} />
           <Box sx={{ mt: 3 }}>
-            <ProgramList programs={programs || []} />
+            <ProgramList query={query} programs={programs || []} />
           </Box>
         </Container>
       </Box>

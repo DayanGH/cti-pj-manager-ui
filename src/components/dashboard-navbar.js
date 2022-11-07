@@ -77,7 +77,6 @@ export const DashboardNavbar = (props) => {
               <Badge
                 badgeContent={4}
                 color="primary"
-                variant="dot"
               >
                 <BellIcon fontSize="small" />
               </Badge>

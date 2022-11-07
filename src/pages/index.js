@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [sectorsData, setSectorsData] = useState([]);
   const [typologyData, setTypologyData] = useState([])
   const [budget, setBudget] = useState(0);
+  const [notifications, setNotifications] = useState(0);
 
   useEffect(() => {
     loadData();
@@ -25,7 +26,7 @@ const Dashboard = () => {
     setloading(true);
     fetchProjects("all")
       .then((data) => {
-        let m = 0
+        let m = 0, n = 0
         let sectors = [
           { amount: 0, value: 'Turismo' },
           { amount: 0, value: 'Industria boitecnológica y farmacéutica' },
@@ -53,11 +54,16 @@ const Dashboard = () => {
             if (project.strategics_sectors.includes(sector.value))
               sector.amount++;
           })
+
+          if(project.status === 1)
+            n++
+
           m += parseInt(project.financing)
         })
         setTypologyData(d)
         setSectorsData(sectors)
         setBudget(m)
+        setNotifications(n)
         fetchMembers()
           .then((data) => {
             setMembers(data);
