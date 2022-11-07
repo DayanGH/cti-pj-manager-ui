@@ -67,7 +67,6 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [value, setValue] = useState(data.program !== null ? { id: data?.program, name: instance?.program_name } : null)
   const [inputValue, setInputValue] = useState('')
   const [pnapType, setPnapType] = useState(data.pj_type)
-  const [eType, setEType] = useState("facim")
 
 
   const [valueChief, setValueChief] = useState(data.chief !== null ? { id: data?.chief, name: instance?.chief_name } : null)
@@ -76,6 +75,16 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [valueSectors, setValueSectors] = useState(instance?.sectors !== undefined ? instance?.sectors : [])
   const [inputValueSectors, setInputValueSector] = useState('')
   const [displayNotes, setdisplayNotes] = useState(onAction === 'new' ? "none" : "flex")
+
+  const [eType, setEType] = useState(onAction === 'new' ? 'facim' :
+    ((data.main_entity !== 'facim' &&
+      data.main_entity !== 'one31' &&
+      data.main_entity !== 'facing' &&
+      data.main_entity !== 'gmmtv' &&
+      data.main_entity !== 'wetv') ? 'other' : data.main_entity))
+  const [displayCustomEntity, setdisplayCustomEntity] = useState(onAction === 'new' ? "none" : eType !== 'other' ? 'none' : 'flex')
+  const [mainEntTemp, setmainEntTem] = useState(eType === 'other' ? data.main_entity : '')
+
   let component;
   const programsAsyncData = useAsync({
     deferFn: fetchPrograms,
@@ -419,9 +428,8 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             InputLabelProps={{ shrink: true }}
           />
         </Box>
-        <Box sx={{display: "flex", mt: 2}}>
         <FormControl
-          sx={{flexGrow: 1, minWidth: 140}}>
+          sx={{ mt: 2 }}>
           <InputLabel id="demo-simple-select-filled-label1">Entidad principal</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label1"
@@ -429,8 +437,16 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             label='Entidad principal'
             value={eType}
             onChange={(event) => {
-              handleChangeField(event.target.value, 'main_entity');
-              //setShowCustomEntity(event.target.value == "other" ? "" : "none");
+              if (event.target.value !== 'other') {
+                handleChangeField(event.target.value, 'main_entity');
+                setEType(event.target.value)
+                setdisplayCustomEntity('none');
+              }
+              else {
+                setEType(event.target.value)
+                handleChangeField("", 'main_entity');
+                setdisplayCustomEntity('flex');
+              }
             }}
           >
             {entities.map((entity) => (
@@ -440,16 +456,16 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
           </Select>
         </FormControl>
         <TextField
-          sx={{ ml: 0.5 }}
+          sx={{ mt: 2, display: displayCustomEntity }}
           type='text'
-          value={data.main_entity}
+          label="Entidad principal"
+          value={mainEntTemp}
           error={'main_entity' in errors}
           helperText={errors.main_entity}
-          onChange={(evt) => handleChangeField(evt.target.value, 'main_entity')}
+          onChange={(evt) => { handleChangeField(evt.target.value, 'main_entity'), setmainEntTem(evt.target.value) }}
           fullWidth
           InputLabelProps={{ shrink: true }}
         />
-        </Box>
         <TextField
           sx={{ mt: 2 }}
           label="Entidades participantes"
