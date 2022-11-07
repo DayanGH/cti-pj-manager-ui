@@ -54,9 +54,6 @@ export const ProgramList = ({ programs, query, ...rest }) => {
                   Clasificación
                 </TableCell>
                 <TableCell>
-                  Revisión
-                </TableCell>
-                <TableCell>
                   Finalización
                 </TableCell>
               </TableRow>
@@ -94,9 +91,6 @@ export const ProgramList = ({ programs, query, ...rest }) => {
                   </TableCell>
                   <TableCell>
                     {program.classification}
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox />
                   </TableCell>
                   <TableCell>
                     {new Date() >= new Date(program.end_date) ? <b>{program.end_date}</b> : program.end_date}

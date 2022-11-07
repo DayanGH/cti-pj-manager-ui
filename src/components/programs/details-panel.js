@@ -111,7 +111,7 @@ export const DetailsPanel = ({ programDetails, handleAction }) => {
                             <b>Plazo: </b>
                         </TableCell>
                         <TableCell>
-                            {programDetails.start_date} hasta {programDetails.end_date}
+                            {new Date() >= new Date(programDetails.end_date) ?  <p>{programDetails.start_date} - {programDetails.end_date} (Finalizado)</p> : <p>{programDetails.start_date} - {programDetails.end_date}</p>}
                         </TableCell>
                     </TableRow>
                     <TableRow>
