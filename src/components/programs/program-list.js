@@ -18,7 +18,7 @@ import {
 import { getInitials } from '../../utils/get-initials';
 import router from 'next/router';
 
-export const ProgramList = ({ programs, ...rest }) => {
+export const ProgramList = ({ programs, query, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -30,10 +30,17 @@ export const ProgramList = ({ programs, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-  return (
-    <Card {...rest}>
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
+
+  const ProgramsTable = () => {
+    const filteredPrograms = programs.filter( (program) => {
+      if(query === "")
+        return program;
+      else
+        return program.name.toLowerCase().includes(query);
+    } );
+
+    return (
+      <Box sx={{ minWidth: 1050 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -55,7 +62,7 @@ export const ProgramList = ({ programs, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {programs.slice(page * limit, page * limit + limit).map((program) => (
+              {filteredPrograms.slice(page * limit, page * limit + limit).map((program) => (
                 <TableRow
                   hover
                   key={program.id}
@@ -92,14 +99,20 @@ export const ProgramList = ({ programs, ...rest }) => {
                     <Checkbox />
                   </TableCell>
                   <TableCell>
-                    {program.end_date}
+                    {new Date() >= new Date(program.end_date) ? <b>{program.end_date}</b> : program.end_date}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Box>
-      </PerfectScrollbar>
+    );
+  };
+
+  return (
+    <Card {...rest}>
+
+      <ProgramsTable/>
       <TablePagination
         component="div"
         count={programs.length}

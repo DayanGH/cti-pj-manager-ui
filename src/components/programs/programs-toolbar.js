@@ -13,7 +13,7 @@ import { NewProgramDialog } from './dialog-new-program';
 import { useTargetAction } from "../../utils/hooks";
 import { fetchPrograms } from 'src/utils/requests';
 
-export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms }) => {
+export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms, setQuery }) => {
   const [action, target, handleAction] = useTargetAction();
   function loaddata(type) {
     fetchPrograms(type === 0 ? "nac" : type === 1 ? "sec" : "ter")
@@ -57,6 +57,7 @@ export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms }) => {
 
           <Box sx={{ maxWidth: 500, m: 1 }}>
             <TextField
+              onChange={(event) => setQuery(event.target.value)}
               fullWidth
               InputProps={{
                 startAdornment: (
