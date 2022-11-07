@@ -19,7 +19,7 @@ import router from 'next/router';
 import { AlertIcon } from 'src/icons/status-alert';
 import { OkIcon } from 'src/icons/status-ok';
 
-export const ProjectsListResults = ({ projects, ...rest }) => {
+export const ProjectsListResults = ({ projects, query, ...rest }) => {
   const [selectedProjectsIds, setSelectedProjectsIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -32,10 +32,16 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-  return (
-    <Card {...rest}>
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
+
+  const ProjectsList = () => {
+    const filteredProjects = projects.filter( (project) => {
+      if(query === "")
+        return project;
+      else
+        return project.name.toLowerCase().includes(query);
+    } );
+    return (
+              <Box sx={{ minWidth: 1050 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -54,7 +60,7 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {projects.slice(page * limit, page * limit + limit).map((project) => (
+              {filteredProjects.slice(page * limit, page * limit + limit).map((project) => (
                 <TableRow
                   hover
                   key={project.id}
@@ -66,7 +72,7 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
                   <Box sx={{display: "flex", alignItems: "center"}}>
                     {project.name}
                     <Tooltip title={project.notes}>
-                      <AlertIcon fontSize="small" sx={{color: "red", ml: 0.5, display: project.notes.status === "0" ? "none" : ""}} />
+                      <AlertIcon fontSize="small" sx={{color: "red", ml: 0.5, display: project.notes.length === 0 ? "none" : "" /*project.status === 0 ?*/}} />
                     </Tooltip>
                     </Box>
                   </TableCell>
@@ -84,7 +90,12 @@ export const ProjectsListResults = ({ projects, ...rest }) => {
             </TableBody>
           </Table>
         </Box>
-      </PerfectScrollbar>
+    );
+  };
+
+  return (
+    <Card {...rest}>
+      <ProjectsList/>
       <TablePagination
         component="div"
         count={projects.length}

@@ -129,7 +129,7 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                             <b>Plazo: </b>
                         </TableCell>
                         <TableCell>
-                            {pdetails.start_date} hasta {pdetails.end_date}
+                            {new Date() >= new Date(pdetails.end_date) ?  <p>{pdetails.start_date} - {pdetails.end_date} (Finalizado)</p> : <p>{pdetails.start_date} - {pdetails.end_date}</p>}
                         </TableCell>
                     </TableRow>
                     <TableRow>
