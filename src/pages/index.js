@@ -6,7 +6,10 @@ import { Budget } from '../components/dashboard/budget';
 import { ProjectsByTypology } from '../components/dashboard/projects-by-typology';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { fetchMembers, fetchProjects, fetchUsers } from '../utils/requests';
+import { Toolbar } from '../components/toolbar';
 import { useEffect, useState } from 'react';
+import { useTargetAction } from "../utils/hooks";
+import { PreviewReportDialog } from 'src/components/dashboard/dialog-preview-report';
 
 const Dashboard = () => {
   const [isloading, setloading] = useState(true);
@@ -15,10 +18,10 @@ const Dashboard = () => {
   const [typologyData, setTypologyData] = useState([])
   const [budget, setBudget] = useState(0);
   const [notifications, setNotifications] = useState(0);
+  const [action, target, handleAction] = useTargetAction();
 
   useEffect(() => {
     loadData();
-    console.log("hi")
   }, []);
 
   function loadData() {
@@ -98,12 +101,26 @@ const Dashboard = () => {
         </title>
       </Head>
       <Box
+        id="dashboard"
         component="main"
         sx={{
           flexGrow: 1,
           p: 1
         }}
       >
+      <Toolbar title="Dashboard"
+                    handleAction={handleAction}
+                    action="view_report" />
+                {["view_report"].includes(action) && (
+                    <PreviewReportDialog
+                        open
+                        onAction={action}
+                        handleClose={handleAction}
+                        sectorsData={sectorsData}
+                        typologyData={typologyData}
+                        members={members}
+                        budget={budget}
+                    />)}
         <Container maxWidth={false}>
           <Grid
             container
