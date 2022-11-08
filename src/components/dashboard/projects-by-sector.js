@@ -95,7 +95,9 @@ export const ProjectsBySectors = ({ sectorsData }) => {
         position: "relative",
       }}
     >
-      <Bar data={barData}
+      <Bar
+       id="sectorsb"
+       data={barData}
         options={barOptions} />
     </Box>
 

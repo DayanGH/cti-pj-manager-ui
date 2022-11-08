@@ -5,6 +5,7 @@ import { jsPDF } from 'jspdf';
 import { MemberAmount } from 'src/components/dashboard/member-amount';
 import { Budget } from 'src/components/dashboard/budget';
 import { ProjectsByTypology } from 'src/components/dashboard/projects-by-typology';
+import { ProjectsBySectors } from 'src/components/dashboard/projects-by-sector';
 
 
 export const PreviewReportDialog = ({ open, handleClose, onAction, typologyData, sectorsData, members, budget }) => {
@@ -14,16 +15,27 @@ export const PreviewReportDialog = ({ open, handleClose, onAction, typologyData,
   };
 
   const htmlToPDF = (id) => {
-    const input = document.getElementById(id);
-    console.log(input)
-    html2canvas(input)
+    const pdf = new jsPDF();
+    pdf.text("An example heading text to test the library functionality. Wich is... to say the least ... limited. This does not seem like a viable solution", 10, 10, {maxWidth: "200"})
+    html2canvas(document.getElementById("projectsc"))
     .then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 0, 0);
-      pdf.save("report.pdf");  
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 40, 30, 120, 100);
+    html2canvas(document.getElementById("sectorsb"))
+    .then((canvas) => {
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 40, 140, 120, 100);
+    html2canvas(document.getElementById("membersc"))
+    .then((canvas) => {
+      pdf.addPage()
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 20, 10, 140, 100);
+    html2canvas(document.getElementById("budgetc"))
+    .then((canvas) => {
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 20, 120, 140, 30);
+       pdf.save("report.pdf");
     });
-  ;
+    });
+    });
+    });
+      
   }
   return (
     <Dialog
@@ -39,7 +51,6 @@ export const PreviewReportDialog = ({ open, handleClose, onAction, typologyData,
         sx={{ px: 2, mx: 1, display: "flex", flexDirection: "column" }}
       >
       <Typography>
-      An example heading text to test the library functionality. Wich is... to say the least ... limited. This does not seem like a viable solution
       </Typography>
         <Container maxWidth={false}>
           <Grid
@@ -57,6 +68,15 @@ export const PreviewReportDialog = ({ open, handleClose, onAction, typologyData,
                 
             </Grid>
             <Grid
+              item
+              xs={12}
+            >
+              <ProjectsBySectors
+                sectorsData={sectorsData}
+                sx={{ height: '100%' }} />
+                
+            </Grid>
+            <Grid
                   item
                   xs={12}
                 >
@@ -68,12 +88,7 @@ export const PreviewReportDialog = ({ open, handleClose, onAction, typologyData,
                 >
                   <MemberAmount members={members} />
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                >
-                  <MemberAmount members={members} />
-                </Grid>
+                
             </Grid>
          </Container>
         <Box

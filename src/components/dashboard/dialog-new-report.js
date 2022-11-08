@@ -1,6 +1,8 @@
 import { Dialog, Button, TextField, Box, DialogTitle, FormControl, InputLabel, MenuItem, Select, Autocomplete } from '@mui/material';
 import { useState } from 'react';
 import { useData } from '../../utils/hooks';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 export const NewReportDialog = ({ open, handleClose, loadData, onAction, ...rest }) => {
   const export_crit = [
@@ -16,7 +18,8 @@ export const NewReportDialog = ({ open, handleClose, loadData, onAction, ...rest
   const [inputValueData, setInputValueData] = useState('')
 
   const generateReport = () => {
-
+       const doc = new jsPDF()
+       
   };
 
 

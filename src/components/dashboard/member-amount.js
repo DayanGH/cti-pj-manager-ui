@@ -34,7 +34,8 @@ export const MemberAmount = ({ members }) => {
   }
 
   return (
-    <Card>
+    <Card
+    >
       <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
         <CardHeader
           title="Miembros"
@@ -52,7 +53,7 @@ export const MemberAmount = ({ members }) => {
       </Box>
       <Divider />
       <CardContent>
-        <Table>
+        <Table id="membersc">
           <TableBody>
 
             <TableRow

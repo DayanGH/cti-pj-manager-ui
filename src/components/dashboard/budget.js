@@ -2,9 +2,12 @@ import { Avatar, Card, CardContent, Grid, Typography } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 export const Budget = ({ budget }) => (
-  <Card>
+  <Card
+  >
     <CardContent>
       <Grid
+        
+        id="budgetc"
         container
         spacing={3}
         sx={{ justifyContent: 'space-between' }}

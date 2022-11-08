@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Container, Grid } from '@mui/material';
 import { MemberAmount } from '../components/dashboard/member-amount';
 import { Budget } from '../components/dashboard/budget';
-import { ProjectsByTypology } from '../components/dashboard/projects-by-typology';
+import { ProjectStats } from '../components/dashboard/project-stats';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { fetchMembers, fetchProjects, fetchUsers } from '../utils/requests';
 import { Toolbar } from '../components/toolbar';
@@ -130,7 +130,7 @@ const Dashboard = () => {
               item
               xs={6}
             >
-              <ProjectsByTypology
+              <ProjectStats
                 sectorsData={sectorsData}
                 typologyData={typologyData}
                 sx={{ height: '100%' }} />
