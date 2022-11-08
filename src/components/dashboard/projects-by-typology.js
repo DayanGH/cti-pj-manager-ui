@@ -184,7 +184,7 @@ export const ProjectsByTypology = ({ sectorsData, typologyData }) => {
           <Tooltip title="Exportar">
             <Box>
               <IconButton
-                onClick={() => htmlToPDF("dashboard") /*handleAction('export')*/}
+                onClick={() => handleAction('export')}
                 size="small"
                 title='Copiar'>
                 <ExportPDF fontSize="small" />
