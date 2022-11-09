@@ -24,6 +24,8 @@ const Documentation = () => {
             .then((data) => {
                 setDocuments(data);
                 setloading(false)
+            }).catch((error) => {
+                console.log(error)
             });
 
     }

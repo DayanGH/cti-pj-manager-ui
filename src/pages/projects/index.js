@@ -5,6 +5,7 @@ import { ProjectsListToolbar } from '../../components/projects/projects-list-too
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { useEffect, useState } from 'react';
 import { fetchProjects } from '../../utils/requests'
+import { plp } from 'src/utils/requests';
 
 function Projects() {
   const [projects, setProjects] = useState();
@@ -22,6 +23,11 @@ function Projects() {
       .then((data) => {
         setProjects(data);
         setloading(false)
+      }).catch((error) => {
+        console.log(error)
+        if (error.response.status === 401) {
+          plp()
+        }
       });
   }
   if (isloading) return <p>cargando....</p>

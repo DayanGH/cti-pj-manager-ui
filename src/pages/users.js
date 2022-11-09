@@ -7,6 +7,7 @@ import { useTargetAction } from "../utils/hooks";
 import { fetchUsers } from '../utils/requests';
 import { useEffect, useState } from 'react';
 import { NewUserDialog } from '../components/users/dialog-new-user';
+import { plp } from 'src/utils/requests';
 
 const Users = () => {
   const [action, target, handleAction] = useTargetAction();
@@ -23,6 +24,11 @@ const Users = () => {
       .then((data) => {
         setUsers(data);
         setloading(false)
+      }).catch((error) => {
+        console.log(error)
+        if (error.response.status === 401) {
+          plp()
+        }
       });
 
   }

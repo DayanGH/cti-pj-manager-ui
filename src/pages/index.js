@@ -58,7 +58,7 @@ const Dashboard = () => {
               sector.amount++;
           })
 
-          if(project.status === 1)
+          if (project.status === 1)
             n++
 
           m += parseInt(project.financing)
@@ -76,6 +76,9 @@ const Dashboard = () => {
           });
       }).catch((error) => {
         console.log(error)
+        if (error.response.status === 401) {
+          plp()
+        }
       });;
 
 
@@ -108,19 +111,7 @@ const Dashboard = () => {
           p: 1
         }}
       >
-      <Toolbar title="Dashboard"
-                    handleAction={handleAction}
-                    action="view_report" />
-                {["view_report"].includes(action) && (
-                    <PreviewReportDialog
-                        open
-                        onAction={action}
-                        handleClose={handleAction}
-                        sectorsData={sectorsData}
-                        typologyData={typologyData}
-                        members={members}
-                        budget={budget}
-                    />)}
+
         <Container maxWidth={false}>
           <Grid
             container

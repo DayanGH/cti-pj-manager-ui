@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Box, Button, ListItem } from '@mui/material';
 
 export const NavItem = (props) => {
-  const { href, icon, title, ...others } = props;
+  const { href, icon, title, OnClick, ...others } = props;
   const router = useRouter();
 
   const active = href ? (router.pathname === href || (router.pathname === '/projects/[id]' && href === "/projects") || (router.pathname === '/programs/[id]' && href === "/programs")) : false;
@@ -26,6 +26,7 @@ export const NavItem = (props) => {
       >
         <Button
           component="a"
+          onClick={OnClick}
           startIcon={icon}
           disableRipple
           sx={{

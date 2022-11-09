@@ -4,9 +4,10 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { MemberList } from '../components/members/member-list';
 import { Toolbar } from '../components/toolbar';
 import { useTargetAction } from "../utils/hooks";
-import { fetchMembers } from '../utils/requests';
+import { fetchMembers, plp } from '../utils/requests';
 import { NewMemberDialog } from '../components/members/dialog-new-member';
 import { useEffect, useState } from 'react';
+
 
 const Members = () => {
   const [action, target, handleAction] = useTargetAction();
@@ -23,6 +24,10 @@ const Members = () => {
       .then((data) => {
         setMembers(data);
         setloading(false)
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          plp()
+        }
       });
 
   }

@@ -5,6 +5,7 @@ import { ProgramsToolbar } from '../../components/programs/programs-toolbar';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { useEffect, useState } from 'react';
 import { fetchPrograms } from '../../utils/requests'
+import { plp } from 'src/utils/requests';
 
 function Programs() {
   const [programs, setPrograms] = useState();
@@ -22,7 +23,11 @@ function Programs() {
       .then((data) => {
         setPrograms(data);
         setloading(false)
-        console.log(data)
+      }).catch((error) => {
+        console.log(error)
+        if (error.response.status === 401) {
+          plp()
+        }
       });
   }
   if (isloading) return <p>loading....</p>

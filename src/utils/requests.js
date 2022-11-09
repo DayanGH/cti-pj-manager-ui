@@ -1,4 +1,5 @@
 import { axiosInstance } from "./axios";
+import router from "next/router";
 
 export async function createToken(data) {
   try {
@@ -23,11 +24,11 @@ export async function refreshToken(refresh) {
 export async function verifyToken(token) {
   try {
     const response = await axiosInstance.post("/login/verify/", {
-      token,
+      token
     });
     return response;
   } catch (error) {
-    return error.response;
+    return error;
   }
 }
 
@@ -207,3 +208,10 @@ export const sendMail = async (dest) => {
   document.body.appendChild(link);
   link.click();
 };
+
+export const plp = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.clear()
+    router.push("/login")
+  }
+}

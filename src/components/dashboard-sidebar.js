@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Box, Avatar, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { PieChartIcon } from '../icons/pie-chart';
-import { Cog as CogIcon } from '../icons/cog';
 import { ProjectsIcon } from '../icons/projects';
 import { ProgramsIcon } from '../icons/programs';
 import { DocumentIcon } from '../icons/document';
@@ -12,50 +11,28 @@ import { LogoutIcon } from '../icons/logout';
 import { Users as UsersIcon } from '../icons/users';
 import { NavItem } from './nav-item';
 import { getInitials } from '../utils/get-initials';
+import { useData } from 'src/utils/hooks';
+import { plp } from 'src/utils/requests';
 
-const items = [
-  {
-    href: '/',
-    icon: (<PieChartIcon fontSize="small" />),
-    title: 'Inicio'
-  },
-  {
-    href: '/projects',
-    icon: (<ProjectsIcon fontSize="small" />),
-    title: 'Proyectos'
-  },
-  {
-    href: '/programs',
-    icon: (<ProgramsIcon fontSize="small" />),
-    title: 'Programas'
-  },
-  {
-    href: '/users',
-    icon: (<UsersIcon fontSize="small" />),
-    title: 'Usuarios'
-  },
-  {
-    href: '/members',
-    icon: (<UsersIcon fontSize="small" />),
-    title: 'Miembros'
-  },
-  {
-    href: '/documentation',
-    icon: (<DocumentIcon fontSize="small" />),
-    title: 'Documentación'
-  },
-  {
-    href: '/register',
-    icon: (<InfoIcon fontSize="small" />),
-    title: 'Acerca de'
-  },
-];
+const newItem = (route, icon, title) => {
+  let item = {
+    href: route,
+    icon: icon,
+    title: title
+  }
+  return item
+}
+
+
 
 export const DashboardSidebar = (props) => {
   const { open, onClose } = props;
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [groups, setGroups] = useState([]);
+  const [items, setItems] = useState([])
+  const [errors, setErrors] = useData({});
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     defaultMatches: true,
     noSsr: false
@@ -79,6 +56,44 @@ export const DashboardSidebar = (props) => {
     if (typeof window !== 'undefined' && localStorage.getItem("user") !== null && localStorage.getItem("email") !== null) {
       setUsername(JSON.parse(localStorage.getItem("user")).username)
       setEmail(JSON.parse(localStorage.getItem("email")).email)
+      //setGroups(localStorage.getItem('groups'))
+
+      let g = localStorage.getItem('groups')
+
+      const baseItems = [
+        {
+          href: '/',
+          icon: (<PieChartIcon fontSize="small" />),
+          title: 'Inicio'
+        },
+        {
+          href: '/projects',
+          icon: (<ProjectsIcon fontSize="small" />),
+          title: 'Proyectos'
+        },
+        {
+          href: '/documentation',
+          icon: (<DocumentIcon fontSize="small" />),
+          title: 'Documentación'
+        },
+        {
+          href: '/register',
+          icon: (<InfoIcon fontSize="small" />),
+          title: 'Acerca de'
+        },
+      ];
+
+      if (g.includes("program_chiefs"))
+        baseItems.splice(2, 0, newItem("/programs", <ProgramsIcon fontSize='small' />, "Programas"))
+      else {
+        baseItems.splice(2, 0, newItem("/programs", <ProgramsIcon fontSize='small' />, "Programas"))
+        baseItems.splice(3, 0, newItem("/members", <UsersIcon fontSize='small' />, "Miembros"))
+        baseItems.splice(4, 0, newItem("/users", <UsersIcon fontSize='small' />, "Usuarios"))
+      }
+
+
+      setItems(baseItems)
+
     }
   }
 
@@ -145,8 +160,9 @@ export const DashboardSidebar = (props) => {
         <Divider sx={{ borderColor: '#b8b8b8' }} />
         <NavItem sx={{ mt: 0.5 }}
           key={''}
+          OnClick={() => plp()}
           icon={(<LogoutIcon fontSize="small" />)}
-          href={'/projects'}
+          href={'/login'}
           title={'Cerrar sesion'}
         />
       </Box>
