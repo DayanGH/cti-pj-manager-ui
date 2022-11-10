@@ -83,9 +83,11 @@ export const DashboardSidebar = (props) => {
         },
       ];
 
+      if(g.includes("project_chiefs"))
+        baseItems.splice(2, 0, newItem("/members", <UsersIcon fontSize='small' />, "Miembros"))
       if (g.includes("program_chiefs"))
         baseItems.splice(2, 0, newItem("/programs", <ProgramsIcon fontSize='small' />, "Programas"))
-      else {
+      if(g.length < 5) {
         baseItems.splice(2, 0, newItem("/programs", <ProgramsIcon fontSize='small' />, "Programas"))
         baseItems.splice(3, 0, newItem("/members", <UsersIcon fontSize='small' />, "Miembros"))
         baseItems.splice(4, 0, newItem("/users", <UsersIcon fontSize='small' />, "Usuarios"))
