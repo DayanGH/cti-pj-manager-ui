@@ -215,3 +215,6 @@ export const plp = () => {
     router.push("/login")
   }
 }
+export const plc = () => {
+    router.push("/")
+}

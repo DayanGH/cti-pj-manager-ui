@@ -5,7 +5,7 @@ import { ProgramsToolbar } from '../../components/programs/programs-toolbar';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { useEffect, useState } from 'react';
 import { fetchPrograms } from '../../utils/requests'
-import { plp } from 'src/utils/requests';
+import { plp, plc } from 'src/utils/requests';
 
 function Programs() {
   const [programs, setPrograms] = useState();
@@ -32,6 +32,9 @@ function Programs() {
         console.log(error)
         if (error.response.status === 401) {
           plp()
+        }
+        else if (error.response.status === 403) {
+          plc()
         }
       });
   }
