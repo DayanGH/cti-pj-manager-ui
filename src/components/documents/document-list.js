@@ -6,7 +6,8 @@ import { CollapseIcon } from 'src/icons/collapse';
 import { DocumentIcon } from 'src/icons/document';
 import { downloadDocument } from 'src/utils/requests';
 
-export const DocumentList = ({ documents, groups, handleAction, source }) => {
+export const DocumentList = ({ documents, groups, handleAction, source, editable }) => {
+    console.log(editable)
 
     const DocumentRow = ({ document, action }) => {
         return (
@@ -36,7 +37,7 @@ export const DocumentList = ({ documents, groups, handleAction, source }) => {
                         </Typography>
                     </Box>
                 </TableCell>
-                <TableCell sx={{ px: 0 }}>
+                <TableCell sx={{ px: 0, display: editable ? "" : "none" }}>
                     <PopupMenu
                         onAction={action}
                         handleAction={handleAction}

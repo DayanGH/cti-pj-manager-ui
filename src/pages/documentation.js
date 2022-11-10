@@ -13,9 +13,14 @@ const Documentation = () => {
     const [action, target, handleAction] = useTargetAction();
     const [documents, setDocuments] = useState();
     const [isloading, setloading] = useState(true);
+    const [groups, setGroups] = useState([]);
 
     useEffect(() => {
         loadData();
+        if (typeof window !== 'undefined'){
+          let g = localStorage.getItem('groups')
+          setGroups(g)
+        }
     }, []);
 
     function loadData() {
@@ -46,6 +51,7 @@ const Documentation = () => {
                 }}
             >
                 <Toolbar title="Documentos"
+                    editable={groups.length < 3}
                     handleAction={handleAction}
                     action="new_document" />
                 {["new_document", "edit_document"].includes(action) && (
@@ -65,6 +71,7 @@ const Documentation = () => {
                     />)}
                 <Box sx={{ p: 1 }}>
                     <DocumentGrid
+                        editable={groups.length < 3}
                         handleAction={handleAction}
                         documents={documents}
                     />

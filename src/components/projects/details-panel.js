@@ -3,7 +3,8 @@ import { AdminMembers } from './dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
 import { MailIcon } from 'src/icons/mail';
 import { sendMail } from 'src/utils/requests';
-export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
+export const DetailsPanel = ({ pdetails, handleAction, action, loadData, editable }) => {
+
     return (
         <Box
             sx={{
@@ -39,11 +40,13 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData }) => {
                 >
                     {pdetails.name}
                 </Typography>
+                <Box
+                    sx={{display: editable ? "" : "none"}}>
                 <PopupMenu
                     onAction={'project'}
                     handleAction={handleAction}
-                    instance={pdetails}
-                ></PopupMenu>
+                    instance={pdetails} />
+                </Box>
             </Box>
             <Table>
                 <TableBody>

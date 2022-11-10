@@ -20,9 +20,14 @@ const ProgramDetails = () => {
     const [programDetails, setProgramDetails] = useState();
     const [isloading, setloading] = useState(true);
     const [action, target, handleAction] = useTargetAction();
+    const [groups, setGroups] = useState([]);
 
     useEffect(() => {
         loadData(id);
+        if (typeof window !== 'undefined'){
+          let g = localStorage.getItem('groups')
+          setGroups(g)
+        }
     }, [id]);
 
     function loadData(id) {
@@ -89,10 +94,12 @@ const ProgramDetails = () => {
                     sx={{ m: 1, flexGrow: 1 }}
                 >
                     <Toolbar title="Documentos"
+                        editable={true}
                         handleAction={handleAction}
                         action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
+                            editable={groups.length < 3}
                             source={'programs'}
                             handleAction={handleAction}
                             documents={programDetails.documents}
@@ -102,6 +109,7 @@ const ProgramDetails = () => {
                 </Box>
                 <DetailsPanel programDetails={programDetails}
                     handleAction={handleAction}
+                    editable={groups.length < 3}
                     action={action}
                     loadData={() => loadData(id)} />
             </Box>

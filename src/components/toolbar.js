@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from '@mui/material';
 import { AddIcon } from '../icons/add';
 
-export const Toolbar = ({ title, handleAction, action }) => {
+export const Toolbar = ({ title, handleAction, action, editable }) => {
     return (
         <Box
             sx={{
@@ -21,6 +21,7 @@ export const Toolbar = ({ title, handleAction, action }) => {
                 {title}
             </Typography>
             <Button
+                sx={{display: editable ? "" : "none"}}
                 startIcon={(<AddIcon fontSize="small" />)}
                 color="primary"
                 variant="contained"

@@ -3,7 +3,7 @@ import { PopupMenu } from '../popup-menu';
 import { DocumentIcon } from 'src/icons/document';
 import { downloadDocument } from 'src/utils/requests';
 
-export const DocumentGrid = ({ documents, handleAction }) => {
+export const DocumentGrid = ({ documents, handleAction, editable }) => {
 
   const DocItem = ({ document }) => {
     return (
@@ -26,11 +26,15 @@ export const DocumentGrid = ({ documents, handleAction }) => {
           >
             {document.name}
           </Typography>
+          <Box
+                    sx={{display: editable ? "" : "none"}}>
           <PopupMenu
             onAction={'simple_doc'}
             handleAction={handleAction}
             instance={document.id}
+
           />
+           </Box>
         </Box>
       </Card>
     );

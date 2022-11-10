@@ -13,7 +13,7 @@ import { NewProgramDialog } from './dialog-new-program';
 import { useTargetAction } from "../../utils/hooks";
 import { fetchPrograms } from 'src/utils/requests';
 
-export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms, setQuery }) => {
+export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms, setQuery, editable }) => {
   const [action, target, handleAction] = useTargetAction();
   function loaddata(type) {
     fetchPrograms(type === 0 ? "nac" : type === 1 ? "sec" : "ter")
@@ -78,6 +78,7 @@ export const ProgramsToolbar = ({ activeTab, setActiveTab, setPrograms, setQuery
           <Box sx={{ m: 1 }}>
 
             <Button
+              sx={{display: editable ? "" : "none"}}
               startIcon={(<AddIcon fontSize="small" />)}
               color="primary"
               variant="contained"

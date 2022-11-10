@@ -12,9 +12,14 @@ function Programs() {
   const [isloading, setloading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
   const [query, setQuery] = useState("");
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
     loadData(0);
+    if (typeof window !== 'undefined'){
+          let g = localStorage.getItem('groups')
+          setGroups(g)
+        }
   }, []);
 
   function loadData(type) {
@@ -30,7 +35,7 @@ function Programs() {
         }
       });
   }
-  if (isloading) return <p>loading....</p>
+  if (isloading) return <p>cargando....</p>
 
   return (
     <>
@@ -47,11 +52,11 @@ function Programs() {
         }}
       >
         <Container maxWidth={false}>
-          <ProgramsToolbar setQuery={setQuery} setPrograms={setPrograms}
+          <ProgramsToolbar editable={groups.length < 3} setQuery={setQuery} setPrograms={setPrograms}
             activeTab={activeTab}
             setActiveTab={setActiveTab} />
           <Box sx={{ mt: 3 }}>
-            <ProgramList query={query} programs={programs || []} />
+            <ProgramList editable={groups.length < 3} query={query} programs={programs || []} />
           </Box>
         </Container>
       </Box>

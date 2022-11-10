@@ -19,9 +19,15 @@ const ProjectDetails = () => {
     const [pdetails, setPdetails] = useState();
     const [isloading, setloading] = useState(true);
     const [action, target, handleAction] = useTargetAction();
+    const [groups, setGroups] = useState([]);
 
     useEffect(() => {
         loadData(id);
+        if (typeof window !== 'undefined'){
+          let g = localStorage.getItem('groups')
+          console.log("lala")
+          setGroups(g)
+        }
     }, [id]);
 
     function loadData(id) {
@@ -87,11 +93,14 @@ const ProjectDetails = () => {
                 <Box
                     sx={{ m: 1, flexGrow: 1 }}
                 >
-                    <Toolbar title="Documentos"
+                    <Toolbar
+                        title="Documentos"
+                        editable={true}
                         handleAction={handleAction}
                         action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
+                            editable={groups.length < 3}
                             source={'projects'}
                             handleAction={handleAction}
                             documents={pdetails.documents}
@@ -101,6 +110,7 @@ const ProjectDetails = () => {
                 </Box>
                 <DetailsPanel pdetails={pdetails}
                     handleAction={handleAction}
+                    editable={groups.length < 3}
                     action={action}
                     loadData={() => loadData(id)} />
             </Box>

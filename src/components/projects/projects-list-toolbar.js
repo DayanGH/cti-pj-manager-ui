@@ -13,7 +13,7 @@ import { NewProjectDialog } from './dialog-new-project';
 import { useTargetAction } from "../../utils/hooks";
 import { fetchProjects } from '../../utils/requests'
 
-export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects, setQuery }) => {
+export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects, setQuery, editable }) => {
   const [action, target, handleAction] = useTargetAction();
   function loaddata(type) {
     fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
@@ -82,6 +82,7 @@ export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects, setQ
               startIcon={(<AddIcon fontSize="small" />)}
               color="primary"
               variant="contained"
+              sx={{display: editable ? "" : "none"}}
               onClick={() => handleAction("new")}
             >
               Nuevo

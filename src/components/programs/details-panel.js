@@ -2,7 +2,7 @@ import { Box, Typography, Table, TableBody, TableRow, TableCell, IconButton } fr
 import { PopupMenu } from '../popup-menu';
 import { MailIcon } from 'src/icons/mail';
 import { sendMail } from 'src/utils/requests';
-export const DetailsPanel = ({ programDetails, handleAction }) => {
+export const DetailsPanel = ({ programDetails, handleAction, editable }) => {
     console.log(programDetails)
     return (
         <Box
@@ -31,11 +31,13 @@ export const DetailsPanel = ({ programDetails, handleAction }) => {
                 >
                     {programDetails.name}
                 </Typography>
+                <Box sx={{display: editable ? "" : "none"}}>
                 <PopupMenu
                     onAction={'program'}
                     handleAction={handleAction}
                     instance={programDetails}
-                ></PopupMenu>
+                />
+                </Box>
             </Box>
             <Table>
                 <TableBody>
