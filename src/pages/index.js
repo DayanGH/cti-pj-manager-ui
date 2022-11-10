@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from "react";
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Container, Grid, Snackbar } from '@mui/material';
 import { MemberAmount } from '../components/dashboard/member-amount';
 import { Budget } from '../components/dashboard/budget';
 import { ProjectStats } from '../components/dashboard/project-stats';
@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [budget, setBudget] = useState(0);
   const [notifications, setNotifications] = useState(0);
   const [action, target, handleAction] = useTargetAction();
+  const [snackOpen, setSnackOpen] = useState(false)
 
   useEffect(() => {
     loadData();
@@ -110,7 +111,16 @@ const Dashboard = () => {
           p: 1
         }}
       >
-
+        <Snackbar
+          open={snackOpen}
+          onClose={() => setSnackOpen(false)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center"
+          }}
+          autoHideDuration={4000}
+          message="Datos copiados"
+          />
         <Container maxWidth={false}>
           <Grid
             container
@@ -121,6 +131,7 @@ const Dashboard = () => {
               xs={6}
             >
               <ProjectStats
+                setSnackOpen={setSnackOpen}
                 sectorsData={sectorsData}
                 typologyData={typologyData}
                 sx={{ height: '100%' }} />
@@ -143,7 +154,7 @@ const Dashboard = () => {
                   item
                   xs={12}
                 >
-                  <MemberAmount members={members} />
+                  <MemberAmount setSnackOpen={setSnackOpen} members={members} />
                 </Grid>
 
               </Grid>

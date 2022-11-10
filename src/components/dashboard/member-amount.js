@@ -2,7 +2,7 @@ import { Box, Card, CardContent, CardHeader, Divider, Table, TableBody, TableRow
 import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
 
-export const MemberAmount = ({ members }) => {
+export const MemberAmount = ({ members, setSnackOpen }) => {
 
   const [int, setInt] = useState(0);
   const [out, setOut] = useState(0);
@@ -45,7 +45,12 @@ export const MemberAmount = ({ members }) => {
 
           <IconButton
             size="small"
-            onClick={() => navigator.clipboard.writeText("Internos: " + int + " Estudiantes: " + stu + " Externos: " + out)}
+            onClick={() => {
+              navigator.clipboard.writeText("Internos: " + int + " Estudiantes: " + stu + " Externos: " + out)
+              setSnackOpen(true)
+            }
+
+            }
           >
             <CopyIcon fontSize="small" />
           </IconButton>

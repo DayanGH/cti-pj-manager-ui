@@ -7,7 +7,7 @@ import { useTargetAction } from 'src/utils/hooks';
 import html2canvas from 'html2canvas';
 
 
-export const ProjectStats = ({ sectorsData, typologyData }) => {
+export const ProjectStats = ({ sectorsData, typologyData, setSnackOpen }) => {
   const theme = useTheme();
   const [showBy, setShowBy] = useState("typology");
   const [action, target, handleAction] = useTargetAction();
@@ -30,6 +30,8 @@ export const ProjectStats = ({ sectorsData, typologyData }) => {
         ])
       })
   })
+
+        setSnackOpen(true)
   }
   return (
     <>
