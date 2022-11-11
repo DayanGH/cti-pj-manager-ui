@@ -16,10 +16,10 @@ function Programs() {
 
   useEffect(() => {
     loadData(0);
-    if (typeof window !== 'undefined'){
-          let g = localStorage.getItem('groups')
-          setGroups(g)
-        }
+    if (typeof window !== 'undefined') {
+      let g = localStorage.getItem('groups')
+      setGroups(g)
+    }
   }, []);
 
   function loadData(type) {
@@ -55,11 +55,15 @@ function Programs() {
         }}
       >
         <Container maxWidth={false}>
-          <ProgramsToolbar editable={groups.length < 3} setQuery={setQuery} setPrograms={setPrograms}
+          <ProgramsToolbar editable={groups.includes('admin')}
+            setQuery={setQuery}
+            setPrograms={setPrograms}
             activeTab={activeTab}
             setActiveTab={setActiveTab} />
           <Box sx={{ mt: 3 }}>
-            <ProgramList editable={groups.length < 3} query={query} programs={programs || []} />
+            <ProgramList editable={groups.includes('admin')}
+              query={query}
+              programs={programs || []} />
           </Box>
         </Container>
       </Box>

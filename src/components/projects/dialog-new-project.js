@@ -54,11 +54,14 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
 
   const entities = [
     { key: 'other', value: 'Otro' },
-    { key: 'facim', value: 'FACIM' },
-    { key: 'facing', value: 'FACING' },
-    { key: 'one31', value: 'One31' },
-    { key: 'wetv', value: 'WeTV' },
-    { key: 'gmmtv', value: 'GMMTV' }]
+    { key: 'FACCEA', value: 'FACCEA' },
+    { key: 'FACCSO', value: 'FACCSO' },
+    { key: 'FACHUM', value: 'FACHUM' },
+    { key: 'FACINF', value: 'FACINF' },
+    { key: 'FACING', value: 'FACING' },
+    { key: 'FEMS', value: 'FEMS' },
+    { key: 'FACEIPA', value: 'FACEIPA' },
+    { key: 'FACCUF', value: 'FACCUF' },]
 
   const [togglePrograms, openPrograms, closePrograms] = useToggleState();
   const [toggleChief, openChiefs, closeChiefs] = useToggleState();
@@ -76,12 +79,15 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [inputValueSectors, setInputValueSector] = useState('')
   const [displayNotes, setdisplayNotes] = useState(onAction === 'new' ? "none" : "flex")
 
-  const [eType, setEType] = useState(onAction === 'new' ? 'facim' :
-    ((data.main_entity !== 'facim' &&
-      data.main_entity !== 'one31' &&
-      data.main_entity !== 'facing' &&
-      data.main_entity !== 'gmmtv' &&
-      data.main_entity !== 'wetv') ? 'other' : data.main_entity))
+  const [eType, setEType] = useState(onAction === 'new' ? 'FACINF' :
+    ((data.main_entity !== 'FACCEA' &&
+      data.main_entity !== 'FACCSO' &&
+      data.main_entity !== 'FACHUM' &&
+      data.main_entity !== 'FACINF' &&
+      data.main_entity !== 'FACING' &&
+      data.main_entity !== 'FEMS' &&
+      data.main_entity !== 'FACEIPA' &&
+      data.main_entity !== 'FACCUF') ? 'other' : data.main_entity))
   const [displayCustomEntity, setdisplayCustomEntity] = useState(onAction === 'new' ? "none" : eType !== 'other' ? 'none' : 'flex')
   const [mainEntTemp, setmainEntTem] = useState(eType === 'other' ? data.main_entity : '')
 
@@ -395,7 +401,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
             value={data.project_classification}
             onChange={(event) => {
               handleChangeField(event.target.value, 'project_classification')
-              setpClass(event.target.value)
+
             }}
           >
             {projectsClass.map((classif) => (

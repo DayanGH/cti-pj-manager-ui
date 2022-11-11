@@ -141,13 +141,13 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
-            
+
             {Boolean(formik.touched.policy && formik.errors.policy) && (
               <FormHelperText error>
                 {formik.errors.policy}
               </FormHelperText>
             )}
-            <Box sx={{ py: 2, my:2 }}>
+            <Box sx={{ py: 2, my: 2 }}>
               <Button
                 color="primary"
                 disabled={formik.isSubmitting}

@@ -24,9 +24,9 @@ const ProgramDetails = () => {
 
     useEffect(() => {
         loadData(id);
-        if (typeof window !== 'undefined'){
-          let g = localStorage.getItem('groups')
-          setGroups(g)
+        if (typeof window !== 'undefined') {
+            let g = localStorage.getItem('groups')
+            setGroups(g)
         }
     }, [id]);
 
@@ -99,7 +99,7 @@ const ProgramDetails = () => {
                         action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
-                            editable={groups.length < 3}
+                            editable={groups.includes('admin')}
                             source={'programs'}
                             handleAction={handleAction}
                             documents={programDetails.documents}
@@ -109,7 +109,7 @@ const ProgramDetails = () => {
                 </Box>
                 <DetailsPanel programDetails={programDetails}
                     handleAction={handleAction}
-                    editable={groups.length < 3}
+                    editable={groups.includes('admin')}
                     action={action}
                     loadData={() => loadData(id)} />
             </Box>

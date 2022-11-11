@@ -120,7 +120,7 @@ const Dashboard = () => {
           }}
           autoHideDuration={4000}
           message="Datos copiados"
-          />
+        />
         <Container maxWidth={false}>
           <Grid
             container
@@ -154,7 +154,8 @@ const Dashboard = () => {
                   item
                   xs={12}
                 >
-                  <MemberAmount setSnackOpen={setSnackOpen} members={members} />
+                  <MemberAmount setSnackOpen={setSnackOpen}
+                    members={members} />
                 </Grid>
 
               </Grid>

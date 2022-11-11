@@ -23,10 +23,10 @@ const ProjectDetails = () => {
 
     useEffect(() => {
         loadData(id);
-        if (typeof window !== 'undefined'){
-          let g = localStorage.getItem('groups')
-          console.log("lala")
-          setGroups(g)
+        if (typeof window !== 'undefined') {
+            let g = localStorage.getItem('groups')
+            console.log("lala")
+            setGroups(g)
         }
     }, [id]);
 
@@ -84,6 +84,7 @@ const ProjectDetails = () => {
                 )}
                 {["new_document"].includes(action) && (
                     <NewDocumentDialog
+                        groupss={groups}
                         open
                         onAction={action}
                         handleClose={handleAction}
@@ -100,7 +101,7 @@ const ProjectDetails = () => {
                         action="new_document" />
                     <Box sx={{ p: 1 }}>
                         <DocumentList
-                            editable={groups.length < 3}
+                            editable={groups.includes('admin')}
                             source={'projects'}
                             handleAction={handleAction}
                             documents={pdetails.documents}
@@ -110,7 +111,7 @@ const ProjectDetails = () => {
                 </Box>
                 <DetailsPanel pdetails={pdetails}
                     handleAction={handleAction}
-                    editable={groups.length < 3}
+                    editable={groups.includes('admin')}
                     action={action}
                     loadData={() => loadData(id)} />
             </Box>

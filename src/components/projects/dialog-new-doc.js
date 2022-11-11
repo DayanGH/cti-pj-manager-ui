@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { addDocument, fetchDocumentsGroup, addDocumentsGroup } from 'src/utils/requests';
 import { useData } from '../../utils/hooks';
 
-export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, ...rest }) => {
-  const [type, setType] = useState("document")
+export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction, groupss, ...rest }) => {
+  const [type, setType] = useState(groupss.includes('economy') ? "group" : "documents")
   const [showCustomName, setShowCustomName] = useState("none")
-  const [showDate, setShowDate] = useState("none")
+  const [showDate, setShowDate] = useState(groupss.includes('economy') ? "" : "none")
   const [docName, setDocName] = useState('')
   const [file, setFile] = useState()
   const [errors, setErrors] = useData({});
@@ -25,7 +25,11 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     { key: 'dpddp', value: 'Documentos de planificación del diseño y desarrollo del producto' },
     { key: 'csbie', value: 'Certifico del salario básico de los investigadores externos' },
     { key: 'fciie', value: 'Fotos escaneadas del carné de identidad de los investigadores' }]
-  const [names, setNames] = useState(documentNames)
+  const economyGroupNames = [
+    { key: 'dpac', value: 'Desglose del presupuesto del año en curso' }]
+
+  const [names, setNames] = useState(groupss.includes('economy') ? economyGroupNames : documentNames)
+
   const groupNames = [
     { key: 'dpac', value: 'Desglose del presupuesto del año en curso' },
     { key: 'mca', value: 'Anexo 15 Modelo de certificación de actividades' },
@@ -38,6 +42,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
     { key: 'acpp', value: 'Acta de conformidad de los participantes del proyecto' },
     { key: 'cpr', value: 'Certificación para el pago de la remuneración' },
     { key: 'cpie', value: 'Anexo 8. Certifico para el pago de los investigadores externos' }]
+
 
   const saveDocument = async () => {
     let data = new FormData();
@@ -109,12 +114,16 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             value={type}
+
             label='Tipo'
             onChange={(event) => {
               setType(event.target.value);
               setNames(event.target.value == 'document' ? documentNames : groupNames);
               setShowDate(event.target.value == "group" ? "flex" : "none");
               setShowCustomName('none')
+            }}
+            inputProps={{
+              readOnly: groupss.includes('economy'),
             }}
           >
             <MenuItem value={'group'}>Grupo</MenuItem>

@@ -17,9 +17,9 @@ const Documentation = () => {
 
     useEffect(() => {
         loadData();
-        if (typeof window !== 'undefined'){
-          let g = localStorage.getItem('groups')
-          setGroups(g)
+        if (typeof window !== 'undefined') {
+            let g = localStorage.getItem('groups')
+            setGroups(g)
         }
     }, []);
 
@@ -51,7 +51,7 @@ const Documentation = () => {
                 }}
             >
                 <Toolbar title="Documentos"
-                    editable={groups.length < 3}
+                    editable={groups.includes('admin')}
                     handleAction={handleAction}
                     action="new_document" />
                 {["new_document", "edit_document"].includes(action) && (
@@ -71,7 +71,7 @@ const Documentation = () => {
                     />)}
                 <Box sx={{ p: 1 }}>
                     <DocumentGrid
-                        editable={groups.length < 3}
+                        editable={groups.includes('admin')}
                         handleAction={handleAction}
                         documents={documents}
                     />
