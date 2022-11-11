@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [isloading, setloading] = useState(true);
   const [members, setMembers] = useState();
   const [sectorsData, setSectorsData] = useState([]);
+  const [entitiesData, setEntitiesData] = useState([]);
   const [typologyData, setTypologyData] = useState([])
   const [budget, setBudget] = useState(0);
   const [notifications, setNotifications] = useState(0);
@@ -43,6 +44,17 @@ const Dashboard = () => {
           { amount: 0, value: 'Industria ligera' },
           { amount: 0, value: 'Servicios técnicos profesionales' }]
 
+        let entities = [
+          { amount: 0, value: 'Otro' },
+          { amount: 0, value: 'FACCEA' },
+          { amount: 0, value: 'FACCSO' },
+          { amount: 0, value: 'FACHUM' },
+          { amount: 0, value: 'FACINM' },
+          { amount: 0, value: 'FACING' },
+          { amount: 0, value: 'FEMS' },
+          { amount: 0, value: 'FACEIPA' },
+          { amount: 0, value: 'FACCUF' },]
+
         data.forEach(project => {
           if (project.pj_type == "papn")
             d[0]++;
@@ -58,6 +70,11 @@ const Dashboard = () => {
               sector.amount++;
           })
 
+          entities.forEach(entity => {
+            if (project.main_entity.includes(entity.value))
+              entity.amount++;
+          })
+
           if (project.status === 1)
             n++
 
@@ -65,6 +82,7 @@ const Dashboard = () => {
         })
         setTypologyData(d)
         setSectorsData(sectors)
+        setEntitiesData(entities)
         setBudget(m)
         setNotifications(n)
         fetchMembers()
@@ -133,6 +151,7 @@ const Dashboard = () => {
               <ProjectStats
                 setSnackOpen={setSnackOpen}
                 sectorsData={sectorsData}
+                entitiesData={entitiesData}
                 typologyData={typologyData}
                 sx={{ height: '100%' }} />
             </Grid>

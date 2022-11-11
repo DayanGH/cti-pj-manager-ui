@@ -34,68 +34,69 @@ export const ProjectsListResults = ({ projects, query, ...rest }) => {
   };
 
   const ProjectsList = () => {
-    const filteredProjects = projects.filter( (project) => {
-      if(query === "")
+    const filteredProjects = projects.filter((project) => {
+      if (query === "")
         return project;
       else
         return project.name.toLowerCase().includes(query);
-    } );
+    });
     return (
-              <Box sx={{ minWidth: 1050 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Nombre
-                </TableCell>
-                <TableCell>
-                  Jefe
-                </TableCell>
-                <TableCell>
-                  Clasificación
-                </TableCell>
-                <TableCell>
-                  Finalización
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredProjects.slice(page * limit, page * limit + limit).map((project) => (
-                <TableRow
-                  hover
-                  key={project.id}
-                  selected={selectedProjectsIds.indexOf(project.id) !== -1}
-                >
+      <Box sx={{ minWidth: 1050 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                Nombre
+              </TableCell>
+              <TableCell>
+                Jefe
+              </TableCell>
+              <TableCell>
+                Clasificación
+              </TableCell>
+              <TableCell>
+                Finalización
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredProjects.slice(page * limit, page * limit + limit).map((project) => (
+              <TableRow
+                hover
+                key={project.id}
+                selected={selectedProjectsIds.indexOf(project.id) !== -1}
+              >
 
-                  <TableCell onClick={() => router.push(`/projects/${project.id}`)}
-                  >
-                  <Box sx={{display: "flex", alignItems: "center"}}>
+                <TableCell onClick={() => router.push(`/projects/${project.id}`)}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
                     {project.name}
                     <Tooltip title={project.notes}>
-                      <AlertIcon fontSize="small" sx={{color: "red", ml: 0.5, display: project.notes.length === 0 ? "none" : "" /*project.status === 0 ?*/}} />
+                      <AlertIcon fontSize="small"
+                        sx={{ color: "red", ml: 0.5, display: project.status === 0 ? "none" : "" }} />
                     </Tooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <UserEntry name={project.chief}/>
-                  </TableCell>
-                  <TableCell>
-                    {project.project_classification}
-                  </TableCell>
-                  <TableCell>
-                    {new Date() >= new Date(project.end_date) ? <b>{project.end_date}</b> : project.end_date}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <UserEntry name={project.chief} />
+                </TableCell>
+                <TableCell>
+                  {project.project_classification}
+                </TableCell>
+                <TableCell>
+                  {new Date() >= new Date(project.end_date) ? <b>{project.end_date}</b> : project.end_date}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
     );
   };
 
   return (
     <Card {...rest}>
-      <ProjectsList/>
+      <ProjectsList />
       <TablePagination
         component="div"
         count={projects.length}

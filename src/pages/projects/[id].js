@@ -4,7 +4,7 @@ import { DashboardLayout } from '../../components/dashboard-layout';
 import { NewDocumentDialog } from '../../components/projects/dialog-new-doc';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { fetchProjectsDetails } from '../../utils/requests';
+import { editProject, fetchProjectsDetails } from '../../utils/requests';
 import { DeleteDialog } from '../../components/projects/dialog-delete-projects';
 import { DocumentList } from '../../components/documents/document-list';
 import { Toolbar } from '../../components/toolbar';
@@ -25,7 +25,6 @@ const ProjectDetails = () => {
         loadData(id);
         if (typeof window !== 'undefined') {
             let g = localStorage.getItem('groups')
-            console.log("lala")
             setGroups(g)
         }
     }, [id]);
@@ -36,6 +35,9 @@ const ProjectDetails = () => {
             fetchProjectsDetails(id)
                 .then((data) => {
                     setPdetails(data);
+                    data.status = 0
+                    //editProject(data).then((data) => { }).catch((e) => { })
+                    console.log(data.status)
                     setloading(false)
                 });
         }

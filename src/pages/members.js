@@ -47,6 +47,7 @@ const Members = () => {
         }}
       >
         <Toolbar title="Miembros"
+          editable={true}
           handleAction={handleAction}
           action="new_member" />
         {["new_member", "edit_member", "get_member"].includes(action) && (

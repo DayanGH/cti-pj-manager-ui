@@ -48,6 +48,7 @@ const Users = () => {
         }}
       >
         <Toolbar title="Usuarios"
+          editable={true}
           handleAction={handleAction}
           action="new_user" />
 

@@ -57,7 +57,7 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
     { key: 'FACCEA', value: 'FACCEA' },
     { key: 'FACCSO', value: 'FACCSO' },
     { key: 'FACHUM', value: 'FACHUM' },
-    { key: 'FACINF', value: 'FACINF' },
+    { key: 'FACINM', value: 'FACINM' },
     { key: 'FACING', value: 'FACING' },
     { key: 'FEMS', value: 'FEMS' },
     { key: 'FACEIPA', value: 'FACEIPA' },
@@ -79,11 +79,11 @@ export const NewProjectDialog = ({ open, loadData, onClose, onAction, instance, 
   const [inputValueSectors, setInputValueSector] = useState('')
   const [displayNotes, setdisplayNotes] = useState(onAction === 'new' ? "none" : "flex")
 
-  const [eType, setEType] = useState(onAction === 'new' ? 'FACINF' :
+  const [eType, setEType] = useState(onAction === 'new' ? 'FACINM' :
     ((data.main_entity !== 'FACCEA' &&
       data.main_entity !== 'FACCSO' &&
       data.main_entity !== 'FACHUM' &&
-      data.main_entity !== 'FACINF' &&
+      data.main_entity !== 'FACINM' &&
       data.main_entity !== 'FACING' &&
       data.main_entity !== 'FEMS' &&
       data.main_entity !== 'FACEIPA' &&
