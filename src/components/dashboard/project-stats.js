@@ -1,5 +1,6 @@
 import { ProjectsBySectors } from "./projects-by-sector"
 import { ProjectsByTypology } from "./projects-by-typology"
+import { ProjectsByEntity } from "./projects-by-entity"
 import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme, FormControl, InputLabel, Select, MenuItem, IconButton, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CopyIcon } from "../../icons/copy"
@@ -7,12 +8,12 @@ import { useTargetAction } from 'src/utils/hooks';
 import html2canvas from 'html2canvas';
 
 
-export const ProjectStats = ({ sectorsData, typologyData, setSnackOpen }) => {
+export const ProjectStats = ({ sectorsData, typologyData, entitiesData, setSnackOpen }) => {
   const theme = useTheme();
   const [showBy, setShowBy] = useState("typology");
   const [action, target, handleAction] = useTargetAction();
 
-  let component = showBy == "typology" ? <ProjectsByTypology typologyData={typologyData} /> : <ProjectsBySectors sectorsData={sectorsData} />
+  let component = showBy == "typology" ? <ProjectsByTypology typologyData={typologyData} /> : ( showBy === "sector" ? <ProjectsBySectors sectorsData={sectorsData}/> : <ProjectsByEntity entitiesData={entitiesData}/>) 
 
   function imageToClipboard(id) {
     html2canvas(document.getElementById(id))
@@ -53,6 +54,7 @@ export const ProjectStats = ({ sectorsData, typologyData, setSnackOpen }) => {
             >
               <MenuItem value={'typology'}>Por tipologia</MenuItem>
               <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
+              <MenuItem value={'faculty'}>Por facultades</MenuItem>
             </Select>
           </FormControl>
           <Tooltip title="Copiar al portapapeles">

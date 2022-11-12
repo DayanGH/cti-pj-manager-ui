@@ -45,7 +45,6 @@ const Dashboard = () => {
           { amount: 0, value: 'Servicios técnicos profesionales' }]
 
         let entities = [
-          { amount: 0, value: 'Otro' },
           { amount: 0, value: 'FACCEA' },
           { amount: 0, value: 'FACCSO' },
           { amount: 0, value: 'FACHUM' },

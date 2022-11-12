@@ -9,7 +9,7 @@ export const ProjectsByTypology = ({ typologyData }) => {
     datasets: [
       {
         data: typologyData,
-        backgroundColor: ['#3F51B5', '#e53935', '#FB8C00', '#90B020'],
+        backgroundColor: ['#323e7c', '#e53935', '#FB8C00', '#90B020'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'

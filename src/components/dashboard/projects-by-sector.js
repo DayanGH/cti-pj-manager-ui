@@ -25,7 +25,7 @@ export const ProjectsBySectors = ({ sectorsData }) => {
   const barData = {
     datasets: [
       {
-        backgroundColor: "#3F51B5",
+        backgroundColor: "#323e7c",
         barPercentage: 0.5,
         barThickness: 12,
         borderRadius: 4,
