@@ -27,25 +27,16 @@ const About = () => {
                <Grid container
         rowSpacing={2}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid
-            item
-            xs={12}>
-            <Typography
-            color="textPrimary"
-            variant="h6"
-          >
-            Desarrollado por
-          </Typography>
-            </Grid>
+        
           <Grid
             item
             xs={6}>
                   <Card
       >
       <CardHeader title="Axel358"
-            sx={{ flexGrow: 1 }} />
+            sx={{ flexGrow: 1, py: 3 }} />
             <Divider />
-        <CardContent>
+        <CardContent sx={{ py: 3 }}>
         <Box sx={{display: "flex", alignItems: "center"}}>
         <MailIcon fontSize="small" />
         <Typography
@@ -74,9 +65,9 @@ const About = () => {
                   <Card
       >
       <CardHeader title="DayanGH"
-            sx={{ flexGrow: 1 }} />
+            sx={{ flexGrow: 1, py: 3 }} />
             <Divider />
-        <CardContent>
+        <CardContent sx={{ py: 3 }}>
         <Box sx={{display: "flex", alignItems: "center"}}>
         <MailIcon fontSize="small" />
         <Typography
@@ -104,9 +95,9 @@ const About = () => {
                   <Card
       >
       <CardHeader title="Departamento de CTI UHO"
-            sx={{ flexGrow: 1 }} />
+            sx={{ flexGrow: 1, py: 3 }} />
             <Divider />
-        <CardContent>
+        <CardContent sx={{ py: 3 }}>
         <Box sx={{display: "flex", alignItems: "center"}}>
         <MailIcon fontSize="small" />
         <Typography
@@ -135,9 +126,9 @@ const About = () => {
                   <Card
       >
       <CardHeader title="Hecho con"
-            sx={{ flexGrow: 1 }} />
+            sx={{ flexGrow: 1, py: 3 }} />
             <Divider />
-        <CardContent>
+        <CardContent sx={{ py: 3 }}>
         <Box sx={{display: "flex", alignItems: "center", justifyContent: 'space-between'}}>
         <Box sx={{display: "flex"}}>
         <NextJSIcon fontSize="medium" />
