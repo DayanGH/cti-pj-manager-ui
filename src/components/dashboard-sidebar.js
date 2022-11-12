@@ -77,7 +77,7 @@ export const DashboardSidebar = (props) => {
           title: 'Documentación'
         },
         {
-          href: '/register',
+          href: '/about',
           icon: (<InfoIcon fontSize="small" />),
           title: 'Acerca de'
         },
