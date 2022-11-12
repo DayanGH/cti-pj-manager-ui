@@ -98,7 +98,7 @@ const ProjectDetails = () => {
                 >
                     <Toolbar
                         title="Documentos"
-                        editable={true}
+                        editable={groups.includes('admin') || groups.includes('project_chiefs') || groups.includes('economy')}
                         handleAction={handleAction}
                         action="new_document" />
                     <Box sx={{ p: 1 }}>
