@@ -114,6 +114,7 @@ const ProjectDetails = () => {
                 <DetailsPanel pdetails={pdetails}
                     handleAction={handleAction}
                     editable={groups.includes('admin')}
+                    manageable={groups.includes('admin') || groups.includes('project_chiefs')}
                     action={action}
                     loadData={() => loadData(id)} />
             </Box>

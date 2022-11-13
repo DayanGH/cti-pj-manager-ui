@@ -6,7 +6,7 @@ import { useData, useTargetAction, useToggleState } from '../../utils/hooks';
 import { CopyIcon } from 'src/icons/copy';
 import { NewMemberDialog } from '../members/dialog-new-member';
 
-export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest }) => {
+export const AdminMembers = ({ open, onClose, pj_id, loadData, project, manageable }) => {
     const [errors, setErrors] = useData({});
     const [value, setValue] = useState(project.members)
     const [inputValue, setInputValue] = useState('')
@@ -134,8 +134,9 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                     <Box
                         sx={{ pt: 2, display: "flex", mb: 1 }}
                     >
+       
                         <Button
-
+                            sx={{display: manageable ? "" : "none"}}
                             onClick={() => handleAction('new_member_p')}
                         >
                             Nuevo
@@ -147,6 +148,7 @@ export const AdminMembers = ({ open, onClose, pj_id, loadData, project, ...rest 
                             Cancelar
                         </Button>
                         <Button
+                            sx={{display: manageable ? "" : "none"}}
                             onClick={() => addMembers()}
                         >
                             Guardar

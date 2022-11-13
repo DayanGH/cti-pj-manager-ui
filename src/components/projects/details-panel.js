@@ -3,7 +3,7 @@ import { AdminMembers } from './dialog-admin-members';
 import { PopupMenu } from '../popup-menu';
 import { MailIcon } from 'src/icons/mail';
 import { sendMail } from 'src/utils/requests';
-export const DetailsPanel = ({ pdetails, handleAction, action, loadData, editable }) => {
+export const DetailsPanel = ({ pdetails, handleAction, action, loadData, editable, manageable }) => {
 
     return (
         <Box
@@ -20,6 +20,7 @@ export const DetailsPanel = ({ pdetails, handleAction, action, loadData, editabl
                     open
                     onAction={action}
                     onClose={handleAction}
+                    manageable={manageable}
                     project={pdetails}
                     loadData={() => loadData()} />
             )}
