@@ -16,7 +16,7 @@ export const NewDocumentDialog = ({ open, handleClose, pj_id, loadData, onAction
   const documentNames = [
     { key: 'other', value: 'Otro' },
     { key: 'profile', value: 'Perfil' },
-    { key: 'contract', value: 'Contract' },
+    { key: 'contract', value: 'Contrato' },
     { key: 'rsjf', value: 'Resolución de nombramiento del jefe de proyecto' },
     { key: 'cidef', value: 'Compatibilización con los intereses de la Defensa' },
     { key: 'roap', value: 'Resolución oficial de aprobación del proyecto' },

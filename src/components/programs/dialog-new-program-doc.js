@@ -16,7 +16,7 @@ export const NewProgramDocumentDialog = ({ open, handleClose, pj_id, loadData, o
   const documentNames = [
     { key: 'other', value: 'Otro' },
     { key: 'profile', value: 'Perfil' },
-    { key: 'contract', value: 'Contract' },
+    { key: 'contract', value: 'Contrato' },
     { key: 'rsjf', value: 'Resolución de nombramiento del equipo de dirección' },
     { key: 'cidef', value: 'Compatibilización con los intereses de la Defensa' },
     { key: 'dap', value: 'Documento de aprobación del programa' },

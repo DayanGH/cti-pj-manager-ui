@@ -52,8 +52,8 @@ export const ProjectStats = ({ sectorsData, typologyData, entitiesData, setSnack
                 setShowBy(event.target.value);
               }}
             >
-              <MenuItem value={'typology'}>Por tipologia</MenuItem>
-              <MenuItem value={'sector'}>Por sector estrategico</MenuItem>
+              <MenuItem value={'typology'}>Por tipología</MenuItem>
+              <MenuItem value={'sector'}>Por sector estratégico</MenuItem>
               <MenuItem value={'faculty'}>Por facultades</MenuItem>
             </Select>
           </FormControl>
