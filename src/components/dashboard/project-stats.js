@@ -8,38 +8,41 @@ import { useTargetAction } from 'src/utils/hooks';
 import html2canvas from 'html2canvas';
 
 
-export const ProjectStats = ({ sectorsData, typologyData, entitiesData, setSnackOpen }) => {
+
+export const ProjectStats = ({ sectorsData, typologyData, entitiesData, setSnackOpen, }) => {
   const theme = useTheme();
   const [showBy, setShowBy] = useState("typology");
   const [action, target, handleAction] = useTargetAction();
 
-  let component = showBy == "typology" ? <ProjectsByTypology typologyData={typologyData} /> : ( showBy === "sector" ? <ProjectsBySectors sectorsData={sectorsData}/> : <ProjectsByEntity entitiesData={entitiesData}/>) 
+  let component = showBy == "typology" ? <ProjectsByTypology typologyData={typologyData} /> : (showBy === "sector" ? <ProjectsBySectors sectorsData={sectorsData} /> : <ProjectsByEntity entitiesData={entitiesData} />)
 
   function imageToClipboard(id) {
     html2canvas(document.getElementById(id))
-    .then((canvas) => {
-      console.log(canvas)
-      canvas.toBlob((blob) => {
-        console.log(blob)
-        navigator.clipboard.write([
-          new ClipboardItem(
-            Object.defineProperty({}, blob.type, {
-              value: blob,
-              enumerable: true
-            })
-          )
-        ])
+      .then((canvas) => {
+        console.log(canvas)
+        canvas.toBlob((blob) => {
+          console.log(blob)
+          navigator.clipboard.write([
+            new ClipboardItem(
+              Object.defineProperty({}, blob.type, {
+                value: blob,
+                enumerable: true
+              })
+            )
+          ])
+        })
+      }).catch((err) => {
+        console.log(err)
       })
-  })
 
-        setSnackOpen(true)
+    setSnackOpen(true)
   }
   return (
     <>
       <Card
       >
         <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
-          <CardHeader title="Projectos"
+          <CardHeader title="Proyectos"
             sx={{ flexGrow: 1 }} />
           <FormControl>
             <InputLabel id="demo-simple-select-filled-label">Datos</InputLabel>
