@@ -48,7 +48,7 @@ const Dashboard = () => {
           { amount: 0, value: 'FACCEA' },
           { amount: 0, value: 'FACCSO' },
           { amount: 0, value: 'FACHUM' },
-          { amount: 0, value: 'FACINM' },
+          { amount: 0, value: 'FACIM' },
           { amount: 0, value: 'FACING' },
           { amount: 0, value: 'FEMS' },
           { amount: 0, value: 'FACEIPA' },
