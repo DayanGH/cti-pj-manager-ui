@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Box } from '@mui/material';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { MemberList } from '../components/members/member-list';
-import { Toolbar } from '../components/toolbar';
+import { UsersToolbar } from '../components/users/users-toolbar';
 import { useTargetAction } from "../utils/hooks";
 import { fetchMembers, plp } from '../utils/requests';
 import { NewMemberDialog } from '../components/members/dialog-new-member';
@@ -13,6 +13,7 @@ const Members = () => {
   const [action, target, handleAction] = useTargetAction();
   const [members, setMembers] = useState();
   const [isloading, setloading] = useState(true);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     loadData();
@@ -46,7 +47,9 @@ const Members = () => {
           p: 1
         }}
       >
-        <Toolbar title="Miembros"
+        <UsersToolbar
+          setQuery={setQuery}
+          title="Miembros"
           editable={true}
           handleAction={handleAction}
           action="new_member" />
@@ -58,7 +61,9 @@ const Members = () => {
             loadData={() => loadData()}
             instance={target}
           />)}
-        <MemberList members={members}
+        <MemberList
+          members={members}
+          query={query}
           handleAction={handleAction}
           action="get_member" />
       </Box>

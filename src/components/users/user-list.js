@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '@mui/material';
 
-export const UserList = ({ users, handleAction, action, ...rest }) => {
+export const UserList = ({ users, handleAction, action, query }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -27,10 +27,17 @@ export const UserList = ({ users, handleAction, action, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-  return (
-    <Card {...rest}>
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
+
+  const UsersList = () => {
+    const filteredUsers = users.filter((user) => {
+      if (query === "")
+        return user;
+      else
+        return user.name.toLowerCase().includes(query);
+    });
+
+    return (
+      <Box sx={{ minWidth: 1050 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -46,7 +53,7 @@ export const UserList = ({ users, handleAction, action, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.slice(page * limit, page * limit + limit).map((user) => (
+              {filteredUsers.slice(page * limit, page * limit + limit).map((user) => (
                 <TableRow
                   hover
                   key={user.id}
@@ -65,7 +72,11 @@ export const UserList = ({ users, handleAction, action, ...rest }) => {
             </TableBody>
           </Table>
         </Box>
-      </PerfectScrollbar>
+    );
+  }
+  return (
+    <Card>
+      <UsersList/>
       <TablePagination
         component="div"
         count={users.length}

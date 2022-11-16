@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Box } from '@mui/material';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { UserList } from '../components/users/user-list';
-import { Toolbar } from '../components/toolbar';
+import { UsersToolbar } from '../components/users/users-toolbar';
 import { useTargetAction } from "../utils/hooks";
 import { fetchUsers } from '../utils/requests';
 import { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ const Users = () => {
   const [action, target, handleAction] = useTargetAction();
   const [users, setUsers] = useState();
   const [isloading, setloading] = useState(true);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     loadData();
@@ -47,8 +48,9 @@ const Users = () => {
           p: 1
         }}
       >
-        <Toolbar title="Usuarios"
+        <UsersToolbar title="Usuarios"
           editable={true}
+          setQuery={setQuery}
           handleAction={handleAction}
           action="new_user" />
 
@@ -60,7 +62,9 @@ const Users = () => {
             loadData={() => loadData()}
             instance={target}
           />)}
-        <UserList users={users}
+        <UserList
+          query={query}
+          users={users}
           handleAction={handleAction}
           action="get_user" />
       </Box>
