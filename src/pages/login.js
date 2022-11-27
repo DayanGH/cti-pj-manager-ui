@@ -54,6 +54,7 @@ const Login = () => {
         localStorage.setItem("email", JSON.stringify(responseToken.data.email));
         localStorage.setItem("groups", JSON.stringify(responseToken.data.groups));
         localStorage.setItem("user_id", responseToken.data.user_id);
+        localStorage.setItem("faculty", responseToken.data.faculty);
         axios.defaults.headers[
           "Authorization"
         ] = `Bearer ${responseToken.data.access}`;

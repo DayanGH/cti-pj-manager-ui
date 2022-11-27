@@ -51,6 +51,15 @@ export const fetchProjects = async (classification) => {
   });
   return response.data;
 };
+export const fetchProjectsIsViced = async (classification, faculty) => {
+  const response = await axiosInstance.get("/projects/", {
+    headers: {
+      "classification": `${classification}`,
+      "faculty": `${faculty}`
+    }
+  });
+  return response.data;
+};
 
 export const deleteProject = async (id) => {
   const response = await axiosInstance.delete(`projects/${id}/`);
@@ -216,5 +225,5 @@ export const plp = () => {
   }
 }
 export const plc = () => {
-    router.push("/")
+  router.push("/")
 }

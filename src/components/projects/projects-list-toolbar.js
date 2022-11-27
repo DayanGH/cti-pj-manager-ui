@@ -11,15 +11,23 @@ import { Search as SearchIcon } from '../../icons/search';
 import { AddIcon } from '../../icons/add';
 import { NewProjectDialog } from './dialog-new-project';
 import { useTargetAction } from "../../utils/hooks";
-import { fetchProjects } from '../../utils/requests'
+import { fetchProjects, fetchProjectsIsViced } from '../../utils/requests'
 
-export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects, setQuery, editable }) => {
+export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects, setQuery, editable, group, faculty }) => {
   const [action, target, handleAction] = useTargetAction();
   function loaddata(type) {
-    fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
-      .then((data) => {
-        setProjects(data);
-      });
+    if (group.includes('vicedec_inv_postgr')) {
+      fetchProjectsIsViced(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap", faculty)
+        .then((data) => {
+          setProjects(data);
+        });
+    } else {
+      fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
+        .then((data) => {
+          setProjects(data);
+        });
+    }
+
   }
   return (
     <>
@@ -82,7 +90,7 @@ export const ProjectsListToolbar = ({ activeTab, setActiveTab, setProjects, setQ
               startIcon={(<AddIcon fontSize="small" />)}
               color="primary"
               variant="contained"
-              sx={{display: editable ? "" : "none"}}
+              sx={{ display: editable ? "" : "none" }}
               onClick={() => handleAction("new")}
             >
               Nuevo

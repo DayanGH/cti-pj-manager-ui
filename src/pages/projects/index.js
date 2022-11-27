@@ -4,7 +4,7 @@ import { ProjectsListResults } from '../../components/projects/projects-list-res
 import { ProjectsListToolbar } from '../../components/projects/projects-list-toolbar';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { useEffect, useState } from 'react';
-import { fetchProjects } from '../../utils/requests'
+import { fetchProjects, fetchProjectsIsViced } from '../../utils/requests'
 import { plp } from 'src/utils/requests';
 
 function Projects() {
@@ -13,6 +13,7 @@ function Projects() {
   const [activeTab, setActiveTab] = useState(0);
   const [query, setQuery] = useState("");
   const [groups, setGroups] = useState([]);
+  const [faculty, setFaculty] = useState('');
 
   useEffect(() => {
     loadData(0);
@@ -23,17 +24,35 @@ function Projects() {
   }, []);
 
   function loadData(type) {
+    if (typeof window !== 'undefined') {
+      let f = localStorage.getItem('faculty')
+      setFaculty(f)
+    }
+    if (f !== '') {
+      fetchProjectsIsViced(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap", f)
+        .then((data) => {
+          setProjects(data);
+          setloading(false)
+        }).catch((error) => {
+          console.log(error)
+          if (error.response.status === 401) {
+            plp()
+          }
+        });
+    }
+    else {
+      fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
+        .then((data) => {
+          setProjects(data);
+          setloading(false)
+        }).catch((error) => {
+          console.log(error)
+          if (error.response.status === 401) {
+            plp()
+          }
+        });
+    }
     setloading(true);
-    fetchProjects(type === 0 ? "papn" : type === 1 ? "paps" : type === 2 ? "papt" : "pnap")
-      .then((data) => {
-        setProjects(data);
-        setloading(false)
-      }).catch((error) => {
-        console.log(error)
-        if (error.response.status === 401) {
-          plp()
-        }
-      });
   }
   if (isloading) return <p>cargando....</p>
 
@@ -56,7 +75,9 @@ function Projects() {
             setProjects={setProjects}
             editable={groups.includes('admin')}
             activeTab={activeTab}
-            setActiveTab={setActiveTab} />
+            setActiveTab={setActiveTab}
+            group={groups}
+            faculty={faculty} />
           <Box sx={{ mt: 3 }}>
             <ProjectsListResults query={query}
               projects={projects || []} />

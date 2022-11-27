@@ -5,7 +5,7 @@ import { MemberAmount } from '../components/dashboard/member-amount';
 import { Budget } from '../components/dashboard/budget';
 import { ProjectStats } from '../components/dashboard/project-stats';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { fetchMembers, fetchProjects, fetchUsers } from '../utils/requests';
+import { fetchMembers, fetchProjects, fetchProjectsIsViced, fetchUsers } from '../utils/requests';
 import { useEffect, useState } from 'react';
 import { useTargetAction } from "../utils/hooks";
 import { plp } from 'src/utils/requests';
@@ -26,9 +26,14 @@ const Dashboard = () => {
   }, []);
 
   function loadData() {
+    let f = '';
+    if (typeof window !== 'undefined') {
+      f = localStorage.getItem('faculty')
+    }
     let d = [0, 0, 0, 0]
-    setloading(true);
-    fetchProjects("all")
+    let request = f === '' ? fetchProjects("all") : fetchProjectsIsViced("all", f);
+
+    request
       .then((data) => {
         let m = 0, n = 0
         let sectors = [

@@ -28,7 +28,6 @@ const ProjectDetails = () => {
             setGroups(g)
         }
     }, [id]);
-
     function loadData(id) {
         if (typeof id !== "undefined") {
             setloading(true);
