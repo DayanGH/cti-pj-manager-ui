@@ -14,6 +14,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
     email: "",
     chief_type: "project_program_both_chief",
     c_id: "",
+    faculty: "",
     ...instance,
   });
   const [data_pass, setDataPass] = useData({
@@ -25,6 +26,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
   const [editable, setEditable] = useState(mainAction === 'new_user' ? false : true)
   const [visible, setVisible] = useState(mainAction === 'new_user' ? "none" : "flex")
   const [invisible, setInvisible] = useState(mainAction === 'new_user' ? "flex" : "none")
+  const [visibleFaculty, setVisibleFaculty] = useState(data.faculty === "" ? "none" : "flex")
 
   const [action, target, handleAction] = useTargetAction();
 
@@ -54,6 +56,7 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
         })
         .catch((error) => {
           setErrors(error.response.data)
+          console.log(error)
         });
     }
 
@@ -146,12 +149,46 @@ export const NewUserDialog = ({ open, handleClose, loadData, onAction, instance,
               value={data.chief_type}
               inputProps={{ readOnly: editable }}
               label="Tipo"
-              onChange={(event) => setData({ "chief_type": event.target.value })}
+              onChange={(event) => {
+                if (event.target.value === "vicedec_inv_postgr") {
+                  setVisibleFaculty('flex')
+                } else {
+                  setVisibleFaculty('none')
+                }
+                setData({ "chief_type": event.target.value })
+              }}
             >
               <MenuItem value={"project_program_both_chief"}>Jefe de Proyecto/ Programa</MenuItem>
               <MenuItem value={"human_resources"}>Recursos Humanos</MenuItem>
               <MenuItem value={"economy"}>Economia</MenuItem>
               <MenuItem value={"vicedec_inv_postgr"}>Vicedecano de Investigacion y Postgrado</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl
+            sx={{ mt: 2, display: visibleFaculty }}
+            error={'faculty' in errors}
+            helpertext={errors.faculty}
+          >
+            <InputLabel id="demo-simple-select-filled-label-faculty">Facultad</InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label-faculty"
+              id="demo-simple-select-filled-faculty"
+              value={data.faculty}
+              inputProps={{ readOnly: editable }}
+              label="Facultad"
+              onChange={(event) => {
+                setData({ "faculty": event.target.value })
+              }}
+            >
+              <MenuItem value={"FACCEA"}>FACCEA</MenuItem>
+              <MenuItem value={"FACCSO"}>FACCSO</MenuItem>
+              <MenuItem value={"FACHUM"}>FACHUM</MenuItem>
+              <MenuItem value={"FACIM"}>FACIM</MenuItem>
+              <MenuItem value={"FACING"}>FACING</MenuItem>
+              <MenuItem value={"FEMS"}>FEMS</MenuItem>
+              <MenuItem value={"FACEIPA"}>FACEIPA</MenuItem>
+              <MenuItem value={"FACCUF"}>FACCUF</MenuItem>
             </Select>
           </FormControl>
 
